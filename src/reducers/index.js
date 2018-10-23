@@ -3,7 +3,10 @@ import {
     REQUEST_PAGES,
     RECEIVE_PAGES,
     REQUEST_POSTS,
-    RECEIVE_POSTS
+    RECEIVE_POSTS,
+    SET_LANG,
+    SET_PAGE,
+    LanguageArray
 } from '../actions';
 
 function content(
@@ -62,21 +65,28 @@ function postsByLanguage(state = {}, action) {
     }
 }
 
-// function contentByType(state = {}, action) {
-//     switch(action.type) {
-//         case RECEIVE_CONTENT:
-//         case REQUEST_CONTENT:
-//             return Object.assign({}, state, {
-//                 [action.lang]: {
-//                     [action.contentType]: content(state[action.lang], action)
-//                 }    
-//             });
-//         default:
-//             return state;
-//     }
-// }
+
+const language = (state = LanguageArray[0], action) => {
+    switch (action.type) {
+      case SET_LANG:
+        return action.language
+      default:
+        return state
+    }
+}
+
+const page = (state = 'home', action) => {
+    switch (action.type) {
+        case SET_PAGE:
+            return action.page
+        default:
+            return state
+    }
+}
 
 const rootReducer = combineReducers({
+    language,
+    page,
     pagesByLanguage,
     postsByLanguage
 });

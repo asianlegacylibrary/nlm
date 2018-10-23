@@ -1,27 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-//import Header from './Header';
+import { Header } from './Header';
+import NavBar from './Nav'
 
-class HomePage extends Component {
+class Page extends Component {
 
   render() {
-
-    const nav = this.props.navigation.map(nav => {
-      return (
-        <li key={nav.slug} className="something">{nav.title}</li>
-      );
-    });
-
+   
     const homepage = this.props.homepage.map(page => {
       return (
-        <div>
+        <div key={page.id}>
           {page.title}
           <img alt={page.title} src={page.img} />
         </div>
       );
     });
-
+    
     const posts = this.props.posts.map(post => {
       return (
         <div key={post.id}>
@@ -32,11 +27,12 @@ class HomePage extends Component {
         </div>
       );
     });
+    
 
     return (
       <div className="container">
-        {/* <Header /> */}
-        <ul className="navbar">{nav}</ul>
+        <Header />
+        <NavBar />
         <div>{homepage}</div>
         <div className="content">{posts}</div>
       </div>
@@ -45,10 +41,8 @@ class HomePage extends Component {
 
 }
 
-const currentLanguage = 'English';
-
 const processPosts = (posts) => {
-  return posts[currentLanguage].items.map(c => {
+  return posts.items.map(c => {
     return {
       id: c.id,
       title: c.acf.title,
@@ -60,8 +54,8 @@ const processPosts = (posts) => {
 }
 
 const processHomepage = (pages) => {
-  return pages[currentLanguage].items
-    .filter(h => h.slug === 'home')
+  return pages.items
+    .filter(h => h.slug.substring(0,4) === 'home')
     .map(h => {
       return {
         id: h.id,
@@ -71,28 +65,17 @@ const processHomepage = (pages) => {
         img: h._embedded["wp:featuredmedia"][0].source_url
       }
     }); 
-};
-
-const createNavigation = (pages) => {
-  return pages[currentLanguage].items.map(c => {
-    return {
-      title: c.title.rendered,
-      slug: c.slug,
-      order: c.menu_order
-    }
-  });
 }
 
 const mapStateToProps = state => {
-  console.log('STATE ', state);
+  //console.log('STATE ', state);
   return {
-    homepage: processHomepage(state.pagesByLanguage),
-    posts: processPosts(state.postsByLanguage),
-    navigation: createNavigation(state.pagesByLanguage)
+    homepage: processHomepage(state.pagesByLanguage[state.language]),
+    posts: processPosts(state.postsByLanguage[state.language])
   }
 }
 
-const Home = connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps)(Page);
 
-export default Home;
+//export default Home;
 

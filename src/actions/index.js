@@ -1,5 +1,22 @@
 import fetch from 'cross-fetch';
 
+export const LanguageArray = [
+    'English',
+    'Mongolian',
+    'Tibetan'
+  ];
+
+export const SET_LANG = 'SET_LANG';
+export const setLanguage = language => ({
+  type: SET_LANG,
+  language
+})
+
+export const SET_PAGE = 'SET_PAGE';
+export const setPage = page => ({
+    type: SET_PAGE,
+    page
+})
 /* ******************************************
 PAGES
 wp pages for content pages (about, preservation)
@@ -30,7 +47,7 @@ export function fetchPages(lang) {
                 response => response.json(),
                 error => console.log('An error ', error)    
             )
-            .then(json => 
+            .then(json =>
                 dispatch(receivePages(lang, json))
             )
     }

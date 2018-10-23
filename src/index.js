@@ -13,6 +13,9 @@ import rootReducer from './reducers';
 
 import Routes from './router';
 
+import './assets/css/main.css'
+import './assets/css/index.css'
+
 const loggerMiddleware = createLogger();
 
 const store = createStore(
@@ -27,9 +30,12 @@ store.dispatch(fetchPages('English'))
 store.dispatch(fetchPosts('English'))
 store.dispatch(fetchPages('Mongolian'))
 store.dispatch(fetchPosts('Mongolian'))
+store.dispatch(fetchPages('Tibetan'))
+store.dispatch(fetchPosts('Tibetan'))
     //.then(() => console.log(store.getState()));
 
 const App = () => {
+    document.body.classList.add('landing');
     return (
         <Provider store={store}>
             <Routes />

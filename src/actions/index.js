@@ -1,5 +1,8 @@
 import fetch from 'cross-fetch';
 
+const node = 'http://206.189.71.52/';
+const apiURL = 'wp-json/wp/v2/'
+
 export const LanguageArray = [
     'English',
     'Mongolian',
@@ -22,34 +25,41 @@ PAGES
 wp pages for content pages (about, preservation)
 ********************************************/
 export const REQUEST_PAGES = 'REQUEST_PAGES';
-function requestPages(lang) {
+function requestPages() {
     return {
-        type: REQUEST_PAGES,
-        lang
+        type: REQUEST_PAGES
     }
 }
 
 export const RECEIVE_PAGES = 'RECEIVE_PAGES';
-function receivePages(lang, json) {
+function receivePages(json) {
     return {
         type: RECEIVE_PAGES,
-        lang,
-        pages: json.filter(child => child.acf.language === lang), //.data.children.map(child => child.data),
+        pages: json, //.filter(child => child.acf.language === lang), //.data.children.map(child => child.data),
         receivedAt: Date.now()
     }
 }
 
-export function fetchPages(lang) {
+export function fetchPages() {
     return function(dispatch) {
-        dispatch(requestPages(lang))
-        return fetch(`http://206.189.71.52/wp-json/wp/v2/pages?_embed`)
+        dispatch(requestPages())
+        return fetch(`${node}${apiURL}pages?_embed`)
             .then(
                 response => response.json(),
                 error => console.log('An error ', error)    
             )
-            .then(json =>
-                dispatch(receivePages(lang, json))
-            )
+            .then(json => {
+                //reduce using empty array to group by language
+                return json.reduce((r, a) => {
+                    r[a.acf.language] = r[a.acf.language] || [];
+                    r[a.acf.language].push(a);
+                    return r;
+                }, []);
+            })
+            .then(json => { 
+                // do NOT receivePages until there are pages!
+                dispatch(receivePages(json)) 
+            })
     }
 }
 
@@ -58,33 +68,39 @@ POSTS
 wp posts for home page content
 ********************************************/
 export const REQUEST_POSTS = 'REQUEST_POSTS';
-function requestPosts(lang) {
+function requestPosts() {
     return {
-        type: REQUEST_POSTS,
-        lang
+        type: REQUEST_POSTS
     }
 }
 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
-function receivePosts(lang, json) {
+function receivePosts(json) {
     return {
         type: RECEIVE_POSTS,
-        lang,
-        posts: json.filter(child => child.acf.language === lang), //.data.children.map(child => child.data),
+        posts: json, //.filter(child => child.acf.language === lang), //.data.children.map(child => child.data),
         receivedAt: Date.now()
     }
 }
 
-export function fetchPosts(lang) {
+export function fetchPosts() {
     return function(dispatch) {
-        dispatch(requestPosts(lang))
-        return fetch(`http://206.189.71.52/wp-json/wp/v2/posts?_embed`)
+        dispatch(requestPosts())
+        return fetch(`${node}${apiURL}posts?_embed`)
             .then(
                 response => response.json(),
                 error => console.log('An error ', error)    
             )
+            .then(json => {
+                //reduce using empty array to group by language
+                return json.reduce((r, a) => {
+                    r[a.acf.language] = r[a.acf.language] || [];
+                    r[a.acf.language].push(a);
+                    return r;
+                }, []);
+            })
             .then(json => 
-                dispatch(receivePosts(lang, json))
+                dispatch(receivePosts(json))
             )
     }
 }

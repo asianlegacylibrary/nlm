@@ -53,6 +53,27 @@ function pagesByLanguage(state = {}, action) {
             return state;
     }
 }
+
+function pages(state = {}, action) {
+    switch(action.type) {
+        case RECEIVE_PAGES:
+        case REQUEST_PAGES:
+            return Object.assign({}, state, content(state, action))
+        default:
+            return state;
+    }
+}
+
+function posts(state = {}, action) {
+    switch(action.type) {
+        case RECEIVE_POSTS:
+        case REQUEST_POSTS:
+            return Object.assign({}, state, content(state, action))
+        default:
+            return state;
+    }
+}
+
 function postsByLanguage(state = {}, action) {
     switch(action.type) {
         case RECEIVE_POSTS:
@@ -66,7 +87,7 @@ function postsByLanguage(state = {}, action) {
 }
 
 
-const language = (state = LanguageArray[0], action) => {
+const selectedLanguage = (state = LanguageArray[0], action) => {
     switch (action.type) {
       case SET_LANG:
         return action.language
@@ -75,7 +96,7 @@ const language = (state = LanguageArray[0], action) => {
     }
 }
 
-const page = (state = 'home', action) => {
+const selectedPage = (state = 'home', action) => {
     switch (action.type) {
         case SET_PAGE:
             return action.page
@@ -85,8 +106,10 @@ const page = (state = 'home', action) => {
 }
 
 const rootReducer = combineReducers({
-    language,
-    page,
+    selectedLanguage,
+    selectedPage,
+    pages,
+    posts,
     pagesByLanguage,
     postsByLanguage
 });

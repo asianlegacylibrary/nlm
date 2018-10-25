@@ -3,24 +3,24 @@ import { connect } from 'react-redux'
 import NavItem from '../containers/NavItem'
 
 const NavBar = ({ navigation }) => {
-    console.log(navigation);
+    //console.log(navigation);
     const slugs = navigation.map(nav => {
         return (
-          <NavItem key={nav.slug} page={nav.match}>{nav.title}</NavItem>
+          <NavItem key={nav.slug} selectedPage={nav.match}>{nav.title}</NavItem>
         );
       });
     return (
-		<ul class="nav-list">
+		<ul className="nav-list">
 			{slugs}
 		</ul>
     );
 }
 
 const createNavigation = (pages) => {
-    return pages.items.map(c => {
+    return pages.map(c => {
         return {
           match: c.slug.substring(0,4),
-          title: c.title.rendered,
+          title: c.slug.substring(0,4) ==='home' ? 'Home' : c.title.rendered,
           slug: c.slug,
           order: c.menu_order
         }
@@ -28,7 +28,8 @@ const createNavigation = (pages) => {
 }
 
 const mapStateToProps = (state) => ({
-    navigation: createNavigation(state.pagesByLanguage[state.language])
+    //navigation: createNavigation(state.pagesByLanguage[state.selectedLanguage])
+    navigation: createNavigation(state.pages.items[state.selectedLanguage])
 })
 
 export default connect(mapStateToProps)(NavBar)

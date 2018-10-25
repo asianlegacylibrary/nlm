@@ -25,14 +25,9 @@ const store = createStore(
         loggerMiddleware
     )
 );
-
-store.dispatch(fetchPages('English'))
-store.dispatch(fetchPosts('English'))
-store.dispatch(fetchPages('Mongolian'))
-store.dispatch(fetchPosts('Mongolian'))
-store.dispatch(fetchPages('Tibetan'))
-store.dispatch(fetchPosts('Tibetan'))
-    //.then(() => console.log(store.getState()));
+store.dispatch(fetchPages())
+store.dispatch(fetchPosts())
+        //.then(() => console.log(store.getState()));
 
 const App = () => {
     document.body.classList.add('landing');

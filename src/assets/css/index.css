@@ -30,3 +30,15 @@ code {
 .nav, .nav-active {
   float: right;
 }
+
+body {
+  background: #efefef;
+}
+#banner {
+  background-size: cover;
+
+}
+#footer {
+  border-top: 1px solid #efefef;
+  background: #222; /*url("../images/bg.jpg")*/
+}

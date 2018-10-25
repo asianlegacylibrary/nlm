@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 const Languages = (props) => {
     const list = props.languages.map(l => {
         return (
-            <Language key={l} language={l}>{l}</Language>
+            <Language key={l} selectedLanguage={l}>{l}</Language>
         );
     });
     return (
@@ -14,7 +14,7 @@ const Languages = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    languages: Object.keys(state.pagesByLanguage)
+    languages: Object.keys(state.pages.items)
 });
 
 export default connect(mapStateToProps)(Languages)

@@ -2,115 +2,138 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { Header } from './Header';
-import NavBar from './Nav'
+import { Footer } from './Footer';
 
 class Page extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.setNumber = {
+      0: 'one',
+      1: 'one',
+      2: 'two',
+      3: 'three',
+      4: 'four'
+    }
+
+  }
+
+  resetPage = () => {
+    this.props.dispatch({ type: 'SET_PAGE', page: 'home' });
+  }
+
+  renderPage(selectedPage, pages) {
+    if (!pages.some(e => e.slug.substring(0,4) === selectedPage)) {
+      console.log('page not there');
+      this.resetPage();
+    }
+    return pages
+      .filter(page => page.slug.substring(0,4) === selectedPage)
+      .map(page => {
+        const mediaURL = page._embedded["wp:featuredmedia"][0].source_url
+      return (
+        <section 
+          id="banner" 
+          key={page.id}
+          style={{
+            backgroundImage: `url(${mediaURL}`
+          }}>
+          <header className="major">
+            <span className="icon fa-angellist style7"></span>
+            <h1>{page.acf.title}</h1>
+            <h3>{page.acf.subtitle}</h3>
+          </header>
+          <ul className="actions">
+            <li><a href="#1" className="button scrolly">Proceed</a></li>
+          </ul>
+        </section>   
+      )
+    })
+  }
+
+  renderPosts(selectedPage, posts) {
+    if(selectedPage === 'home') {
+      if(posts) {
+        //console.log(posts);
+      return posts.map((post, i) => {
+        let j = i % 2 === 0 ? 1 : 3;
+        //console.log('i IS ', i)
+        let mediaURL = ""
+        if(post._embedded["wp:featuredmedia"]) {
+          mediaURL = post._embedded["wp:featuredmedia"][0].source_url || ""
+        }
+        if(j === 3) {
+          return (
+            <section key={i} id={i} className={`wrapper special style${j}`}>
+				<div className="inner">
+            <section className="spotlights">
+            <section>
+            <h2>{post.acf.title}</h2>
+							<span className="image"><img src={mediaURL} alt="" /></span>
+						</section>
+						<section>
+							<p dangerouslySetInnerHTML={{__html: post.content.rendered}} />
+							<ul className="actions">
+								<li><a href={`#${i+1}`} className="button">{post.acf.subtitle}</a></li>
+							</ul>
+						</section>
+						
+					</section>
+          </div>
+			</section>
+          )
+        }
+          return (
+            <section key={i} id={i} className={`wrapper special style${j}`}>
+				<div className="inner">
+            <section className="spotlights">
+						<section>
+							<h2>{post.acf.title}</h2>
+							<p dangerouslySetInnerHTML={{__html: post.content.rendered}} />
+							<ul className="actions">
+								<li><a href={`#${i+1}`} className="button">{post.acf.subtitle}</a></li>
+							</ul>
+						</section>
+						<section>
+							<span className="image"><img src={mediaURL} alt="" /></span>
+              <h2>Lacus elementum</h2>	
+						</section>
+					</section>
+          </div>
+			</section>
+          )
+      })
+      }
+    }
+  }
+
   render() {
    
-    const page = this.props.pages.map(page => {
-      return (
-        <section id="banner" key={page.id}>
-            <header class="major">
-                <span class="icon fa-code style3"></span>
-                <h1>{page.title}</h1>
-                <p dangerouslySetInnerHTML={{__html: page.content}} />
-            </header>
-            <ul class="actions">
-                <li><a href="#1" class="button scrolly">Proceed</a></li>
-            </ul>
-        </section>
-        
-          
-        //   <img alt={page.title} src={page.img} />
-      );
-    });
-    
-    const posts = this.props.posts.map((post, i) => {
+    if(this.props.fetchingPages || this.props.fetchingPosts) {
         return (
-            <section id={i} class="wrapper style1 special">
-                <div class="inner">
-                    <header class="major alt style2">
-                        <h2>{post.title}</h2>
-                        <p>{post.subtitle}</p>
-                    </header>
-                    <section class="split">
-                        <article>
-                            <h4>Sed imperdiet</h4>
-                            <p dangerouslySetInnerHTML={{__html: post.content}} />
-                            <ul class="actions">
-                                <li><a href="#" class="button">Learn More</a></li>
-                            </ul>
-                        </article>
-                        <article>
-                            <h4>Magna Feugiat</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla imperdiet, lorem in pretium aliquet, lacus dui tristique lacus, vel convallis justo lectus in augue. Tempus pellentesque iaculis imperdiet et elementum.</p>
-                            <ul class="actions">
-                                <li><a href="#" class="button">Learn More</a></li>
-                            </ul>
-                        </article>
-                    </section>
-                </div>
-            </section>
-        //   <img alt={post.title} src={post.img} />
-      );
-    });
-    
-
+          <div>LOADING</div>
+        );
+    }
     return (
-        
       <div className="container">
         <Header />
-        <div>{page}</div>
-        <div className="content">{posts}</div>
+        {this.renderPage(this.props.selectedPage, this.props.pages)}
+        {this.renderPosts(this.props.selectedPage, this.props.posts)}
+        <Footer />
       </div>
     );
   }
 
 }
 
-const processPosts = (posts) => {
-  return posts.items.map(c => {
-    return {
-      id: c.id,
-      title: c.acf.title,
-      subtitle: c.acf.subtitle,
-      content: c.content.rendered,
-      img: c._embedded["wp:featuredmedia"][0].source_url
-    }
-  });
-}
-
-const processPages = (pages, currentPage) => {
-  return pages.items
-    .filter(h => h.slug.substring(0,4) === currentPage)
-    .map(h => {
-      return {
-        id: h.id,
-        title: h.acf.title,
-        subtitle: h.acf.subtitle,
-        content: h.content.rendered,
-        img: h._embedded["wp:featuredmedia"][0].source_url
-      }
-    }); 
-}
-
-const mapStateToProps = state => {
-  //console.log('STATE ', state);
-  if(state.page === 'home') {
-      console.log('we home');
-      return {
-        pages: processPages(state.pagesByLanguage[state.language], state.page),
-        posts: processPosts(state.postsByLanguage[state.language])
-      }
-  }
-  return {
-    pages: processPages(state.pagesByLanguage[state.language], state.page),
-    posts: []
-  }
-}
+const mapStateToProps = state => ({
+  fetchingPages: state.pages.isFetching,
+  fetchingPosts: state.posts.isFetching,
+  selectedLanguage: state.selectedLanguage,
+  selectedPage: state.selectedPage,
+  pages: state.pages.isFetching ? [] : state.pages.items[state.selectedLanguage],
+  posts: state.posts.isFetching ? [] : state.posts.items[state.selectedLanguage]
+});
 
 export default connect(mapStateToProps)(Page);
-
-//export default Home;
-

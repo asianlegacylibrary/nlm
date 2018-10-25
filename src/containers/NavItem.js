@@ -26,11 +26,11 @@ NavItem.propTypes = {
 
 
 const mapStateToProps = (state, ownProps) => ({
-  active: ownProps.page === state.page
+  active: ownProps.selectedPage === state.selectedPage
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onClick: () => dispatch(setPage(ownProps.page)) 
+    onClick: () => dispatch(setPage(ownProps.selectedPage)) 
   });
 
 export default connect(

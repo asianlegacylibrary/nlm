@@ -26,11 +26,11 @@ Language.propTypes = {
 
 
 const mapStateToProps = (state, ownProps) => ({
-  active: ownProps.language === state.language
+  active: ownProps.selectedLanguage === state.selectedLanguage
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onClick: () => dispatch(setLanguage(ownProps.language)) 
+  onClick: () => dispatch(setLanguage(ownProps.selectedLanguage)) 
 });
 
 export default connect(

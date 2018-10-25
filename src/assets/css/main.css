@@ -1410,7 +1410,7 @@
 	body {
 		background-attachment: fixed, fixed;
 		/* background-image: url("images/angular-lines-up.svg"), url("../images/bg.jpg"); */
-		background-image: url("images/angular-lines-up.svg"), url("../images/bg.jpg");
+		/* background-image: url("../images/bg.jpg"); */
 		background-position: center -315px, center top;
 		background-repeat: no-repeat;
 		background-size: auto, cover;
@@ -1419,7 +1419,7 @@
 		body.landing {
 			background-attachment: scroll, scroll, fixed;
 			/* background-image: url("images/angular-lines-up.svg"), url("images/angular-lines-down.svg"), url("../images/bg.jpg"); */
-			background-image: url("images/angular-lines-up.svg"), url("../images/bg.jpg");
+			/* background-image: url("../images/bg.jpg"); */
 			background-position: center top, center bottom, center top;
 			background-size: auto, auto, cover;
 		}

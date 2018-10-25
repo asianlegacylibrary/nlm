@@ -30,9 +30,10 @@ class Page extends Component {
     }
     return pages
       .filter(page => page.slug.substring(0,4) === selectedPage)
-      .map(page => {
+      .map((page, i) => {
         const mediaURL = page._embedded["wp:featuredmedia"][0].source_url
       return (
+        <div>
         <section 
           id="banner" 
           key={page.id}
@@ -47,7 +48,21 @@ class Page extends Component {
           <ul className="actions">
             <li><a href="#1" className="button scrolly">Proceed</a></li>
           </ul>
-        </section>   
+        </section>
+        {selectedPage === 'home' ? null : 
+        <section key={i} id={i} className={`wrapper special style1`}>
+				<div className="inner-page">
+            <section className="spotlights">
+							<p dangerouslySetInnerHTML={{__html: page.content.rendered}} />
+							<ul className="actions">
+								<li><a href={`#${i+1}`} className="button">{page.acf.subtitle}</a></li>
+							</ul>
+						</section>
+        
+        </div>
+        </section>
+        }
+        </div>
       )
     })
   }

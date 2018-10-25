@@ -42,3 +42,12 @@ body {
   border-top: 1px solid #efefef;
   background: #222; /*url("../images/bg.jpg")*/
 }
+
+.wrapper > .inner-page {
+  margin: 0 auto;
+  padding-bottom: 0.01em;
+  padding: 10%;
+  font-size: 1.4em;
+  width: 100%;
+  max-width: 58.5em;
+}

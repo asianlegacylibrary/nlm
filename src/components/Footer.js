@@ -3,6 +3,11 @@ import React from 'react'
 export const Footer = () => {
     return (
         <footer id="footer">
+            <div className="icon">
+              <img 
+                src="http://206.189.71.52/wp-content/uploads/2018/10/nlm-logo-no-text.png" 
+                alt="mongolia-logo" />
+            </div>
             <ul className="alt-icons">
                 <li><a href="#1" className="icon fa-twitter"><span className="label">Twitter</span></a></li>
                 <li><a href="#1" className="icon fa-facebook"><span className="label">Facebook</span></a></li>

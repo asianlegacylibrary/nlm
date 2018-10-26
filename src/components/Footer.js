@@ -17,7 +17,7 @@ export const Footer = () => {
                 <li><a href="#1">Contact Us</a></li>
             </ul>
             <p className="copyright">
-                &copy; Untitled Corp. All rights reserved. ACIP.
+                &copy; Untitled Corp. YO. All rights reserved. ACIP.
             </p>
         </footer>
     )

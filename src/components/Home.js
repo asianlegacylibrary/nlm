@@ -6,6 +6,8 @@ import NavBar from './Nav'
 
 class Page extends Component {
 
+
+  
   render() {
    
     const homepage = this.props.homepage.map(page => {

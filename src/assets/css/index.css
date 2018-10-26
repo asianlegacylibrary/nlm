@@ -30,6 +30,33 @@ code {
 .nav, .nav-active {
   float: right;
 }
+.btn-nav, .btn-lang {
+  /* background-color: rgba(72, 68, 89, 0.2); */
+  color: #222;
+  text-decoration: none;
+  border: none;
+  padding: 0 1em;
+  height: 2em;
+  line-height: 2em;
+  outline: none
+}
+.btn-nav a, .btn-lang a {
+  text-decoration: none;
+  color: #222;
+  outline: none;
+}
+.btn-nav:hover, .btn-nav a:hover, 
+.btn-nav:active, .btn-nav a:active,
+.btn-nav:focus, .btn-nav a:focus,
+.nav-active.btn-nav, .nav-active.btn-nav a,
+.btn-lang:hover, .btn-lang a:hover,
+.btn-lang:active, .btn-lang a:active
+.btn-lang:focus, .btn-lang a:focus
+.lang-active.btn-nav, .lang-active.btn-nav a {
+  /* background-color: rgba(72, 68, 89, 0.5); */
+  outline: none;
+  color: #7c759a;
+}
 
 body {
   background: #efefef;

@@ -13,7 +13,11 @@ const Language = ({ active, children, onClick }) => (
         { color: 'black', } 
         }
     >
+     <button
+      key={children}
+      className="btn-lang">
       {children}
+    </button>
     </li>
 )
 

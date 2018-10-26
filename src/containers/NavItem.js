@@ -13,7 +13,11 @@ const NavItem = ({ active, children, onClick }) => (
         { color: 'black', } 
         }
     >
+    <button
+      key={children}
+      className="btn-nav">
       {children}
+    </button>
     </li>
 )
 

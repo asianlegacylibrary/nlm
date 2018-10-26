@@ -34,12 +34,13 @@ class Page extends Component {
       .map((page, i) => {
         const mediaURL = page._embedded["wp:featuredmedia"][0].source_url
       return (
-        <div>
+        <div key={i}>
         <section 
           id="banner" 
           key={page.id}
           style={{
-            backgroundImage: `url(${mediaURL}`
+            backgroundImage: `linear-gradient(to bottom, rgba(255,255,255,0.2) 0%,rgba(255,255,255,1.0) 100%), url(${mediaURL})`
+            //backgroundImage: `url(${mediaURL}`
           }}>
           <header className="major">
             <span className="icon fa-angellist style7"></span>

@@ -1,12 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import NavItem from '../containers/NavItem'
 
 const NavBar = ({ navigation }) => {
     //console.log(navigation);
     const slugs = navigation.map(nav => {
         return (
-          <NavItem key={nav.slug} selectedPage={nav.match}>{nav.title}</NavItem>
+          <NavItem key={nav.slug} selectedPage={nav.match}><Link to={nav.slug}>{nav.title}</Link></NavItem>
         );
       });
     return (

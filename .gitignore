@@ -6,8 +6,8 @@
 # testing
 /coverage
 
-# production
-/build
+# production, keeping build in repo for webhook to DO
+#/build
 
 # misc
 .DS_Store

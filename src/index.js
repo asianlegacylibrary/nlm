@@ -1,17 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './assets/css/index.css';
-//import App from './App';
+
 import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import { Provider } from 'react-redux';
-import thunkMiddleware from 'redux-thunk';
+import thunkMiddleware from 'redux-thunk'
 
-import { fetchPages, fetchPosts } from './actions';
-import rootReducer from './reducers';
+import { fetchPages, fetchPosts, fetchData } from './actions'
+import rootReducer from './reducers'
 
-import Routes from './router';
+import Routes from './router'
+
+import { checkConnection } from './server/connection'
 
 import './assets/css/main.css'
 import './assets/css/index.css'
@@ -28,6 +29,9 @@ const store = createStore(
 store.dispatch(fetchPages())
 store.dispatch(fetchPosts())
         //.then(() => console.log(store.getState()));
+store.dispatch(fetchData())
+
+checkConnection()
 
 const App = () => {
     document.body.classList.add('landing');

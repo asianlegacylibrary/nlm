@@ -6,7 +6,12 @@ import {
     RECEIVE_POSTS,
     SET_LANG,
     SET_PAGE,
-    LanguageArray
+    LanguageArray,
+    RECEIVE_DATA,
+    REQUEST_DATA,
+    RECEIVE_ID,
+    REQUEST_ID,
+    DETAIL_MODAL
 } from '../actions';
 
 function content(
@@ -37,6 +42,31 @@ function content(
                 items: action.posts,
                 lastUpdated: action.receivedAt
             })
+        case REQUEST_DATA:
+            return Object.assign({}, state, {
+                isFetching: true
+            })
+        case RECEIVE_DATA:
+            return Object.assign({}, state, {
+                isFetching: false,
+                items: action.data,
+                lastUpdated: action.receivedAt
+            })
+        case REQUEST_ID:
+            return Object.assign({}, state, {
+                isFetching: true
+            })
+        case RECEIVE_ID:
+            return Object.assign({}, state, {
+                isFetching: false,
+                item: action.data,
+                lastUpdated: action.receivedAt
+            })
+        case DETAIL_MODAL:
+            return Object.assign({}, state, {
+                modalID: action.modalID,
+                show: action.show
+            })
         default:
             return state;
     }
@@ -58,6 +88,26 @@ function pages(state = {}, action) {
     switch(action.type) {
         case RECEIVE_PAGES:
         case REQUEST_PAGES:
+            return Object.assign({}, state, content(state, action))
+        default:
+            return state;
+    }
+}
+
+function data(state = {}, action) {
+    switch(action.type) {
+        case RECEIVE_DATA:
+        case REQUEST_DATA:
+            return Object.assign({}, state, content(state, action))
+        default:
+            return state;
+    }
+}
+
+function detailData(state = {}, action) {
+    switch(action.type) {
+        case RECEIVE_ID:
+        case REQUEST_ID:
             return Object.assign({}, state, content(state, action))
         default:
             return state;
@@ -96,6 +146,15 @@ const selectedLanguage = (state = LanguageArray[0], action) => {
     }
 }
 
+function detailModal(state = { modalID: 0 }, action) {
+    switch(action.type) {
+        case DETAIL_MODAL:
+            return Object.assign({}, state, content(state, action))
+        default:
+            return state;
+    }
+}
+
 const selectedPage = (state = 'home', action) => {
     switch (action.type) {
         case SET_PAGE:
@@ -110,6 +169,9 @@ const rootReducer = combineReducers({
     selectedPage,
     pages,
     posts,
+    data,
+    detailData,
+    detailModal,
     pagesByLanguage,
     postsByLanguage
 });

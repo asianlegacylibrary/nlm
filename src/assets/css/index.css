@@ -169,7 +169,10 @@ section.special, article.special, header.special {
     color: #484459;
     word-break: break-all;
     width: 80%;
+    max-height: 80%;
     height: auto;
+    overflow: scroll;
+
     /* top: 40%; */
     top: calc(-50vh + 60%);
     /* bottom: calc(-50vh + 60%) */
@@ -189,4 +192,23 @@ section.special, article.special, header.special {
   font-style: italic;
   font-size: 0.8em;
   margin: 0 0 0.5em 0;
+}
+
+.modal-title {
+  font-size: 1.3em;
+
+}
+.meta-italics {
+  font-style: italic;
+}
+.modal-text {
+  margin: 0 0 0.5em 0;
+}
+
+.meta-catalog {
+  font-size: 1.3em;
+  word-break: normal;
+}
+.meta-title {
+  font-weight: bold;
 }

@@ -1,5 +1,43 @@
 import React from 'react'
 
+const unpackNames = (arr, type) => {
+    console.log('names ', typeof(arr['rdfs:label']), arr['rdfs:label'])
+    if(Array.isArray(arr['rdfs:label'])) {
+        console.log('WTF i array', arr['rdfs:label'])
+        const a = arr['rdfs:label'].map(l => {
+            console.log('mapping', l)
+            return (
+                <p className="modal-text">
+                    <span className="meta-italics">({l['@language']}): </span>
+                    <span className="meta-title">{l['@value']}</span>
+                </p>
+            )})
+            return (
+                <div className="modal-text">
+                    <span className="meta-detail">{type.split("Person")[1]}: </span>
+                    {a}
+                </div>
+            )
+    } else {
+        return (
+            <p className="modal-text">
+                <span className="meta-detail">{type.split("Person")[1]}: </span>
+                <span className="meta-italics">({arr['rdfs:label']['@language']}): </span>
+                <span className="meta-title">{arr['rdfs:label']['@value']}</span>
+            </p>
+        )
+    }
+
+    // return (
+    //     <p className="modal-text">
+    //         <span className="meta-detail">{arr.type.split("Person")[1]}: </span>
+    //         <span className="meta-italics">({arr['rdfs:label']['@language']}): </span>
+    //         <span className="meta-title">{arr['rdfs:label']['@value']}</span>
+    //     </p>
+       
+    // )
+}
+
 const unpack = (arr) => {
     if(arr === null) {
         return null
@@ -21,9 +59,18 @@ const unpack = (arr) => {
         })
     } else if (typeof arr === 'object') {
         // re-factor to allow for retreival of '@value' from any key
-        return (
-            arr['@value']
-        )
+        if(arr.hasOwnProperty('type')) { 
+            return unpackNames(arr, arr.type) 
+        } else {
+            return (
+                <p key={arr['@value']} className="modal-text">
+                    <span className="meta-italics">({arr['@language']}): </span>
+                    <span className="meta-title">{arr['@value']}</span>
+                </p>
+               
+            )
+        }
+        
     } else if (typeof arr === 'string') {
         if(arr.substring(0,3) === 'bdr') {
             return ( <a onClick={() => this.showModal(arr.split(":")[1])} href={arr}>{arr}</a> )
@@ -39,29 +86,60 @@ const parseType = (source) => {
     let { 
         'skos:prefLabel': label,
         '@id': id,
-        type
+        type,
+        'workCatalogInfo': catalogInfo,
+        personName,
+        note
     } = source
 
-    return (
-        <div className="detail-data">
-            <p className="meta-detail">
-                <span>Detail for record {id}, </span>
-                <span> {type}</span>
-            </p>
-            <h2>{ unpack(label) }</h2>
-            
-        </div>
-    )
+    // set undefined to null for pre-render check
+    note !== undefined ? note = note.noteText : note = null
 
-    // switch(type) {
-    //     case 'Person':   
-    //     case 'Topic':
-    //     case 'Work':
-    //     default:
-    //         return null
-    // }
+    switch(type) {
+        case 'Person':  
+            return (
+                <div className="detail-data">
+                    <p className="meta-detail">
+                        <span>Detail for record {id}, </span>
+                        <span> {type}</span>
+                    </p>
+                    <div className="modal-title">{ unpack(label) }</div>
+                    <div className="">
+                        <span className="lead-item">Name(s): </span>
+                        <span className="meta-catalog">{ unpack(personName) }</span>
+                    </div>
+                </div>
+            )
+        case 'Topic':
+            return (
+                <div className="detail-data">
+                    <p className="meta-detail">
+                        <span>Detail for record {id}, </span>
+                        <span> {type}</span>
+                    </p>
+                    <div className="modal-title">{ unpack(label) }</div>
+                    {note === null ? null : (
+                        <div className="meta-catalog">Note: { note !== null ? unpack(note) : null }</div>
+                    )}
+                    
+                </div>
+            )
+        case 'Work':
+            return (
+                <div className="detail-data">
+                    <p className="meta-detail">
+                        <span>Detail for record {id}, </span>
+                        <span> {type}</span>
+                    </p>
+                    <div className="modal-title">{ unpack(label) }</div>
+                    <div className="meta-catalog">{ unpack(catalogInfo) }</div>
+                </div>
+            )
+        default:
+            return null
+    }
 }
-// { handleClose, show, doc_id, children }
+
 const Modal = ({ workDetail, hideModal, doc_id, show }) => {
     console.log('props from MODAL', workDetail)
     

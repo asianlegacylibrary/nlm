@@ -16,6 +16,7 @@ creatorMainAuthor
 workCreator
 workGenre
 workIsAbout (can be an array)
+workHasPart (usually array)
 
 // For any of these, check the @language
 // TIBETAN bo-x-ewts
@@ -48,7 +49,9 @@ class Archives extends Component {
             return null
         } else if(Array.isArray(arr)) {
             return arr.map((a, i) => {
-                if(a.substring(0,3) === 'bdr') {
+                if(typeof a === 'object') {
+                    return this.unpack(a)
+                } else if(a.substring(0,3) === 'bdr') {
                     return (
                         <div key={i} className="card-sub-item">
                             {/* <a onClick={() => this.handleClick(a.split(":")[1])} href={a}>{a}</a> */}
@@ -62,14 +65,15 @@ class Archives extends Component {
             })
         } else if (typeof arr === 'object') {
             // re-factor to allow for retreival of '@value' from any key
-            return (
-                arr['rdfs:label']['@value']
-            )
+            //console.log('rdfs ', arr);
+            return ( <span key={arr['rdfs:label']['@value']}>{arr['rdfs:label']['@value']}</span> )
         } else if (typeof arr === 'string') {
             if(arr.substring(0,3) === 'bdr') {
                 return ( <a onClick={() => this.showModal(arr.split(":")[1])} href={arr}>{arr}</a> )
             } else {
-                return arr
+                return (
+                    <span>{arr}</span>
+                )
             }
             
         }
@@ -87,7 +91,8 @@ class Archives extends Component {
                 'workCreator': creator,
                 'workGenre': genre,
                 'workIsAbout': topic,
-                'workTitle': title
+                'workTitle': title,
+                'workHasPart': parts 
             } = work._source
 
             
@@ -95,9 +100,10 @@ class Archives extends Component {
             return (
                 
                 <div key={id} className="card">
+
                     <div className="card-item">
                         <span className="item-lead">Title:</span>
-                        <span> { this.unpack(title[0]) }</span>
+                        <span> { this.unpack(title) }</span>
                     </div>
                     <div className="card-item">
                         <span className="item-lead">Author:</span> 
@@ -116,9 +122,18 @@ class Archives extends Component {
                         <span> { this.unpack(topic) }</span>
                     </div>
                     <div className="card-item">
+                        <span className="item-lead">Part(s):</span> 
+                        <span> { this.unpack(parts) }</span>
+                    </div>
+                    <div className="card-item">
                         <span className="item-lead">Work:</span>
                         <span> { this.unpack(label['@value']) }</span>
                     </div>
+
+                    <button onClick={() => this.showModal(id.split(":")[1])}>
+                        More details...
+                    </button>
+
                 </div>
             )
         })

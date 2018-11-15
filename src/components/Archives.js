@@ -44,8 +44,35 @@ class Archives extends Component {
         this.props.dispatch({ type: 'DETAIL_MODAL', show: false})
     }
 
+    unpackFrontend = (code, o) => {
+        if(code === 'P') {
+            let p = null
+            if(Array.isArray(o.data.personName)) {
+                p = o.data.personName.find(p => p.type === 'PersonPrimaryName');
+                p = p['rdfs:label']['@value']
+            }
+            //console.log('unpacking person', p)
+            return p
+        } else if(code === 'T') {
+            let g = null
+            if(Array.isArray(o.data['skos:prefLabel'])) {
+                g = o.data['skos:prefLabel'].find(g => g['@language'] === 'en')
+                g == null ? g = o.data['skos:prefLabel'].find(g => g['@language'] === 'bo-x-ewts') : g = g  
+                g = g['@value']  
+            } else if(typeof o.data['skos:prefLabel'] === 'object') {
+                g = o.data['skos:prefLabel']['@value']
+            }
+            //console.log('unpacking topic', g)
+            return g
+        } else if(code === 'W') {
+            console.log('I ended up in W', o)
+        } else {
+            return null
+        }
+    }
+
     unpack = (arr) => {
-        if(arr === null) {
+        if(arr === null || arr === undefined) {
             return null
         } else if(Array.isArray(arr)) {
             return arr.map((a, i) => {
@@ -64,30 +91,39 @@ class Archives extends Component {
                 
             })
         } else if (typeof arr === 'object') {
-            // re-factor to allow for retreival of '@value' from any key
-            //console.log('rdfs ', arr);
-            return ( <span key={arr['rdfs:label']['@value']}>{arr['rdfs:label']['@value']}</span> )
+                if('key' in arr) {
+                    
+                    if(arr.data.hasOwnProperty('@id')) {
+                        return arr.data['@id']
+                    } 
+                    else {
+                        return this.unpackFrontend(arr.code, arr)
+                    }        
+                } else if(arr.hasOwnProperty('@value')) {
+                    return arr['@value']
+                } else {
+                    return ( <span key={arr['rdfs:label']['@value']}>{arr['rdfs:label']['@value']}</span> )
+                }
+                
         } else if (typeof arr === 'string') {
-            if(arr.substring(0,3) === 'bdr') {
-                return ( <a onClick={() => this.showModal(arr.split(":")[1])} href={arr}>{arr}</a> )
-            } else {
-                return (
-                    <span>{arr}</span>
-                )
-            }
-            
+                if(arr.substring(0,3) === 'bdr') {
+                    return ( <a onClick={() => this.showModal(arr.split(":")[1])} href={arr}>{arr}</a> )
+        } else {
+            return (
+                <span>{arr}</span>
+            )
         }
-        
     }
+}
 
     render() {
         
-        const items = this.props.works.map(work => {
+        const items = this.props.works.map((work, i) => {
 
             const { 
                 'skos:prefLabel': label,
                 '@id': id,
-                'creatorMainAuthor': author,
+                // 'creatorMainAuthor': author,
                 'workCreator': creator,
                 'workGenre': genre,
                 'workIsAbout': topic,
@@ -95,42 +131,42 @@ class Archives extends Component {
                 'workHasPart': parts 
             } = work._source
 
-            
+            const author = work._source.creatorMainAuthor !== undefined ? work._source.creatorMainAuthor : null 
+            const authorCode = author !== null ? author.item : null
+            console.log('AUTHOR', author)
+
             // CARD
             return (
                 
-                <div key={id} className="card">
-
+                <div key={i} className="card">
                     <div className="card-item">
+                        <span className="item-work"> 
+                            { this.unpack(label) }
+                        </span>
+                    </div>
+
+                    {/* <div className="card-item">
                         <span className="item-lead">Title:</span>
                         <span> { this.unpack(title) }</span>
+                    </div> */}
+
+                    <div className="card-item">
+                        <span className="item-lead">Author: </span> 
+                        <span className="item-btn" onClick={() => this.showModal(authorCode)} href={authorCode}>
+                                { this.unpack(author) }
+                        </span>
                     </div>
                     <div className="card-item">
-                        <span className="item-lead">Author:</span> 
-                        <span> { this.unpack(author) }</span>
-                    </div>
-                    <div className="card-item">
-                        <span className="item-lead">Creator:</span> 
-                        <span> { this.unpack(creator) }</span>
-                    </div>
-                    <div className="card-item">
-                        <span className="item-lead">Genre(s):</span> 
+                        <span className="item-lead">Genre:</span> 
                         <span> { this.unpack(genre) }</span>
                     </div>
                     <div className="card-item">
-                        <span className="item-lead">Topic(s):</span> 
+                        <span className="item-lead">Topic:</span> 
                         <span> { this.unpack(topic) }</span>
                     </div>
-                    <div className="card-item">
-                        <span className="item-lead">Part(s):</span> 
-                        <span> { this.unpack(parts) }</span>
-                    </div>
-                    <div className="card-item">
-                        <span className="item-lead">Work:</span>
-                        <span> { this.unpack(label['@value']) }</span>
-                    </div>
+                    
 
-                    <button onClick={() => this.showModal(id.split(":")[1])}>
+                    <button onClick={() => this.showModal(id.item)}>
                         More details...
                     </button>
 
@@ -142,6 +178,7 @@ class Archives extends Component {
             <div className="grid">
                 {items}
                 <Modal 
+                    key={this.props.doc_id}
                     hideModal={this.hideModal} 
                     doc_id={this.props.doc_id} 
                     show={this.props.showModal} 

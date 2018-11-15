@@ -1,5 +1,5 @@
 import { client, log } from './connection';
-const index = 'bdrc_work';
+const initialIndex = 'frontend';
 const type = ''; // 'data'
 const size = 10;
 
@@ -16,7 +16,7 @@ const initialSearch = (ids) => {
         }
 	};
 	log('initial search body', body);
-	return client.search({index, type, body});
+	return client.search({index: initialIndex, type, body});
 };
 
 const searchID = (id) => {
@@ -32,7 +32,7 @@ const searchID = (id) => {
         }
 	};
 	log('initial search body', body);
-	return client.search({index: 'bdrc_*', type, body});
+	return client.search({index: ['bdrc_work', 'bdrc_topic', 'bdrc_person'], type, body});
 };
 
 const textOnlyTerm = (term, catref, filterClause) => {
@@ -77,7 +77,7 @@ const textOnlyTerm = (term, catref, filterClause) => {
 	//console.log('the body of phrase match ', body);
 	//const b = client.search({index, type, body});
 	//log('logging client.search pre return ', b);
-	return client.search({index, type, body});
+	return client.search({initialIndex, type, body});
 };
 
 

@@ -57,7 +57,7 @@ class Archives extends Component {
             let g = null
             if(Array.isArray(o.data['skos:prefLabel'])) {
                 g = o.data['skos:prefLabel'].find(g => g['@language'] === 'en')
-                g == null ? g = o.data['skos:prefLabel'].find(g => g['@language'] === 'bo-x-ewts') : g = g  
+                g = g == null ? g = o.data['skos:prefLabel'].find(g => g['@language'] === 'bo-x-ewts') : g  
                 g = g['@value']  
             } else if(typeof o.data['skos:prefLabel'] === 'object') {
                 g = o.data['skos:prefLabel']['@value']
@@ -124,16 +124,16 @@ class Archives extends Component {
                 'skos:prefLabel': label,
                 '@id': id,
                 // 'creatorMainAuthor': author,
-                'workCreator': creator,
+                //'workCreator': creator,
                 'workGenre': genre,
                 'workIsAbout': topic,
-                'workTitle': title,
-                'workHasPart': parts 
+                //'workTitle': title,
+                //'workHasPart': parts 
             } = work._source
 
             const author = work._source.creatorMainAuthor !== undefined ? work._source.creatorMainAuthor : null 
             const authorCode = author !== null ? author.item : null
-            console.log('AUTHOR', author)
+            //console.log('AUTHOR', author)
 
             // CARD
             return (
@@ -198,89 +198,3 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps)(Archives)
-
-
-// const Archives = ({ works }) => {
-//     const items = works.map(work => {
-//         const { 
-//             'skos:prefLabel': label,
-//             '@id': id,
-//             'creatorMainAuthor': author,
-//             'workCreator': creator,
-//             'workGenre': genre,
-//             'workIsAbout': topic,
-//             'workTitle': title
-//         } = work._source
-
-        
-//         // CARD
-//         return (
-//             <div key={id} className="card">
-//                 <div className="card-item">
-//                     <span className="item-lead">Title:</span>
-//                     <span> { unpack(title[0]) }</span>
-//                 </div>
-//                 <div className="card-item">
-//                     <span className="item-lead">Author:</span> 
-//                     <span> { unpack(author) }</span>
-//                 </div>
-//                 <div className="card-item">
-//                     <span className="item-lead">Creator:</span> 
-//                     <span> {unpack(creator) }</span>
-//                 </div>
-//                 <div className="card-item">
-//                     <span className="item-lead">Genre(s):</span> 
-//                     <span> {unpack(genre) }</span>
-//                 </div>
-//                 <div className="card-item">
-//                     <span className="item-lead">Topic(s):</span> 
-//                     <span> { unpack(topic) }</span>
-//                 </div>
-//                 <div className="card-item">
-//                     <span className="item-lead">Work:</span>
-//                     <span> { unpack(label['@value']) }</span>
-//                 </div>
-//             </div>
-//         )
-//     })
-//     // GRID
-//     return (
-//         <div className="grid">{items}</div>
-//     )
-// }
-
-// const handleClick = ({ dispatch }, doc_id) => {
-//     console.log('clicked!', doc_id)
-//     dispatch({ type: 'DETAIL_MODAL' })
-// }
-// const unpack = (arr) => {
-//     if(arr === null) {
-//         return null
-//     } else if(Array.isArray(arr)) {
-//         return arr.map((a, i) => {
-//             if(a.substring(0,3) === 'bdr') {
-//                 return (
-//                     <div key={i} className="card-sub-item">
-//                         <a onClick={() => handleClick(a.split(":")[1])} href={a}>{a}</a>
-//                     </div> 
-//                 )
-//             } else {
-//                 return ( <div key={i} className="card-sub-item">{a}</div>)
-//             }
-            
-//         })
-//     } else if (typeof arr === 'object') {
-//         // re-factor to allow for retreival of '@value' from any key
-//         return (
-//             arr['rdfs:label']['@value']
-//         )
-//     } else if (typeof arr === 'string') {
-//         if(arr.substring(0,3) === 'bdr') {
-//             return ( <a onClick={() => handleClick(arr.split(":")[1])} href={arr}>{arr}</a> )
-//         } else {
-//             return arr
-//         }
-        
-//     }
-    
-// }

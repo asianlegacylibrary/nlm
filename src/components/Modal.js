@@ -1,11 +1,11 @@
 import React from 'react'
 
 const unpackNames = (arr, type) => {
-    console.log('names ', typeof(arr['rdfs:label']), arr['rdfs:label'])
+    //console.log('names ', typeof(arr['rdfs:label']), arr['rdfs:label'])
     if(Array.isArray(arr['rdfs:label'])) {
-        console.log('WTF i array', arr['rdfs:label'])
+        //console.log('WTF i array', arr['rdfs:label'])
         const a = arr['rdfs:label'].map(l => {
-            console.log('mapping', l)
+            //console.log('mapping', l)
             return (
                 <p className="modal-text">
                     <span className="meta-italics">({l['@language']}): </span>
@@ -82,7 +82,7 @@ const unpack = (arr) => {
     
 }
 
-const parseType = (source) => {
+const parseType = (source, hideModal) => {
     let { 
         'skos:prefLabel': label,
         '@id': id,
@@ -108,6 +108,7 @@ const parseType = (source) => {
                         <span className="lead-item">Name(s): </span>
                         <span className="meta-catalog">{ unpack(personName) }</span>
                     </div>
+                    <button onClick={hideModal}>Close</button>
                 </div>
             )
         case 'Topic':
@@ -121,7 +122,7 @@ const parseType = (source) => {
                     {note === null ? null : (
                         <div className="meta-catalog">Note: { note !== null ? unpack(note) : null }</div>
                     )}
-                    
+                    <button onClick={hideModal}>Close</button>
                 </div>
             )
         case 'Work':
@@ -133,6 +134,7 @@ const parseType = (source) => {
                     </p>
                     <div className="modal-title">{ unpack(label) }</div>
                     <div className="meta-catalog">{ unpack(catalogInfo) }</div>
+                    <button onClick={hideModal}>Close</button>
                 </div>
             )
         default:
@@ -141,23 +143,25 @@ const parseType = (source) => {
 }
 
 const Modal = ({ workDetail, hideModal, doc_id, show }) => {
-    console.log('props from MODAL', workDetail)
+    //console.log('props from MODAL', workDetail)
     
     const showHideClassName = show ? 'modal display-block' : 'modal display-none';
     let data
     
     if(Object.keys(workDetail).length > 0) {
-        data = parseType(workDetail._source)
+        data = parseType(workDetail._source, hideModal)
     } else {
         data = <div>LOADING {doc_id}</div>
     }
     
     return (
         
-        <div className={showHideClassName}>
+        <div 
+            className={showHideClassName}
+            onClick={hideModal}
+        >
             <section className='modal-main'>
                 {data}
-                <button onClick={hideModal}>Close</button>
             </section>
         </div>
     )

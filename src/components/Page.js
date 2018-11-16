@@ -55,9 +55,9 @@ class Page extends Component {
               <h1>{page.acf.title}</h1>
               <h3>{page.acf.subtitle}</h3>
             </header>
-            <ul className="actions">
+            {/* <ul className="actions">
               <li><a href="#1" className="button scrolly">Proceed</a></li>
-            </ul>
+            </ul> */}
           </section>
           {selectedPage === 'home' ? null : 
           <section className={`wrapper special style1`}>

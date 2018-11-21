@@ -195,6 +195,30 @@ section.special, article.special, header.special {
 .yo {
   color: 'red'
 }
+
+.grid {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-flow: row wrap;
+  align-content: flex-end; /*flex-start, space-between, space-around, stretch */
+}
+.card {
+  border: 1px solid #222;
+  align-content: flex-start;
+  padding: 10px;
+  margin: 1%;
+  min-width: 22%;
+  width: 22%;
+  height: 100%;
+}
+
+.modal-main {
+  padding: 2%;
+}
+
 /* MEDIA QUERIES
 breakpoints: 1680, 1280, 980, 736, 480
 */

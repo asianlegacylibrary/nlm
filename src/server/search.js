@@ -32,7 +32,7 @@ const searchID = (id) => {
         }
 	};
 	log('initial search body', body);
-	return client.search({index: ['bdrc_work', 'bdrc_topic', 'bdrc_person'], type, body});
+	return client.search({index: ['bdrc_work', 'bdrc_topic', 'bdrc_person', 'bdrc_item'], type, body});
 };
 
 const textOnlyTerm = (term, catref, filterClause) => {

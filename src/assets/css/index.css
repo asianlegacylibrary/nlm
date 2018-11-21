@@ -81,10 +81,10 @@ body {
 .wrapper.style1 > .inner {
   background-color: #efefef;
 }
-
+/* 
 .wrapper.style1 {
-  /* background: #fff; */
-}
+  background: #fff;
+} */
 
 section.special, article.special, header.special {
   text-align: left;
@@ -169,6 +169,10 @@ section.special, article.special, header.special {
 }
 .modal-text {
   margin: 0 0 0.5em 0;
+}
+
+.modal-btn {
+  margin-right: 12px;
 }
 
 .meta-catalog {

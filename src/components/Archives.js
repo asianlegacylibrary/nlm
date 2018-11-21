@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 //import { Link, withRouter } from 'react-router-dom'
 
-import { fetchSpecificID, fetchIIIF } from '../actions'
+import { fetchSpecificID } from '../actions'
 
 import Modal from './Modal'
 //import UniversalViewer from './UniversalViewer'
@@ -148,7 +148,7 @@ class Archives extends Component {
                 'workIsAbout': topic,
                 //'workTitle': title,
                 //'workHasPart': parts,
-                'workNumberOfVolumes': volumes
+                //'workNumberOfVolumes': volumes
             } = work._source
 
             //console.log('V', volumes)

@@ -13,6 +13,8 @@ import {
     REQUEST_ID,
     REQUEST_MANIFEST,
     RECEIVE_MANIFEST,
+    REQUEST_IIIF,
+    RECEIVE_IIIF,
     DETAIL_MODAL,
     UNIVERSAL_VIEWER
 } from '../actions';
@@ -77,6 +79,16 @@ function content(
                 manifestURL: action.manifestURL,
                 lastUpdated: action.receivedAt
             })
+        case REQUEST_IIIF:
+            return Object.assign({}, state, {
+                isFetching: true
+            })
+        case RECEIVE_IIIF:
+            return Object.assign({}, state, {
+                isFetching: false,
+                firstImage: action.firstImage,
+                lastUpdated: action.receivedAt
+            })
         case UNIVERSAL_VIEWER:
             return Object.assign({}, state, {
                 viewerID: action.viewerID,
@@ -138,6 +150,16 @@ function manifestData(state = {}, action) {
     switch(action.type) {
         case RECEIVE_MANIFEST:
         case REQUEST_MANIFEST:
+            return Object.assign({}, state, content(state, action))
+        default:
+            return state;
+    }
+}
+
+function IIIFData(state = {}, action) {
+    switch(action.type) {
+        case RECEIVE_IIIF:
+        case REQUEST_IIIF:
             return Object.assign({}, state, content(state, action))
         default:
             return state;
@@ -211,6 +233,7 @@ const rootReducer = combineReducers({
     data,
     detailData,
     manifestData,
+    IIIFData,
     detailModal,
     universalViewer,
     pagesByLanguage,

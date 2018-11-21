@@ -182,7 +182,7 @@ export function fetchSpecificID(doc_id) {
         dispatch(requestID())
         try {
             searchID([doc_id]).then((dataDetail) => {
-                console.log('THEN', dataDetail)
+                //console.log('THEN', dataDetail)
                 const imageAsset = dataDetail.hits.hits[0]._source.workHasItemImageAsset
                 const volumes = dataDetail.hits.hits[0]._source.workNumberOfVolumes
                 dispatch(fetchManifest(imageAsset, volumes))
@@ -224,21 +224,31 @@ function fetchManifest(imageAsset, volumes) {
             let imageURL
             const iiifpres = "http://iiifpres.bdrc.io" ;
             if(imageAsset) {
+                const id = imageAsset.includes(":") ? imageAsset.split(":")[1] : imageAsset
                 if(volumes === 1) {
                     // must reconstruct imageItem based on workHasItem > hasVolume
                     // bdr:W22677
                     // W22677 > workHasItem > bdr:I22677 > HasVolume > V22677_I1KG1714
                     // BDRC "http://iiifpres.bdrc.io/2.1.1/v:bdr:V22677_I1KG1714/manifest"
-                    imageURL = `${iiifpres}/2.1.1/v:${imageAsset}/manifest`
-                    imageURL = ``
+                    searchID([id]).then((dataDetail) => {
+                        console.log('THEN', dataDetail)
+                        const volumeID = dataDetail.hits.hits[0]._source.itemHasVolume
+                        imageURL = `${iiifpres}/2.1.1/v:${volumeID}/manifest`
+                        console.log('THIS IS IMAGE URL', imageURL)
+                        dispatch(fetchIIIF(imageURL))
+                        return dispatch(receiveManifest(imageURL))
+                    })
                 } else if(volumes > 1) {
                     // bdr:W1GS135873
-                    // ACIP http://iiifpres.bdrc.io/2.1.1/collection/i:bdr:bdr:I1KG1132
                     // BDRC "http://iiifpres.bdrc.io/2.1.1/collection/i:bdr:I1GS135873"
                     imageURL = `${iiifpres}/2.1.1/collection/i:${imageAsset}`
+                    console.log('THIS IS IMAGE URL', imageURL)
+                    dispatch(fetchIIIF(imageURL))
+                    return dispatch(receiveManifest(imageURL))
                 }
+            } else {
+                return dispatch(receiveManifest(''))
             }
-            return dispatch(receiveManifest(imageURL))
         } catch (error) {
             console.error('fetch manifest error! ', error)
         }
@@ -276,35 +286,94 @@ export const universalViewer = (viewerID, showViewer) => ({
     showViewer
 })
 
-export function fetchIIIF() {
-    return async dispatch => {
-        console.log('config!')
-        dispatch(requestIIIF())
-        try {
-            console.log('sign in to IIIF', config.auth)
-
-            //return config.text
-        }
-        catch(e) {
-            
-            console.error('config error', e)
-        }
+export const RECEIVE_IIIF = 'RECEIVE_IIIF';
+function receiveIIIF(firstImage) {
+    return {
+        type: RECEIVE_IIIF,
+        firstImage,
+        receivedAt: Date.now()
     }
 }
 
-
 export const REQUEST_IIIF = 'REQUEST_IIIF';
 function requestIIIF() {
+    console.log('requesting IIIF!')
     return {
         type: REQUEST_IIIF
     }
 }
 
-export const RECEIVE_IIIF = 'RECEIVE_IIIF';
-function receiveIIIF(json) {
-    return {
-        type: RECEIVE_IIIF,
-        pages: json,
-        receivedAt: Date.now()
+export function fetchIIIF(url) {
+    return dispatch => {
+        console.log('config!')
+        dispatch(requestIIIF())
+        try {
+            console.log('what am i sending?', url)
+            // first image
+            //http://iiif.bdrc.io/image/v2/bdr:V22677_I1KG1714::I1KG17140003.jpg/full/,600/0/default.jpg"
+            // imageAsset
+            // http://iiifpres.bdrc.io/2.1.1/v:bdr:V22677_I1KG1714/manifest"
+            // http://iiifpres.bdrc.io/2.1.1/v:bdr:V22677_I1KG1714/manifest
+            //url = `http://iiif.bdrc.io/image/v2/bdr:V22677_I1KG1714::I1KG17140003.jpg/full/full/0/default.jpg`
+            console.log('sign in to IIIF', config.auth)
+            fetch(url, {method: 'GET'}).then((manifest) => {
+                return manifest.json()
+            }).then(data => {
+                console.log('MANIFEST?!', data)
+                let image ;
+                //collection ?
+                if(!data.sequences ) {
+                    if (data.manifests) {
+                        console.log('I AM A COLLECTION')
+                        dispatch(fetchIIIF(data.manifests[0]["@id"]))
+                    }
+                }
+                if(data.sequences && data.sequences[0] && data.sequences[0].canvases) {
+                    let found = false ;
+                    for(let i in data.sequences[0].canvases){
+                        let s = data.sequences[0].canvases[i]
+                        if(s.label === "tbrc-1") {
+                            s = data.sequences[0].canvases[2]
+                            if(s && s.images && s.images[0]) {
+                                console.log('IMAGE FOUND AT: data.sequences[0].canvases[2].images[0].resource["@id"]')
+                                image = data.sequences[0].canvases[2].images[0].resource["@id"]
+                                
+                                console.log("image",image)
+           
+                                found = true ;
+
+                                dispatch(receiveIIIF(image))
+
+                                // let test = await api.getURLContents(image)
+                                // store.dispatch(dataActions.firstImage(image,iri))
+           
+                            }
+                        }
+                    }
+
+                    if(!found) {
+                        if(data.sequences[0].canvases[0] 
+                            && data.sequences[0].canvases[0].images[0] 
+                            && data.sequences[0].canvases[0].images[0].resource["@id"]) {
+                            
+                            image = data.sequences[0].canvases[0].images[0].resource["@id"]
+                            found = true
+                            console.log('IMAGE FOUND AT: data.sequences[0].canvases[0].images[0].resource["@id"]')
+                            console.log("image",image)
+                            
+                            
+                            dispatch(receiveIIIF(image))
+                            
+                            //let test = await api.getURLContents(image)
+                            //store.dispatch(dataActions.firstImage(image,iri))
+                        }
+                    }
+                }
+            })
+        }
+        catch(e) {
+            
+            console.error('config error', e)
+        }
     }
 }

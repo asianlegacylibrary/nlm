@@ -11,7 +11,10 @@ import {
     REQUEST_DATA,
     RECEIVE_ID,
     REQUEST_ID,
-    DETAIL_MODAL
+    REQUEST_MANIFEST,
+    RECEIVE_MANIFEST,
+    DETAIL_MODAL,
+    UNIVERSAL_VIEWER
 } from '../actions';
 
 function content(
@@ -60,7 +63,24 @@ function content(
             return Object.assign({}, state, {
                 isFetching: false,
                 item: action.data,
+                imageAsset: action.imageAsset,
+                volume: action.volume,
                 lastUpdated: action.receivedAt
+            })
+        case REQUEST_MANIFEST:
+            return Object.assign({}, state, {
+                isFetching: true
+            })
+        case RECEIVE_MANIFEST:
+            return Object.assign({}, state, {
+                isFetching: false,
+                manifestURL: action.manifestURL,
+                lastUpdated: action.receivedAt
+            })
+        case UNIVERSAL_VIEWER:
+            return Object.assign({}, state, {
+                viewerID: action.viewerID,
+                imageAsset: action.imageAsset
             })
         case DETAIL_MODAL:
             return Object.assign({}, state, {
@@ -114,6 +134,16 @@ function detailData(state = {}, action) {
     }
 }
 
+function manifestData(state = {}, action) {
+    switch(action.type) {
+        case RECEIVE_MANIFEST:
+        case REQUEST_MANIFEST:
+            return Object.assign({}, state, content(state, action))
+        default:
+            return state;
+    }
+}
+
 function posts(state = {}, action) {
     switch(action.type) {
         case RECEIVE_POSTS:
@@ -155,6 +185,15 @@ function detailModal(state = { modalID: 0 }, action) {
     }
 }
 
+function universalViewer(state = { viewerID: 0 }, action) {
+    switch(action.type) {
+        case UNIVERSAL_VIEWER:
+            return Object.assign({}, state, content(state, action))
+        default:
+            return state;
+    }
+}
+
 const selectedPage = (state = 'home', action) => {
     switch (action.type) {
         case SET_PAGE:
@@ -171,7 +210,9 @@ const rootReducer = combineReducers({
     posts,
     data,
     detailData,
+    manifestData,
     detailModal,
+    universalViewer,
     pagesByLanguage,
     postsByLanguage
 });

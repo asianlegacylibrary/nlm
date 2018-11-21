@@ -184,6 +184,17 @@ section.special, article.special, header.special {
   border: 1px solid #222;
 }
 
+.z {
+  z-index: 200001;
+  background: transparent;
+  bottom: 0;
+  right: 10px;
+  position: absolute;
+}
+
+.yo {
+  color: 'red'
+}
 /* MEDIA QUERIES
 breakpoints: 1680, 1280, 980, 736, 480
 */

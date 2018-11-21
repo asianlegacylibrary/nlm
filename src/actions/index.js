@@ -2,6 +2,8 @@ import fetch from 'cross-fetch'
 
 import { initialSearch, searchID } from '../server/search'
 
+import config from './config-defaults.json'
+
 const nodeWP = 'http://206.189.71.52/'
 const endpointWP = 'wp-json/wp/v2/'
 
@@ -163,6 +165,8 @@ function receiveID(json) {
     return {
         type: RECEIVE_ID,
         data: json, //.filter(child => child.acf.language === lang), //.data.children.map(child => child.data),
+        imageAsset: json.hits.hits[0]._source.workHasItemImageAsset,
+        volume: json.hits.hits[0]._source.workHasItem,
         receivedAt: Date.now()
     }
 }
@@ -173,17 +177,88 @@ function receiveID(json) {
 //     dispatch(anotherAction(items));
 //   }
 export function fetchSpecificID(doc_id) {
-    return async dispatch => {
-        
+    return dispatch => {  
         console.log('fetchSpecificID!', doc_id)
         dispatch(requestID())
         try {
-            const dataDetail = await searchID([doc_id])
-            console.log(dataDetail)
-            return dispatch(receiveID(dataDetail))
+            searchID([doc_id]).then((dataDetail) => {
+                console.log('THEN', dataDetail)
+                const imageAsset = dataDetail.hits.hits[0]._source.workHasItemImageAsset
+                const volumes = dataDetail.hits.hits[0]._source.workNumberOfVolumes
+                dispatch(fetchManifest(imageAsset, volumes))
+                return dataDetail
+            }).then((dataDetail) => {
+                return dispatch(receiveID(dataDetail))
+            })
         } catch(error) {
-            console.error('error! ', error)
+            console.error('fetch ID error! ', error)
         }
+    }
+}
+
+// export function fetchSpecificID(doc_id) {
+//     return async dispatch => {
+        
+//         console.log('fetchSpecificID!', doc_id)
+//         dispatch(requestID())
+//         try {
+//             const dataDetail = await searchID([doc_id])
+//             const imageAsset = dataDetail.hits.hits[0]._source.workHasItemImageAsset
+//             const volumes = dataDetail.hits.hits[0]._source.workNumberOfVolumes
+            
+//             console.log('post fetchManifest', imageAsset, volumes)
+//             return receiveID(dataDetail).then(() => {
+//                 dispatch(fetchManifest(imageAsset, volumes))
+//             })
+//         } catch(error) {
+//             console.error('fetch ID error! ', error)
+//         }
+//     }
+// }
+
+function fetchManifest(imageAsset, volumes) {
+    return dispatch => {
+        console.log('INSIDE fetchManifest', imageAsset)
+        dispatch(requestManifest())
+        try {
+            let imageURL
+            const iiifpres = "http://iiifpres.bdrc.io" ;
+            if(imageAsset) {
+                if(volumes === 1) {
+                    // must reconstruct imageItem based on workHasItem > hasVolume
+                    // bdr:W22677
+                    // W22677 > workHasItem > bdr:I22677 > HasVolume > V22677_I1KG1714
+                    // BDRC "http://iiifpres.bdrc.io/2.1.1/v:bdr:V22677_I1KG1714/manifest"
+                    imageURL = `${iiifpres}/2.1.1/v:${imageAsset}/manifest`
+                    imageURL = ``
+                } else if(volumes > 1) {
+                    // bdr:W1GS135873
+                    // ACIP http://iiifpres.bdrc.io/2.1.1/collection/i:bdr:bdr:I1KG1132
+                    // BDRC "http://iiifpres.bdrc.io/2.1.1/collection/i:bdr:I1GS135873"
+                    imageURL = `${iiifpres}/2.1.1/collection/i:${imageAsset}`
+                }
+            }
+            return dispatch(receiveManifest(imageURL))
+        } catch (error) {
+            console.error('fetch manifest error! ', error)
+        }
+    }
+}
+
+export const RECEIVE_MANIFEST = 'RECEIVE_MANIFEST';
+function receiveManifest(manifestURL) {
+    return {
+        type: RECEIVE_MANIFEST,
+        manifestURL,
+        receivedAt: Date.now()
+    }
+}
+
+export const REQUEST_MANIFEST = 'REQUEST_MANIFEST';
+function requestManifest() {
+    console.log('requesting manifest!')
+    return {
+        type: REQUEST_MANIFEST
     }
 }
 
@@ -193,3 +268,43 @@ export const modalDetail = (modalID, show) => ({
     modalID: modalID,
     show: show
 })
+
+export const UNIVERSAL_VIEWER = 'UNIVERSAL_VIEWER';
+export const universalViewer = (viewerID, showViewer) => ({
+    type: UNIVERSAL_VIEWER,
+    viewerID,
+    showViewer
+})
+
+export function fetchIIIF() {
+    return async dispatch => {
+        console.log('config!')
+        dispatch(requestIIIF())
+        try {
+            console.log('sign in to IIIF', config.auth)
+
+            //return config.text
+        }
+        catch(e) {
+            
+            console.error('config error', e)
+        }
+    }
+}
+
+
+export const REQUEST_IIIF = 'REQUEST_IIIF';
+function requestIIIF() {
+    return {
+        type: REQUEST_IIIF
+    }
+}
+
+export const RECEIVE_IIIF = 'RECEIVE_IIIF';
+function receiveIIIF(json) {
+    return {
+        type: RECEIVE_IIIF,
+        pages: json,
+        receivedAt: Date.now()
+    }
+}

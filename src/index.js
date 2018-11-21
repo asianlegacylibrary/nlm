@@ -7,7 +7,7 @@ import { createLogger } from 'redux-logger';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk'
 
-import { fetchPages, fetchPosts, fetchData } from './actions'
+import { fetchPages, fetchPosts, fetchData, fetchIIIF } from './actions'
 import rootReducer from './reducers'
 
 import Routes from './router'

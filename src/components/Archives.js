@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+//import { Link, withRouter } from 'react-router-dom'
 
-import { fetchSpecificID } from '../actions'
+import { fetchSpecificID, fetchIIIF } from '../actions'
 
 import Modal from './Modal'
+//import UniversalViewer from './UniversalViewer'
+//import View from './View'
+
+
 
 /* of interest 
 
@@ -31,9 +36,23 @@ workCatalogInfo
 */
 class Archives extends Component {
 
+    // setManifest = (doc_id) => {
+    //     //this.props.dispatch(fetchIIIF(doc_id))
+    //     this.props.dispatch(
+    //         { type: 'UNIVERSAL_VIEWER', viewerID: doc_id }
+    //     )
+    //     localStorage.setItem("manifestURL", "http://iiifpres.bdrc.io/2.1.1/collection/i:bdr:I1GS135873")
+                        
+    // }
+
+    // hideViewer = () => {
+    //     this.props.dispatch({ type: 'UNIVERSAL_VIEWER', showViewer: false })
+    // }
+
     showModal = (doc_id) => {
         //fetchSpecificID(doc_id)
         this.props.dispatch(fetchSpecificID(doc_id))
+        //this.props.dispatch(fetchIIIF(doc_id))
         this.props.dispatch(
             { type: 'DETAIL_MODAL', modalID: doc_id, show: true }
         )
@@ -128,8 +147,11 @@ class Archives extends Component {
                 'workGenre': genre,
                 'workIsAbout': topic,
                 //'workTitle': title,
-                //'workHasPart': parts 
+                //'workHasPart': parts,
+                'workNumberOfVolumes': volumes
             } = work._source
+
+            //console.log('V', volumes)
 
             const author = work._source.creatorMainAuthor !== undefined ? work._source.creatorMainAuthor : null 
             const authorCode = author !== null ? author.item : null
@@ -169,6 +191,13 @@ class Archives extends Component {
                     <button onClick={() => this.showModal(id.item)}>
                         More details...
                     </button>
+                    {/* <Link 
+                        target='_blank' 
+                        to="viewer"    
+                    >
+                    VIEWER
+                    </Link> */}
+                    
 
                 </div>
             )
@@ -179,11 +208,17 @@ class Archives extends Component {
                 {items}
                 <Modal 
                     key={this.props.doc_id}
-                    hideModal={this.hideModal} 
+                    hideModal={this.hideModal}
                     doc_id={this.props.doc_id} 
-                    show={this.props.showModal} 
-                    workDetail={this.props.workDetail}
+                    show={this.props.showModal}
                 />
+                {/* <UniversalViewer 
+                    key={`UNIV`}
+                    hideViewer={this.hideViewer}
+                    doc_id={this.props.doc_id} 
+                    showViewer={this.props.showViewer} 
+                    
+                /> */}
             </div>
         )
     }
@@ -194,7 +229,8 @@ const mapStateToProps = (state) => ({
     works: state.data.items.hits.hits,
     workDetail: state.detailData.isFetching || state.detailModal.modalID === 0 ? {} : state.detailData.item.hits.hits[0],
     doc_id: state.detailModal.modalID,
-    showModal: state.detailModal.show
+    showModal: state.detailModal.show,
+    manifestURL: state.manifestData.isFetching ? '' : state.manifestData.manifestURL
 })
 
 export default connect(mapStateToProps)(Archives)

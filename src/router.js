@@ -3,7 +3,8 @@ import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 
 //import { connect } from 'react-redux';
 
-import Page from './components/Page';
+import Page from './components/Page'
+//import View from './components/View'
 
 // const componentRoutes = {
 //     component: Home,
@@ -29,7 +30,9 @@ const Routes = () => {
         <Router>
             <Switch>
                 <Route exact path="/" component={Page} />
+                {/* <Route path="/viewer" component={View} /> */}
                 <Route path="/:page" component={Page} />
+                
             </Switch>
         </Router>
     )

@@ -6,19 +6,27 @@
         <link type="text/css" href="src/assets/css/index.css" rel="stylesheet">
         <style type="text/css">
             .loading {
+                padding: 40px;
                 font-weight: 400;
+                font-size: 2em;
                 letter-spacing: 0.2em;
                 line-height: 1.5;
                 margin: 0 0 0.96em 0;
                 text-transform: uppercase;
                 color: #413D53;
                 font-family: 'Source Sans Pro', sans-serif;
+                animation: blinker 1s linear infinite;
+            }
+
+            @keyframes blinker {
+                50% {
+                    opacity: 0;
+                }
             }
         </style>
     </head>
 <body>
-    <div class="loading">
-        LOADING...  
+    <div class="loading">LOADING...</div>
         <div
             id="viewer"
             class="uv"
@@ -35,8 +43,7 @@
             data-rotation="0"
             style="width:0; height:0; background-color:#000;"
             >
-            </div>     
-     </div>
+            </div>
 </body>
 <script type="text/javascript">
     var node = document.getElementById("viewer"); 

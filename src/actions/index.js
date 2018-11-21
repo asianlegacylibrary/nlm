@@ -2,7 +2,8 @@ import fetch from 'cross-fetch'
 
 import { initialSearch, searchID } from '../server/search'
 
-import config from './config-defaults.json'
+// possibly needed for authenticated requests?
+//import config from './config-defaults.json'
 
 const nodeWP = 'http://206.189.71.52/'
 const endpointWP = 'wp-json/wp/v2/'
@@ -286,6 +287,7 @@ export const universalViewer = (viewerID, showViewer) => ({
     showViewer
 })
 
+export const NULLIFY_IIIF = 'NULLIFY_IIIF';
 export const RECEIVE_IIIF = 'RECEIVE_IIIF';
 function receiveIIIF(firstImage) {
     return {
@@ -299,28 +301,27 @@ export const REQUEST_IIIF = 'REQUEST_IIIF';
 function requestIIIF() {
     console.log('requesting IIIF!')
     return {
-        type: REQUEST_IIIF
+        type: REQUEST_IIIF,
+        firstImage: null
     }
 }
 
 export function fetchIIIF(url) {
     return dispatch => {
-        console.log('config!')
         dispatch(requestIIIF())
         try {
-            console.log('what am i sending?', url)
             // first image
             //http://iiif.bdrc.io/image/v2/bdr:V22677_I1KG1714::I1KG17140003.jpg/full/,600/0/default.jpg"
             // imageAsset
             // http://iiifpres.bdrc.io/2.1.1/v:bdr:V22677_I1KG1714/manifest"
             // http://iiifpres.bdrc.io/2.1.1/v:bdr:V22677_I1KG1714/manifest
-            //url = `http://iiif.bdrc.io/image/v2/bdr:V22677_I1KG1714::I1KG17140003.jpg/full/full/0/default.jpg`
-            console.log('sign in to IIIF', config.auth)
+            
             fetch(url, {method: 'GET'}).then((manifest) => {
                 return manifest.json()
             }).then(data => {
                 console.log('MANIFEST?!', data)
                 let image ;
+
                 //collection ?
                 if(!data.sequences ) {
                     if (data.manifests) {
@@ -328,6 +329,7 @@ export function fetchIIIF(url) {
                         dispatch(fetchIIIF(data.manifests[0]["@id"]))
                     }
                 }
+                // this logic taken directly from ResourceViewer BDRC
                 if(data.sequences && data.sequences[0] && data.sequences[0].canvases) {
                     let found = false ;
                     for(let i in data.sequences[0].canvases){
@@ -335,18 +337,11 @@ export function fetchIIIF(url) {
                         if(s.label === "tbrc-1") {
                             s = data.sequences[0].canvases[2]
                             if(s && s.images && s.images[0]) {
-                                console.log('IMAGE FOUND AT: data.sequences[0].canvases[2].images[0].resource["@id"]')
+                                //console.log('IMAGE FOUND AT: data.sequences[0].canvases[2].images[0].resource["@id"]')
                                 image = data.sequences[0].canvases[2].images[0].resource["@id"]
-                                
-                                console.log("image",image)
-           
+                                //console.log("image",image)
                                 found = true ;
-
-                                dispatch(receiveIIIF(image))
-
-                                // let test = await api.getURLContents(image)
-                                // store.dispatch(dataActions.firstImage(image,iri))
-           
+                                return dispatch(receiveIIIF(image))
                             }
                         }
                     }
@@ -358,14 +353,9 @@ export function fetchIIIF(url) {
                             
                             image = data.sequences[0].canvases[0].images[0].resource["@id"]
                             found = true
-                            console.log('IMAGE FOUND AT: data.sequences[0].canvases[0].images[0].resource["@id"]')
-                            console.log("image",image)
-                            
-                            
-                            dispatch(receiveIIIF(image))
-                            
-                            //let test = await api.getURLContents(image)
-                            //store.dispatch(dataActions.firstImage(image,iri))
+                            //console.log('IMAGE FOUND AT: data.sequences[0].canvases[0].images[0].resource["@id"]')
+                            //console.log("image",image)
+                            return dispatch(receiveIIIF(image))
                         }
                     }
                 }

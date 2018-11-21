@@ -76,7 +76,7 @@ class Modal extends Component {
             } else {
                 return (
                     <p key={arr['@value']} className="modal-text">
-                        <span className="meta-italics">({arr['@language']}): </span>
+                        {/* <span className="meta-italics">({arr['@language']}): </span> */}
                         <span className="meta-title">{arr['@value']}</span>
                     </p>
                    
@@ -109,8 +109,21 @@ class Modal extends Component {
         } = source
     
         console.log("ACCESS!", access)
+        console.log('SEARCHING FOR CATALOG INFO', catalogInfo)
 
-        let btn = this.buildScansBtn(access)
+        const metaDetail = (
+            <p className="meta-detail">
+                <span>Detail for record {id}, </span>
+                <span> {type}</span>
+            </p>
+        )
+
+        const closeBtn = (
+            <button className="modal-btn" onClick={hideModal}>
+                <i className="fa fa-2x fa-times"></i> 
+                Close
+            </button>
+        )
 
         // set undefined to null for pre-render check
         note !== undefined ? note = note.noteText : note = null
@@ -119,48 +132,55 @@ class Modal extends Component {
             case 'Person':  
                 return (
                     <div className="detail-data">
-                        <p className="meta-detail">
-                            <span>Detail for record {id}, </span>
-                            <span> {type}</span>
-                        </p>
+                        {metaDetail}
                         <div className="modal-title">{ this.unpack(label) }</div>
                         <div className="">
                             <span className="lead-item">Name(s): </span>
                             <span className="meta-catalog">{ this.unpack(personName) }</span>
                         </div>
-                        <button className="modal-btn" onClick={hideModal}>Close</button>
+                        {closeBtn}
                     </div>
                 )
             case 'Topic':
                 return (
                     <div className="detail-data">
-                        <p className="meta-detail">
-                            <span>Detail for record {id}, </span>
-                            <span> {type}</span>
-                        </p>
+                        {metaDetail}
                         <div className="modal-title">{ this.unpack(label) }</div>
                         {note === null ? null : (
                             <div className="meta-catalog">Note: { note !== null ? this.unpack(note) : null }</div>
                         )}
-                        <button className="modal-btn" onClick={hideModal}>Close</button>
+                        {closeBtn}
                     </div>
                 )
             case 'Work':
+                let scanBtn = this.buildScansBtn(access)
+                let img
+                console.log('in work access is', access)
+                if(access === 'bdr:AccessRestrictedByTbrc') {
+                    img = (
+                        <div>RESTRICTED ACCESS TO IMAGE FILE</div>
+                    )
+                } else if(firstImage === null || firstImage === undefined) {
+                    img = (
+                        <div className="blinky">LOADING IMAGE...</div>
+                    )
+                } else {
+                    img = (
+                        <img src={firstImage} width="100%" alt="scan" />
+                    )
+                }
                 
                 return (
                     <div className="detail-data">
-                        <img src={firstImage} width="100%" alt="scan" />
-                        <p className="meta-detail">
-                            <span>Detail for record {id}, </span>
-                            <span> {type}</span>
-                        </p>
                         <div className="modal-title">{ this.unpack(label) }</div>
+                        
+                        {metaDetail}
+                        
+                        {img}
+                        
                         <div className="meta-catalog">{ this.unpack(catalogInfo) }</div>
-                        <button className="modal-btn" onClick={hideModal}>
-                            <i className="fa fa-2x fa-times"></i> 
-                             Close
-                        </button>
-                        {btn}
+                        
+                        {closeBtn}{scanBtn}
                     </div>
                 )
             default:

@@ -161,14 +161,14 @@ section.special, article.special, header.special {
 }
 
 .modal-title {
-  font-size: 1.3em;
+  font-size: 1.6em;
 
 }
 .meta-italics {
   font-style: italic;
 }
 .modal-text {
-  margin: 0 0 0.5em 0;
+  margin: 0 0 1em 0;
 }
 
 .modal-btn {
@@ -176,7 +176,7 @@ section.special, article.special, header.special {
 }
 
 .meta-catalog {
-  font-size: 1.3em;
+  font-size: 1em;
   word-break: normal;
 }
 .meta-title {
@@ -198,6 +198,16 @@ section.special, article.special, header.special {
 
 .yo {
   color: 'red'
+}
+
+.blinky {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
 }
 
 .grid {
@@ -280,6 +290,11 @@ breakpoints: 1680, 1280, 980, 736, 480
 
 @media screen and (max-width: 480px) {
 
+  button {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
   
 
 }

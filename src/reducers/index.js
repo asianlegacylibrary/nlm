@@ -15,6 +15,7 @@ import {
     RECEIVE_MANIFEST,
     REQUEST_IIIF,
     RECEIVE_IIIF,
+    NULLIFY_IIIF,
     DETAIL_MODAL,
     UNIVERSAL_VIEWER
 } from '../actions';
@@ -89,6 +90,10 @@ function content(
                 firstImage: action.firstImage,
                 lastUpdated: action.receivedAt
             })
+        case NULLIFY_IIIF:
+            return Object.assign({}, state, {
+                firstImage: null
+            })
         case UNIVERSAL_VIEWER:
             return Object.assign({}, state, {
                 viewerID: action.viewerID,
@@ -159,6 +164,7 @@ function manifestData(state = {}, action) {
 function IIIFData(state = {}, action) {
     switch(action.type) {
         case RECEIVE_IIIF:
+        case NULLIFY_IIIF:
         case REQUEST_IIIF:
             return Object.assign({}, state, content(state, action))
         default:

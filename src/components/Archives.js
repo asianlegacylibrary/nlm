@@ -61,6 +61,7 @@ class Archives extends Component {
     hideModal = () => {
         //this.setState({ show: false });
         this.props.dispatch({ type: 'DETAIL_MODAL', show: false})
+        this.props.dispatch({ type: 'NULLIFY_IIIF'})
     }
 
     unpackFrontend = (code, o) => {
@@ -125,15 +126,30 @@ class Archives extends Component {
                 }
                 
         } else if (typeof arr === 'string') {
-                if(arr.substring(0,3) === 'bdr') {
-                    return ( <a onClick={() => this.showModal(arr.split(":")[1])} href={arr}>{arr}</a> )
+            if(arr.substring(0,3) === 'bdr') {
+                return ( <a onClick={() => this.showModal(arr.split(":")[1])} href={arr}>{arr}</a> )
+            } else {
+                return (
+                    <span>{arr}</span>
+                )
+            }
+        }
+    }
+
+    buildCardItem(item, code, lead) {
+        if(code === null) {
+            return null
         } else {
             return (
-                <span>{arr}</span>
+                <div className="card-item">
+                    <span className="item-lead">{lead} </span> 
+                    <span className="item-btn" onClick={() => this.showModal(code)}>
+                        { this.unpack(item) }
+                    </span>
+                </div>
             )
         }
     }
-}
 
     render() {
         
@@ -151,54 +167,35 @@ class Archives extends Component {
                 //'workNumberOfVolumes': volumes
             } = work._source
 
-            //console.log('V', volumes)
-
             const author = work._source.creatorMainAuthor !== undefined ? work._source.creatorMainAuthor : null 
             const authorCode = author !== null ? author.item : null
-            //console.log('AUTHOR', author)
-
+            const genreCode = genre !== undefined ? genre.item : null
+            const topicCode = topic !== undefined ? topic.item : null
+            const workCode = id !== undefined ? id.item : null
+            
+            const itemAuthor = this.buildCardItem(author, authorCode, "Author:")
+            const itemGenre = this.buildCardItem(genre, genreCode, "Genre:")
+            const itemTopic = this.buildCardItem(topic, topicCode, "Topic:")
+            
             // CARD
             return (
                 
                 <div key={i} className="card">
+                    <p className="meta-detail">{workCode}</p>
                     <div className="card-item">
                         <span className="item-work"> 
                             { this.unpack(label) }
                         </span>
                     </div>
 
-                    {/* <div className="card-item">
-                        <span className="item-lead">Title:</span>
-                        <span> { this.unpack(title) }</span>
-                    </div> */}
-
-                    <div className="card-item">
-                        <span className="item-lead">Author: </span> 
-                        <span className="item-btn" onClick={() => this.showModal(authorCode)} href={authorCode}>
-                                { this.unpack(author) }
-                        </span>
-                    </div>
-                    <div className="card-item">
-                        <span className="item-lead">Genre:</span> 
-                        <span> { this.unpack(genre) }</span>
-                    </div>
-                    <div className="card-item">
-                        <span className="item-lead">Topic:</span> 
-                        <span> { this.unpack(topic) }</span>
-                    </div>
+                    {itemAuthor}
+                    {itemGenre}
+                    {itemTopic}
                     
-
                     <button onClick={() => this.showModal(id.item)}>
                         More details...
                     </button>
-                    {/* <Link 
-                        target='_blank' 
-                        to="viewer"    
-                    >
-                    VIEWER
-                    </Link> */}
-                    
-
+                   
                 </div>
             )
         })

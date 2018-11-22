@@ -6,6 +6,13 @@
 # testing
 /coverage
 
+# within src, there's an archive of old code
+/src/archive
+
+# python interpreter files
+/python/venv
+/python/.idea
+
 # production, keeping build in repo for webhook to DO
 #/build
 

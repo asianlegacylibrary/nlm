@@ -8,6 +8,8 @@
 
 - [NLM Components](#nlm-components)
 
+- [HTML5 Template](#html5-template)
+
 - [Create-React-App](#create-react-app)
 
 ## Data and APIs
@@ -24,6 +26,11 @@ Info on the Wordpress API
 
 ## NLM Components
 Info on the NLM React Components
+
+## HTML5 Template
+Info on the html5up.net template we're using, Hologram
+https://pixelarity.com/hologram
+Shouts out to [aj](http://twitter.com/ajlkn)
 
 ## Create React App
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

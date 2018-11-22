@@ -10,8 +10,8 @@
 /src/archive
 
 # python interpreter files
-/python/venv
-/python/.idea
+src/python/venv
+src/python/.idea
 
 # production, keeping build in repo for webhook to DO
 #/build

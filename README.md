@@ -29,7 +29,9 @@ Info on the NLM React Components
 
 ## HTML5 Template
 Info on the html5up.net template we're using, Hologram
+
 https://pixelarity.com/hologram
+
 Shouts out to [aj](http://twitter.com/ajlkn)
 
 ## Create React App

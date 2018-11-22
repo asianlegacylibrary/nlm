@@ -18,7 +18,7 @@ class Modal extends Component {
             )
     
             return (
-                <div className="modal-text">
+                <div key={type} className="modal-text">
                     <span className="meta-detail">{type.split("Person")[1]}: </span>
                     {a}
                 </div>

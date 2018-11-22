@@ -172,11 +172,6 @@ function receiveID(json) {
     }
 }
 
-// return (dispatch, getState) => {
-//     const {items} = getState().otherReducer;
-
-//     dispatch(anotherAction(items));
-//   }
 export function fetchSpecificID(doc_id) {
     return dispatch => {  
         console.log('fetchSpecificID!', doc_id)
@@ -196,26 +191,6 @@ export function fetchSpecificID(doc_id) {
         }
     }
 }
-
-// export function fetchSpecificID(doc_id) {
-//     return async dispatch => {
-        
-//         console.log('fetchSpecificID!', doc_id)
-//         dispatch(requestID())
-//         try {
-//             const dataDetail = await searchID([doc_id])
-//             const imageAsset = dataDetail.hits.hits[0]._source.workHasItemImageAsset
-//             const volumes = dataDetail.hits.hits[0]._source.workNumberOfVolumes
-            
-//             console.log('post fetchManifest', imageAsset, volumes)
-//             return receiveID(dataDetail).then(() => {
-//                 dispatch(fetchManifest(imageAsset, volumes))
-//             })
-//         } catch(error) {
-//             console.error('fetch ID error! ', error)
-//         }
-//     }
-// }
 
 function fetchManifest(imageAsset, volumes) {
     return dispatch => {
@@ -280,13 +255,6 @@ export const modalDetail = (modalID, show) => ({
     show: show
 })
 
-export const UNIVERSAL_VIEWER = 'UNIVERSAL_VIEWER';
-export const universalViewer = (viewerID, showViewer) => ({
-    type: UNIVERSAL_VIEWER,
-    viewerID,
-    showViewer
-})
-
 export const NULLIFY_IIIF = 'NULLIFY_IIIF';
 export const RECEIVE_IIIF = 'RECEIVE_IIIF';
 function receiveIIIF(firstImage) {
@@ -337,9 +305,7 @@ export function fetchIIIF(url) {
                         if(s.label === "tbrc-1") {
                             s = data.sequences[0].canvases[2]
                             if(s && s.images && s.images[0]) {
-                                //console.log('IMAGE FOUND AT: data.sequences[0].canvases[2].images[0].resource["@id"]')
                                 image = data.sequences[0].canvases[2].images[0].resource["@id"]
-                                //console.log("image",image)
                                 found = true ;
                                 return dispatch(receiveIIIF(image))
                             }
@@ -353,8 +319,6 @@ export function fetchIIIF(url) {
                             
                             image = data.sequences[0].canvases[0].images[0].resource["@id"]
                             found = true
-                            //console.log('IMAGE FOUND AT: data.sequences[0].canvases[0].images[0].resource["@id"]')
-                            //console.log("image",image)
                             return dispatch(receiveIIIF(image))
                         }
                     }
@@ -362,7 +326,6 @@ export function fetchIIIF(url) {
             })
         }
         catch(e) {
-            
             console.error('config error', e)
         }
     }

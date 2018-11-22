@@ -1,53 +1,38 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-const unpackNames = (arr, type) => {
-    //console.log('names ', typeof(arr['rdfs:label']), arr['rdfs:label'])
-    if(Array.isArray(arr['rdfs:label'])) {
-        //console.log('WTF i array', arr['rdfs:label'])
-        const a = arr['rdfs:label'].map((l, i) => {
-            //console.log('mapping', l)
-            return (
-                <p key={i} className="modal-text">
-                    <span className="meta-italics">({l['@language']}): </span>
-                    <span className="meta-title">{l['@value']}</span>
-                </p>
-            )})
+class Modal extends Component {
+
+    unpackNames = (arr, type) => {
+    
+        if(Array.isArray(arr['rdfs:label'])) {
+            
+            const a = arr['rdfs:label'].map((l, i) => {
+    
+                return (
+                    <p key={i} className="modal-text">
+                        <span className="meta-italics">({l['@language']}): </span>
+                        <span className="meta-title">{l['@value']}</span>
+                    </p>
+                )}
+            )
+    
             return (
                 <div className="modal-text">
                     <span className="meta-detail">{type.split("Person")[1]}: </span>
                     {a}
                 </div>
             )
-    } else {
-        return (
-            <p className="modal-text">
-                <span className="meta-detail">{type.split("Person")[1]}: </span>
-                <span className="meta-italics">({arr['rdfs:label']['@language']}): </span>
-                <span className="meta-title">{arr['rdfs:label']['@value']}</span>
-            </p>
-        )
-    }
-
-    // return (
-    //     <p className="modal-text">
-    //         <span className="meta-detail">{arr.type.split("Person")[1]}: </span>
-    //         <span className="meta-italics">({arr['rdfs:label']['@language']}): </span>
-    //         <span className="meta-title">{arr['rdfs:label']['@value']}</span>
-    //     </p>
-       
-    // )
-}
-
-
-
-
-
-// { hideModal, doc_id, show, workDetail, manifestURL}
-class Modal extends Component {
-
-    componentWillMount() {
-        console.log('props from MODAL, mounted', this.props)
+    
+        } else {
+            return (
+                <p key={type} className="modal-text">
+                    <span className="meta-detail">{type.split("Person")[1]}: </span>
+                    <span className="meta-italics">({arr['rdfs:label']['@language']}): </span>
+                    <span className="meta-title">{arr['rdfs:label']['@value']}</span>
+                </p>
+            )
+        }
     }
 
     unpack = (arr) => {
@@ -60,8 +45,7 @@ class Modal extends Component {
                 } else if(a.substring(0,3) === 'bdr') {
                     return (
                         <div key={i} className="card-sub-item">
-                            {/* <a onClick={() => this.handleClick(a.split(":")[1])} href={a}>{a}</a> */}
-                            <a onClick={() => this.showModal(a.split(":")[1])} href={a}>{a}</a>
+                            <div onClick={() => this.showModal(a.split(":")[1])}>{a}</div>
                         </div> 
                     )
                 } else {
@@ -72,20 +56,18 @@ class Modal extends Component {
         } else if (typeof arr === 'object') {
             // re-factor to allow for retreival of '@value' from any key
             if(arr.hasOwnProperty('type')) { 
-                return unpackNames(arr, arr.type) 
+                return this.unpackNames(arr, arr.type) 
             } else {
                 return (
                     <p key={arr['@value']} className="modal-text">
-                        {/* <span className="meta-italics">({arr['@language']}): </span> */}
                         <span className="meta-title">{arr['@value']}</span>
                     </p>
-                   
                 )
             }
             
         } else if (typeof arr === 'string') {
             if(arr.substring(0,3) === 'bdr') {
-                return ( <a onClick={() => this.showModal(arr.split(":")[1])} href={arr}>{arr}</a> )
+                return ( <div onClick={() => this.showModal(arr.split(":")[1])}>{arr}</div> )
             } else {
                 return arr
             }
@@ -103,14 +85,8 @@ class Modal extends Component {
             personName,
             note,
             'adm:access': access
-            //'workHasItemImageAsset': imageAsset,
-            //'workHasItem': volumeAsset,
-            //'workNumberOfVolumes': volumes
         } = source
     
-        console.log("ACCESS!", access)
-        console.log('SEARCHING FOR CATALOG INFO', catalogInfo)
-
         const metaDetail = (
             <p className="meta-detail">
                 <span>Detail for record {id}, </span>
@@ -155,7 +131,6 @@ class Modal extends Component {
             case 'Work':
                 let scanBtn = this.buildScansBtn(access)
                 let img
-                console.log('in work access is', access)
                 if(access === 'bdr:AccessRestrictedByTbrc') {
                     img = (
                         <div>RESTRICTED ACCESS TO IMAGE FILE</div>
@@ -217,10 +192,6 @@ class Modal extends Component {
     render() {
         const showHideClassName = this.props.show ? 'modal display-block' : 'modal display-none';
         let data
-        console.log('on this render i have volumes, ', this.props.numberVolumes)
-    
-        //this.buildScansBtn()
-        
         
         if(Object.keys(this.props.workDetail).length > 0) {
             data = this.parseType(
@@ -228,7 +199,7 @@ class Modal extends Component {
                 this.props.hideModal,
                 this.props.firstImage)
         } else {
-            data = <div>LOADING {this.props.doc_id}</div>
+            data = <div className="blinky">LOADING {this.props.doc_id}</div>
         }
         return ( 
             <div 

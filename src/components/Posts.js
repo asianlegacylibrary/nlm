@@ -1,17 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-
-
 const Posts = ({ posts }) => {
     if(!posts) {
         return <div>NO POSTS</div>
     }
     else {
-        //console.log(posts);
+        
         return posts.map((post, i) => {
         let j = i % 2 === 0 ? 1 : 3;
-        //console.log('i IS ', i)
+        
         let mediaURL = ""
         if(post._embedded["wp:featuredmedia"]) {
             mediaURL = post._embedded["wp:featuredmedia"][0].source_url || ""
@@ -49,7 +47,7 @@ const Posts = ({ posts }) => {
                         </section>
                         <section>
                             <span className="image"><img src={mediaURL} alt="" /></span>
-                            <h2>Lacus elementum</h2>	
+                            {/* <h2>Lacus elementum</h2>	 */}
                         </section>
                     </section>
                 </div>

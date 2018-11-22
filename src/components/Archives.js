@@ -1,14 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-//import { Link, withRouter } from 'react-router-dom'
-
 import { fetchSpecificID } from '../actions'
-
 import Modal from './Modal'
-//import UniversalViewer from './UniversalViewer'
-//import View from './View'
-
-
 
 /* of interest 
 
@@ -36,34 +29,24 @@ workCatalogInfo
 */
 class Archives extends Component {
 
-    // setManifest = (doc_id) => {
-    //     //this.props.dispatch(fetchIIIF(doc_id))
-    //     this.props.dispatch(
-    //         { type: 'UNIVERSAL_VIEWER', viewerID: doc_id }
-    //     )
-    //     localStorage.setItem("manifestURL", "http://iiifpres.bdrc.io/2.1.1/collection/i:bdr:I1GS135873")
-                        
-    // }
-
-    // hideViewer = () => {
-    //     this.props.dispatch({ type: 'UNIVERSAL_VIEWER', showViewer: false })
-    // }
-
+    // fetch ID from ES and show modal
     showModal = (doc_id) => {
-        //fetchSpecificID(doc_id)
         this.props.dispatch(fetchSpecificID(doc_id))
-        //this.props.dispatch(fetchIIIF(doc_id))
         this.props.dispatch(
             { type: 'DETAIL_MODAL', modalID: doc_id, show: true }
         )
     }
 
+    // close modal and nullify the IIIF image so there's no flash
+    // of previous image on next modal
     hideModal = () => {
-        //this.setState({ show: false });
         this.props.dispatch({ type: 'DETAIL_MODAL', show: false})
         this.props.dispatch({ type: 'NULLIFY_IIIF'})
     }
 
+    // parse out the frontend index 
+    // this index built specifically for UI
+    // so that we can show values immediately, ie. The Buddha, not P809
     unpackFrontend = (code, o) => {
         if(code === 'P') {
             let p = null
@@ -91,18 +74,19 @@ class Archives extends Component {
         }
     }
 
+    // parse out json
     unpack = (arr) => {
         if(arr === null || arr === undefined) {
             return null
         } else if(Array.isArray(arr)) {
             return arr.map((a, i) => {
+                // if it's an array of objects then recursion
                 if(typeof a === 'object') {
                     return this.unpack(a)
                 } else if(a.substring(0,3) === 'bdr') {
                     return (
                         <div key={i} className="card-sub-item">
-                            {/* <a onClick={() => this.handleClick(a.split(":")[1])} href={a}>{a}</a> */}
-                            <a onClick={() => this.showModal(a.split(":")[1])} href={a}>{a}</a>
+                            <div onClick={() => this.showModal(a.split(":")[1])}>{a}</div>
                         </div> 
                     )
                 } else {
@@ -111,23 +95,29 @@ class Archives extends Component {
                 
             })
         } else if (typeof arr === 'object') {
+                
                 if('key' in arr) {
-                    
+                    // return ID string
                     if(arr.data.hasOwnProperty('@id')) {
                         return arr.data['@id']
                     } 
                     else {
+                        // return a frontend index item
                         return this.unpackFrontend(arr.code, arr)
-                    }        
+                    }
+
+                // part of a language / value pair
                 } else if(arr.hasOwnProperty('@value')) {
                     return arr['@value']
                 } else {
+                    // if you made it this far, it must be an rdfs item
                     return ( <span key={arr['rdfs:label']['@value']}>{arr['rdfs:label']['@value']}</span> )
                 }
                 
         } else if (typeof arr === 'string') {
+            // if string begins with bdr then we assume its indexed
             if(arr.substring(0,3) === 'bdr') {
-                return ( <a onClick={() => this.showModal(arr.split(":")[1])} href={arr}>{arr}</a> )
+                return ( <div onClick={() => this.showModal(arr.split(":")[1])}>{arr}</div> )
             } else {
                 return (
                     <span>{arr}</span>
@@ -136,6 +126,7 @@ class Archives extends Component {
         }
     }
 
+    // build an item for the CARD (grid item)
     buildCardItem(item, code, lead) {
         if(code === null) {
             return null
@@ -152,7 +143,7 @@ class Archives extends Component {
     }
 
     render() {
-        
+        // loop over our initial 9 works
         const items = this.props.works.map((work, i) => {
 
             const { 
@@ -203,23 +194,16 @@ class Archives extends Component {
         return (
             <div className="grid">
                 {items}
+                {/* modal returned based on show prop */}
                 <Modal 
                     key={this.props.doc_id}
                     hideModal={this.hideModal}
                     doc_id={this.props.doc_id} 
                     show={this.props.showModal}
                 />
-                {/* <UniversalViewer 
-                    key={`UNIV`}
-                    hideViewer={this.hideViewer}
-                    doc_id={this.props.doc_id} 
-                    showViewer={this.props.showViewer} 
-                    
-                /> */}
             </div>
         )
     }
-
 }
 
 const mapStateToProps = (state) => ({

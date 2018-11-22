@@ -48,25 +48,18 @@ class Page extends Component {
                   rgba(239, 239, 239,0.1) 50%,
                   rgba(239, 239, 239,1.0) 100%), 
                   url(${mediaURL})`
-              //backgroundImage: `url(${mediaURL}`
             }}>
             <header className="major">
               <span className="icon fa-angellist style7"></span>
               <h1>{page.acf.title}</h1>
               <h3>{page.acf.subtitle}</h3>
             </header>
-            {/* <ul className="actions">
-              <li><a href="#1" className="button scrolly">Proceed</a></li>
-            </ul> */}
           </section>
           {selectedPage === 'home' ? null : 
           <section className={`wrapper special style1`}>
             <div className="inner-page">
                 <section className="spotlights">
                   <p dangerouslySetInnerHTML={{__html: page.content.rendered}} />
-                  {/* <ul className="actions">
-                    <li>{page.acf.subtitle}</li>
-                  </ul> */}
                 </section>
             </div>
           </section>
@@ -80,13 +73,12 @@ class Page extends Component {
    
     if(this.props.fetchingPages || this.props.fetchingPosts) {
         return (
-          <div>LOADING</div>
+          <div className="blinky">LOADING</div>
         );
     }
     return (
       <div className="container">
         <Header />
-        
         { this.renderPage(this.props.selectedPage, this.props.pages, this.props.meowPage) }
         { this.props.selectedPage === 'home' ? <Posts /> : null }
         { this.props.selectedPage === 'arch' ? <Archives /> : null }

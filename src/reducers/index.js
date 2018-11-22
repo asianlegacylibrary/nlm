@@ -16,8 +16,7 @@ import {
     REQUEST_IIIF,
     RECEIVE_IIIF,
     NULLIFY_IIIF,
-    DETAIL_MODAL,
-    UNIVERSAL_VIEWER
+    DETAIL_MODAL
 } from '../actions';
 
 function content(
@@ -94,27 +93,10 @@ function content(
             return Object.assign({}, state, {
                 firstImage: null
             })
-        case UNIVERSAL_VIEWER:
-            return Object.assign({}, state, {
-                viewerID: action.viewerID,
-                imageAsset: action.imageAsset
-            })
         case DETAIL_MODAL:
             return Object.assign({}, state, {
                 modalID: action.modalID,
                 show: action.show
-            })
-        default:
-            return state;
-    }
-}
-
-function pagesByLanguage(state = {}, action) {
-    switch(action.type) {
-        case RECEIVE_PAGES:
-        case REQUEST_PAGES:
-            return Object.assign({}, state, {
-                    [action.lang]: content(state[action.lang], action)
             })
         default:
             return state;
@@ -182,19 +164,6 @@ function posts(state = {}, action) {
     }
 }
 
-function postsByLanguage(state = {}, action) {
-    switch(action.type) {
-        case RECEIVE_POSTS:
-        case REQUEST_POSTS:
-            return Object.assign({}, state, {
-                [action.lang]: content(state[action.lang], action)
-            })
-        default:
-            return state;
-    }
-}
-
-
 const selectedLanguage = (state = LanguageArray[0], action) => {
     switch (action.type) {
       case SET_LANG:
@@ -207,15 +176,6 @@ const selectedLanguage = (state = LanguageArray[0], action) => {
 function detailModal(state = { modalID: 0 }, action) {
     switch(action.type) {
         case DETAIL_MODAL:
-            return Object.assign({}, state, content(state, action))
-        default:
-            return state;
-    }
-}
-
-function universalViewer(state = { viewerID: 0 }, action) {
-    switch(action.type) {
-        case UNIVERSAL_VIEWER:
             return Object.assign({}, state, content(state, action))
         default:
             return state;
@@ -240,10 +200,7 @@ const rootReducer = combineReducers({
     detailData,
     manifestData,
     IIIFData,
-    detailModal,
-    universalViewer,
-    pagesByLanguage,
-    postsByLanguage
+    detailModal
 });
 
 export default rootReducer;

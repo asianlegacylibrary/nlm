@@ -74,9 +74,7 @@ const textOnlyTerm = (term, catref, filterClause) => {
 		}
 		
 	};
-	//console.log('the body of phrase match ', body);
-	//const b = client.search({index, type, body});
-	//log('logging client.search pre return ', b);
+	
 	return client.search({initialIndex, type, body});
 };
 

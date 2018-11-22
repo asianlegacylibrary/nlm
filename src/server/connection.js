@@ -7,13 +7,13 @@ const host = '142.93.23.6' // : 'localhost';
 let isConnected = false;
 let healthStatus = 'red';
 
-console.log(host);
-
 const log = (...msgs) => {
 	if (process.env.NODE_ENV === 'development') {
 		console.log(...msgs)
 	}
 };
+
+log(host);
 
 const client = new elasticsearch.Client({
 	host: {
@@ -43,12 +43,6 @@ async function checkConnection() {
 		}
     }
     
-    // cat module with json formatting
-    // client.cat.indices({"format": "json"}, (err, res) => {
-    //     log('cat2', res.filter(f => f.index.substring(0,4) === "bdrc"))
-    //     log(err)
-    // });
-
     // HAVE A LOOK INTO THIS FOR FILTERING OBJECTS
     // Object.filter = (obj, predicate) => 
     // Object.assign(...Object.keys(obj)

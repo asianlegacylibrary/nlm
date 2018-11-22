@@ -26,9 +26,11 @@ const store = createStore(
         loggerMiddleware
     )
 );
+
+// THIS COULD BE REPLACED WITH ONE 'INITIALIZE APP' type function
+// GET PAGES, POSTS, ES DATA
 store.dispatch(fetchPages())
 store.dispatch(fetchPosts())
-        //.then(() => console.log(store.getState()));
 store.dispatch(fetchData())
 
 checkConnection()

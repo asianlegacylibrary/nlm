@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import NavItem from '../containers/NavItem'
 
 const NavBar = ({ navigation }) => {
-    //console.log(navigation);
     const slugs = navigation.map(nav => {
         return (
           <NavItem key={nav.slug} selectedPage={nav.match}><Link to={nav.slug}>{nav.title}</Link></NavItem>
@@ -29,7 +28,6 @@ const createNavigation = (pages) => {
 }
 
 const mapStateToProps = (state) => ({
-    //navigation: createNavigation(state.pagesByLanguage[state.selectedLanguage])
     navigation: createNavigation(state.pages.items[state.selectedLanguage])
 })
 

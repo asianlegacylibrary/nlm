@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import NavItem from '../containers/NavItem'
 import { withNamespaces } from 'react-i18next'
 
-const NavBar = ({ navigation, i18n, t }) => {
+const NavBar = ({ navigation, t }) => {
     // matching page nav with translated 'pages' object // t('pages')[nav.match] // obj[key]
     const slugs = navigation.map(nav => {
         return (

@@ -17,6 +17,7 @@ import { checkConnection } from './server/connection'
 import './assets/css/main.css'
 import './assets/css/index.css'
 
+// this is what gives the entire app access to t, i18n...
 import './i18n'
 
 const loggerMiddleware = createLogger();

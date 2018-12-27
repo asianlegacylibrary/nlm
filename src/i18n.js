@@ -3,6 +3,12 @@ import Backend from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { reactI18nextModule } from 'react-i18next';
 
+
+// NOTE THAT 'en' is attempting to be loaded because of LanguageDetector (probably)
+// and in our case we're loading 'English'
+// this is due to how I originally coded the component
+// refactor to use language codes :)
+
 i18n
   // load translation using xhr -> see /public/locales
   // learn more: https://github.com/i18next/i18next-xhr-backend

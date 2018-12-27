@@ -30,7 +30,7 @@ def index_document(index, es, document, doc_id, config):
             id=doc_id
         )
         print("Indexing", doc_id)
-    except urllib.error.HTTPError as e:
+    except urllib.error.HTTPError:
         print("skipping ", doc_id, ". URL not found.")
 
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withNamespaces } from 'react-i18next'
 
 class Modal extends Component {
 
@@ -76,7 +77,7 @@ class Modal extends Component {
         
     }
 
-    parseType = (source, hideModal, firstImage) => {
+    parseType = (source, hideModal, firstImage, t) => {
         let { 
             'skos:prefLabel': label,
             '@id': id,
@@ -89,7 +90,7 @@ class Modal extends Component {
     
         const metaDetail = (
             <p className="meta-detail">
-                <span>Detail for record {id}, </span>
+                <span>{t('modal.detail')} {id}, </span>
                 <span> {type}</span>
             </p>
         )
@@ -97,7 +98,7 @@ class Modal extends Component {
         const closeBtn = (
             <button className="modal-btn" onClick={hideModal}>
                 <i className="fa fa-2x fa-times"></i> 
-                Close
+                {t('technical.btn-close')}
             </button>
         )
 
@@ -111,7 +112,7 @@ class Modal extends Component {
                         {metaDetail}
                         <div className="modal-title">{ this.unpack(label) }</div>
                         <div className="">
-                            <span className="lead-item">Name(s): </span>
+                            <span className="lead-item">{t('modal.names')}: </span>
                             <span className="meta-catalog">{ this.unpack(personName) }</span>
                         </div>
                         {closeBtn}
@@ -123,21 +124,21 @@ class Modal extends Component {
                         {metaDetail}
                         <div className="modal-title">{ this.unpack(label) }</div>
                         {note === null ? null : (
-                            <div className="meta-catalog">Note: { note !== null ? this.unpack(note) : null }</div>
+                            <div className="meta-catalog">{t('modal.note')}: { note !== null ? this.unpack(note) : null }</div>
                         )}
                         {closeBtn}
                     </div>
                 )
             case 'Work':
-                let scanBtn = this.buildScansBtn(access)
+                let scanBtn = this.buildScansBtn(access, t)
                 let img
                 if(access === 'bdr:AccessRestrictedByTbrc') {
                     img = (
-                        <div>RESTRICTED ACCESS TO IMAGE FILE</div>
+                        <div>{t('modal.image-restricted')}</div>
                     )
                 } else if(firstImage === null || firstImage === undefined) {
                     img = (
-                        <div className="blinky">LOADING IMAGE...</div>
+                        <div className="blinky">{t('technical.loading-image')}</div>
                     )
                 } else {
                     img = (
@@ -163,7 +164,7 @@ class Modal extends Component {
         }
     }
 
-    buildScansBtn(access) {
+    buildScansBtn(access, t) {
         let btn = null
         if(this.props.manifestURL !== undefined) {
             localStorage.setItem("manifestURL", this.props.manifestURL)
@@ -173,14 +174,14 @@ class Modal extends Component {
             } else if(access === 'bdr:AccessRestrictedByTbrc') {
                 btn = (
                     <button disabled={true}>
-                        <i className="fa fa-2x fa-eye-slash"></i> Scans Restricted
+                        <i className="fa fa-2x fa-eye-slash"></i> {t('modal.scans-restricted')}
                     </button>
                 )
             } else {
                 btn = (
                     <a target="_blank" href="/viewer.html">
                         <button>
-                            <i className="fa fa-2x fa-eye"></i> SCANS
+                            <i className="fa fa-2x fa-eye"></i> {t('modal.scans')}
                         </button>
                     </a>
                 )
@@ -197,9 +198,10 @@ class Modal extends Component {
             data = this.parseType(
                 this.props.workDetail._source, 
                 this.props.hideModal,
-                this.props.firstImage)
+                this.props.firstImage,
+                this.props.t)
         } else {
-            data = <div className="blinky">LOADING {this.props.doc_id}</div>
+            data = <div className="blinky">{this.props.t('technical.loading')} {this.props.doc_id}</div>
         }
         return ( 
             <div 
@@ -222,4 +224,5 @@ const mapStateToProps = (state) => ({
     firstImage: state.IIIFData.isFetching || state.detailModal.modalID === 0 ? null : state.IIIFData.firstImage
 })
 
-export default connect(mapStateToProps)(Modal)
+const withN = withNamespaces()(Modal)
+export default connect(mapStateToProps)(withN)

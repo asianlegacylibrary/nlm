@@ -5,9 +5,13 @@
   "dependencies": {
     "cross-fetch": "^2.2.2",
     "elasticsearch": "^15.2.0",
+    "i18next": "^13.0.0",
+    "i18next-browser-languagedetector": "^2.2.4",
+    "i18next-xhr-backend": "^1.5.1",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-i18next": "^8.4.0",
     "react-load-script": "^0.0.6",
     "react-loader": "^2.4.5",
     "react-redux": "^5.0.7",

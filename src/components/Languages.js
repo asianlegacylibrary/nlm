@@ -1,20 +1,22 @@
 import React from 'react'
 import Language from '../containers/Language'
-import { connect } from 'react-redux'
 
+import { withNamespaces } from 'react-i18next'
+
+// language codes, ISO 639-1
+// mongolian - mn, english - en, tibetan - bo
 const Languages = (props) => {
-    const list = props.languages.map(l => {
-        return (
-            <Language key={l} selectedLanguage={l}>{l}</Language>
-        );
-    });
+    let list = []
+    if(props.tReady) {
+        list = Object.entries(props.t('languages')).map(([k, l]) => {
+            return (
+                <Language key={l} selectedLanguage={k}>{l}</Language>
+            )
+        })
+    }
     return (
         <ul className="language-list">{list}</ul>
     );
 }
 
-const mapStateToProps = (state) => ({
-    languages: Object.keys(state.pages.items)
-});
-
-export default connect(mapStateToProps)(Languages)
+export default withNamespaces()(Languages)

@@ -1,43 +1,40 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { setLanguage } from '../actions'
 import { connect } from 'react-redux'
+import { withNamespaces } from 'react-i18next'
 
-const Language = ({ active, children, onClick }) => (
+const Language = ({ active, children, dispatch, lang, i18n }) => {
+
+  const changeI18n = (lng) => {
+    i18n.changeLanguage(lng);
+  }
+  
+  return (
     <li
       key={children}
-       onClick={active ? null : onClick}
-       className={active ? "lang-active" : "lang"}
-       style={active ? 
+      onClick={() => {
+        dispatch(setLanguage(lang))
+        changeI18n(lang)
+        }}
+      className={active ? "lang-active" : "lang"}
+      style={active ? 
         { color: 'red', } :
         { color: 'black', } 
         }
     >
-     <button
+    <button
       key={children}
       className="btn-lang">
       {children}
     </button>
     </li>
-)
-
-Language.propTypes = {
-  active: PropTypes.bool.isRequired,
-  children: PropTypes.node.isRequired,
-  onClick: PropTypes.func.isRequired
+  )
 }
 
-
-
 const mapStateToProps = (state, ownProps) => ({
-  active: ownProps.selectedLanguage === state.selectedLanguage
+  active: ownProps.selectedLanguage === state.selectedLanguage,
+  lang: ownProps.selectedLanguage
 })
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onClick: () => dispatch(setLanguage(ownProps.selectedLanguage)) 
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Language)
+const withN = new withNamespaces()(Language)
+export default connect(mapStateToProps)(withN)

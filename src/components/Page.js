@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { Header } from './Header';
-import { Footer } from './Footer';
+import Footer from './Footer';
 import Posts from './Posts'
 import Archives from './Archives'
+
+import { withNamespaces } from 'react-i18next'
+
 
 class Page extends Component {
 
@@ -39,6 +42,7 @@ class Page extends Component {
         }
         return (
           <div key={page.slug}>
+          
           <section 
             id="banner" 
             key={page.id}
@@ -50,9 +54,10 @@ class Page extends Component {
                   url(${mediaURL})`
             }}>
             <header className="major">
-              <span className="icon fa-angellist style7"></span>
+              <span className="icon fa-book style7"></span>
               <h1>{page.acf.title}</h1>
               <h3>{page.acf.subtitle}</h3>
+              {/* {this.props.t('description.part2')} */}
             </header>
           </section>
           {selectedPage === 'home' ? null : 
@@ -73,12 +78,13 @@ class Page extends Component {
    
     if(this.props.fetchingPages || this.props.fetchingPosts) {
         return (
-          <div className="blinky">LOADING</div>
+          <div className="blinky">{this.props.t('technical.loading')}</div>
         );
     }
     return (
       <div className="container">
         <Header />
+        
         { this.renderPage(this.props.selectedPage, this.props.pages, this.props.meowPage) }
         { this.props.selectedPage === 'home' ? <Posts /> : null }
         { this.props.selectedPage === 'arch' ? <Archives /> : null }
@@ -100,4 +106,5 @@ const mapStateToProps = state => ({
   pages: state.pages.isFetching ? [] : state.pages.items[state.selectedLanguage]
 });
 
-export default connect(mapStateToProps)(Page);
+const withN = new withNamespaces()(Page)
+export default connect(mapStateToProps)(withN);

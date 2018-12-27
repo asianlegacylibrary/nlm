@@ -19,6 +19,8 @@ import {
     DETAIL_MODAL
 } from '../actions';
 
+
+
 function content(
     state = {
         isFetching: false,

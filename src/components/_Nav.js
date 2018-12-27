@@ -2,13 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import NavItem from '../containers/NavItem'
-import { withNamespaces } from 'react-i18next'
 
-const NavBar = ({ navigation, i18n, t }) => {
-    // matching page nav with translated 'pages' object // t('pages')[nav.match] // obj[key]
+const NavBar = ({ navigation }) => {
     const slugs = navigation.map(nav => {
         return (
-          <NavItem key={nav.slug} selectedPage={nav.match}><Link to={nav.slug}>{t('pages')[nav.match]}</Link></NavItem>
+          <NavItem key={nav.slug} selectedPage={nav.match}><Link to={nav.slug}>{nav.title}</Link></NavItem>
         );
       });
     return (
@@ -33,5 +31,4 @@ const mapStateToProps = (state) => ({
     navigation: createNavigation(state.pages.items[state.selectedLanguage])
 })
 
-const withN = new withNamespaces()(NavBar)
-export default connect(mapStateToProps)(withN)
+export default connect(mapStateToProps)(NavBar)

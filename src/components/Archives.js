@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { fetchSpecificID } from '../actions'
 import Modal from './Modal'
 
+import { withNamespaces } from 'react-i18next'
+
 /* of interest 
 
 // ID & Category
@@ -164,9 +166,9 @@ class Archives extends Component {
             const topicCode = topic !== undefined ? topic.item : null
             const workCode = id !== undefined ? id.item : null
             
-            const itemAuthor = this.buildCardItem(author, authorCode, "Author:")
-            const itemGenre = this.buildCardItem(genre, genreCode, "Genre:")
-            const itemTopic = this.buildCardItem(topic, topicCode, "Topic:")
+            const itemAuthor = this.buildCardItem(author, authorCode, `${this.props.t('archives.author')}:`)
+            const itemGenre = this.buildCardItem(genre, genreCode, `${this.props.t('archives.genre')}:`)
+            const itemTopic = this.buildCardItem(topic, topicCode, `${this.props.t('archives.topic')}:`)
             
             // CARD
             return (
@@ -184,7 +186,7 @@ class Archives extends Component {
                     {itemTopic}
                     
                     <button onClick={() => this.showModal(id.item)}>
-                        More details...
+                        {`${this.props.t('archives.more')}:`}
                     </button>
                    
                 </div>
@@ -214,4 +216,5 @@ const mapStateToProps = (state) => ({
     manifestURL: state.manifestData.isFetching ? '' : state.manifestData.manifestURL
 })
 
-export default connect(mapStateToProps)(Archives)
+const withN = new withNamespaces()(Archives)
+export default connect(mapStateToProps)(withN)

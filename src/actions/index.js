@@ -8,6 +8,10 @@ import { initialSearch, searchID } from '../server/search'
 const nodeWP = 'http://206.189.71.52/'
 const endpointWP = 'wp-json/wp/v2/'
 
+//const iiifpres = "http://iiifpres.bdrc.io" ;
+//const iiifpres = "http://presentation.bdrc.io"
+const iiifpres = "http://iiif.bdrc.io"
+
 const initialIDs = [
     'W22677',
     'W1GS135873',
@@ -178,7 +182,7 @@ export function fetchSpecificID(doc_id) {
         dispatch(requestID())
         try {
             searchID([doc_id]).then((dataDetail) => {
-                //console.log('THEN', dataDetail)
+                console.log('THEN', dataDetail)
                 const imageAsset = dataDetail.hits.hits[0]._source.workHasItemImageAsset
                 const volumes = dataDetail.hits.hits[0]._source.workNumberOfVolumes
                 dispatch(fetchManifest(imageAsset, volumes))
@@ -198,7 +202,7 @@ function fetchManifest(imageAsset, volumes) {
         dispatch(requestManifest())
         try {
             let imageURL
-            const iiifpres = "http://iiifpres.bdrc.io" ;
+            
             if(imageAsset) {
                 const id = imageAsset.includes(":") ? imageAsset.split(":")[1] : imageAsset
                 if(volumes === 1) {

@@ -17,6 +17,11 @@
        "endpoints":["http://localhost:9000","http://iiif.bdrc.io"],
        "index":1
     },
+    "determine_current_iiif":
+    {
+       "2018_december":["http://presentation.bdrc.io/2.1.1/"],
+       "previous_to_that":["http://iiifpres.bdrc.io/2.1.1/"]
+    },
     "rkts":
     {
        "endpoints":["http://localhost:8080"],

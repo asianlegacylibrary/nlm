@@ -17,6 +17,8 @@ import { checkConnection } from './server/connection'
 import './assets/css/main.css'
 import './assets/css/index.css'
 
+import './i18n'
+
 const loggerMiddleware = createLogger();
 
 const store = createStore(

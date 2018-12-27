@@ -1,0 +1,38 @@
+{
+    "title": "National Library of Mongolia",
+    "sub-title": "Digital Archives",
+    "pages": {
+      "home": "Нүүр",
+      "arch": "Архивууд"
+    },
+    "technical": {
+      "loading": "Loading",
+      "loading-image": "Loading image...",
+      "btn-close": "Close"
+    },
+    "languages": {
+      "English": "Англи хэл",
+      "Mongolian": "Монгол хэл"
+    },
+    "archives": {
+      "author": "Зохиогч",
+      "genre": "Төрөл",
+      "topic": "Сэдэв",
+      "more": "More details..."
+    },
+    "modal": {
+      "detail": "Details for record"
+    },
+    "bdrc-ontology": {
+      "work": "Work",
+      "person": "Person",
+      "topic": "Topic"
+    },
+    "footer": {
+      "terms": "Ашиглах нөхцөл",
+      "privacy": "Privacy policy",
+      "contact": "Contact us",
+      "rights": "All rights reserved"
+    }
+}
+  

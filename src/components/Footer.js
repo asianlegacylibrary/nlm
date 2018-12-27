@@ -1,6 +1,7 @@
 import React from 'react'
+import { withNamespaces } from 'react-i18next'
 
-export const Footer = () => {
+const Footer = (props) => {
     return (
         <footer id="footer">
             <div className="icon">
@@ -17,14 +18,16 @@ export const Footer = () => {
                 <li><a href="#1" className="icon fa-envelope"><span className="label">Email</span></a></li>
             </ul>
             <ul className="menu">
-                <li><a href="#1">Terms of Use</a></li>
-                <li><a href="#1">Privacy Policy</a></li>
-                <li><a href="#1">Contact Us</a></li>
+                <li><a href="#1">{props.t('footer.terms')}</a></li>
+                <li><a href="#1">{props.t('footer.privacy')}</a></li>
+                <li><a href="#1">{props.t('footer.contact')}</a></li>
             </ul>
             <p className="copyright">
-                &copy; Untitled Corp. YO. All rights reserved. ACIP.
+                &copy;  ACIP. YO. {props.t('footer.rights')}.
             </p>
         </footer>
     )
 }
+
+export default withNamespaces()(Footer)
 

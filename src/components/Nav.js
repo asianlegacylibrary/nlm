@@ -4,11 +4,20 @@ import { Link } from 'react-router-dom'
 import NavItem from '../containers/NavItem'
 import { withNamespaces } from 'react-i18next'
 
-const NavBar = ({ navigation, t }) => {
+import { withRouter } from 'react-router-dom'
+
+//{ navigation, t, lang }
+const NavBar = (props) => {
     // matching page nav with translated 'pages' object // t('pages')[nav.match] // obj[key]
-    const slugs = navigation.map(nav => {
+    // nav.slug
+    console.log(props.lng, props.page)
+    const slugs = props.navigation.map(nav => {
         return (
-          <NavItem key={nav.slug} selectedPage={nav.match}><Link to={nav.slug}>{t('pages')[nav.match]}</Link></NavItem>
+          <NavItem key={nav.slug} selectedPage={nav.match}>
+            <Link to={`/${props.lng}/${props.t('pages')[nav.match]}`}>
+              {props.t('pages')[nav.match]}
+            </Link>
+          </NavItem>
         );
       });
     return (
@@ -30,8 +39,10 @@ const createNavigation = (pages) => {
 }
 
 const mapStateToProps = (state) => ({
-    navigation: createNavigation(state.pages.items[state.selectedLanguage])
+    navigation: createNavigation(state.pages.items[state.selectedLanguage]),
+    lang: state.selectedLanguage,
+    page: state.selectedPage
 })
 
 const withN = new withNamespaces()(NavBar)
-export default connect(mapStateToProps)(withN)
+export default withRouter(connect(mapStateToProps)(withN))

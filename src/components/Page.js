@@ -95,16 +95,19 @@ class Page extends Component {
 
 }
 
-const mapStateToProps = state => ({
-  fetchingPages: state.pages.isFetching,
-  selectedLanguage: state.selectedLanguage,
-  selectedPage: 
-    state.pages.isFetching ? 
-    [] : 
-    state.pages.items[state.selectedLanguage].some(page => page.slug.substring(0,4) === state.selectedPage) ? 
-    state.selectedPage : "home",
-  pages: state.pages.isFetching ? [] : state.pages.items[state.selectedLanguage]
-});
+const mapStateToProps = state => {
+  console.log('state in Page component', state)
+  return {
+    fetchingPages: state.pages.isFetching,
+    selectedLanguage: state.selectedLanguage,
+    selectedPage: 
+      state.pages.isFetching ? 
+      [] : 
+      state.pages.items[state.selectedLanguage].some(page => page.slug.substring(0,4) === state.selectedPage) ? 
+      state.selectedPage : "home",
+    pages: state.pages.isFetching ? [] : state.pages.items[state.selectedLanguage]
+  }
+};
 
 const withN = new withNamespaces()(Page)
 export default connect(mapStateToProps)(withN);

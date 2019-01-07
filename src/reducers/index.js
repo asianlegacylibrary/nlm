@@ -1,4 +1,7 @@
 import { combineReducers } from 'redux';
+import { connectRouter } from 'connected-react-router'
+import { defaultLanguage } from '../actions'
+
 import {
     REQUEST_PAGES,
     RECEIVE_PAGES,
@@ -193,7 +196,8 @@ const selectedPage = (state = 'home', action) => {
     }
 }
 
-const rootReducer = combineReducers({
+const rootReducer = (history) => combineReducers({
+    router: connectRouter(history),
     selectedLanguage,
     selectedPage,
     pages,

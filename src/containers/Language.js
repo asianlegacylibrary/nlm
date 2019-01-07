@@ -6,6 +6,7 @@ import { withNamespaces } from 'react-i18next'
 const Language = ({ active, children, dispatch, lang, i18n }) => {
 
   const changeI18n = (lng) => {
+    console.log('in language connector with', lng)
     i18n.changeLanguage(lng);
   }
   

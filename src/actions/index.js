@@ -30,6 +30,13 @@ export const LanguageArray = [
     'Tibetan'
 ]
 
+export const defaultLanguage = 'en'
+
+export const languages = {
+    en: "English",
+    mn: "Mongolian"
+}
+
 export const SET_LANG = 'SET_LANG';
 export const setLanguage = language => ({
   type: SET_LANG,

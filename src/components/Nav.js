@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import NavItem from '../containers/NavItem'
 import { withNamespaces } from 'react-i18next'
 
-import { withRouter } from 'react-router-dom'
+//import { withRouter } from 'react-router-dom'
 
 //{ navigation, t, lang }
 const NavBar = (props) => {
@@ -45,4 +45,4 @@ const mapStateToProps = (state) => ({
 })
 
 const withN = new withNamespaces()(NavBar)
-export default withRouter(connect(mapStateToProps)(withN))
+export default connect(mapStateToProps)(withN)

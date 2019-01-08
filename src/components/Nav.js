@@ -12,11 +12,11 @@ const NavBar = (props) => {
       //const p = nav.match === 'home' ? '' : `/${props.t('pages')[nav.match]}`
       const p = nav.match === 'home' ? '' : `/${nav.match}`
         return (
-          <NavItem key={nav.slug} selectedPage={nav.match}>
-            <Link to={`/${props.lng}${p}`}>
+          <Link to={`/${props.lng}${p}`}>
+            <NavItem key={nav.slug} selectedPage={nav.match}>
               {props.t('pages')[nav.match]}
-            </Link>
-          </NavItem>
+            </NavItem>
+          </Link>
         );
       });
     return (

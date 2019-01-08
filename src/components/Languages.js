@@ -16,11 +16,11 @@ const Languages = (props) => {
             //const p = props.page === 'home' ? '' : `/${props.t('pages')[props.page]}`
             const p = props.page === 'home' ? '' : `/${props.page}`
             return (
-                <Language key={l} selectedLanguage={k}>
-                    <Link to={`/${k}${p}`} >
+                <Link to={`/${k}${p}`} >
+                    <Language key={l} selectedLanguage={k}>
                         {l}
-                    </Link>
-                </Language>
+                    </Language>
+                </Link>
             )
         })
     return (

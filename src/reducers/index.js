@@ -175,8 +175,9 @@ const selectedLanguage = (state = defaultLanguage, action) => {
         case SET_LANG:
             return action.language
         case LOCATION_CHANGE:
-            console.log('from the reducer, selected lang', action.payload)
-            //return action.payload.location.pathname.substring(1,3)
+            if(action.payload.location.pathname.split('/')[1].length === 0) {
+                return state
+            }
             return action.payload.location.pathname.split('/')[1]
       default:
         return state

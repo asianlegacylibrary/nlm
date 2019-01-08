@@ -68,6 +68,7 @@ class Page extends Component {
 
   resetPage = () => {
     this.props.dispatch({ type: 'SET_PAGE', page: 'home' });
+    this.setLang(defaultLanguage)
   }
 
   renderPage(selectedPage, pages) {

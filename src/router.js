@@ -37,7 +37,7 @@ const Routes = () => {
                 <Route path={`/Mongolian`} component={Page} />
                 <Route path={`/English/arch`} component={Page} />
                 <Route path={`/Mongolian/arch`} component={Page} />
-                <Redirect push to="/English" component={Page} />
+                <Redirect push from="*" to="/English" component={Page} />
             </Switch>
         </Router>
     )

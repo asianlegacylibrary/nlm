@@ -1,42 +1,42 @@
 {
-    "title": "National Library of Mongolia",
-    "sub-title": "Digital Archives",
+    "title": "Гарчиг",
+    "sub-title": "Дэд гарчиг",
     "pages": {
       "home": "Нүүр",
       "arch": "Архивууд"
     },
     "technical": {
-      "loading": "Loading",
-      "loading-image": "Loading image...",
-      "btn-close": "Close"
+      "loading": "Татаж авах",
+      "loading-image": "Зураг татах...",
+      "btn-close": "Хаах"
     },
     "languageCodes": {
-      "en": "Англи",
-      "mn": "Монгол"
+      "en": "English",
+      "mn": "Монгол хэл"
     },
     "languages": {
-      "English": "Англи хэл",
+      "English": "English",
       "Mongolian": "Монгол хэл"
     },
     "archives": {
       "author": "Зохиогч",
-      "genre": "Төрөл",
-      "topic": "Сэдэв",
-      "more": "More details..."
+      "genre": "Төрөл зүйл",
+      "topic": "Агуулга",
+      "more": "Дэлгэрэнгүй үзэх..."
     },
     "modal": {
-      "detail": "Details for record"
+      "detail": "Нарийвчлан үзэх"
     },
     "bdrc-ontology": {
-      "work": "Work",
-      "person": "Person",
-      "topic": "Topic"
+      "work": "Aжил",
+      "person": "Бие хүн",
+      "topic": "Агуулга"
     },
     "footer": {
-      "terms": "Ашиглах нөхцөл",
-      "privacy": "Privacy policy",
-      "contact": "Contact us",
-      "rights": "All rights reserved"
+      "terms": "Ашиглах журам",
+      "privacy": "Нууцлах журам",
+      "contact": "Холбоо барих",
+      "rights": "Зохиогчийн эрхээр хамгаалагдсан"
     }
 }
   

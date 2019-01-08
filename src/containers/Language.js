@@ -3,6 +3,8 @@ import { setLanguage } from '../actions'
 import { connect } from 'react-redux'
 import { withNamespaces } from 'react-i18next'
 
+import { defaultLanguage } from '../actions'
+
 const Language = ({ active, children, dispatch, lang, i18n }) => {
 
   const changeI18n = (lng) => {
@@ -34,7 +36,7 @@ const Language = ({ active, children, dispatch, lang, i18n }) => {
 
 const mapStateToProps = (state, ownProps) => ({
   active: ownProps.selectedLanguage === state.selectedLanguage,
-  lang: ownProps.selectedLanguage
+  lang: ownProps.selectedLanguage || defaultLanguage
 })
 
 const withN = new withNamespaces()(Language)

@@ -209,7 +209,7 @@ class Archives extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    works: state.data.items.hits.hits,
+    works: state.data.isFetching ? [] : state.data.items.hits.hits,
     workDetail: state.detailData.isFetching || state.detailModal.modalID === 0 ? {} : state.detailData.item.hits.hits[0],
     doc_id: state.detailModal.modalID,
     showModal: state.detailModal.show,

@@ -6,6 +6,11 @@ import Footer from './Footer';
 import Posts from './Posts'
 import Archives from './Archives'
 
+import { defaultLanguage, 
+  setLanguage, 
+  LanguageArray,
+  setPage } from '../actions'
+
 import { withNamespaces } from 'react-i18next'
 
 
@@ -21,6 +26,43 @@ class Page extends Component {
       3: 'three',
       4: 'four'
     }
+  }
+
+  componentWillMount() { 
+    this.languageCheckAndUpdate() 
+  }
+
+  componentDidUpdate() {
+    window.onpopstate  = (e) => {
+      e.preventDefault()
+      this.languageCheckAndUpdate()
+    }
+  }
+
+  languageCheckAndUpdate() {
+    const { history, url, selectedPage, dispatch, t } = this.props;
+    if(url.split('/')[2] !== undefined) {
+      if(Object.keys(t('pages')).includes(url.split('/')[2])) {
+        dispatch(setPage('arch'))
+      } else {
+        dispatch(setPage('home'))
+        history.push(`/${url.split('/')[1]}`)
+      }
+    } else {
+      dispatch(setPage('home'))
+    }
+    if(LanguageArray.includes(url.split('/')[1])) {  
+      this.setLang(url.split('/')[1], selectedPage)
+    } else {
+      this.setLang(defaultLanguage, selectedPage)
+      history.push(defaultLanguage)
+    }  
+  }
+
+  setLang = (lng) => {
+    const { i18n, dispatch } = this.props;
+    i18n.changeLanguage(lng) // change locale
+    dispatch(setLanguage(lng)) // set redux language
 
   }
 
@@ -85,7 +127,7 @@ class Page extends Component {
       <div className="container">
         <Header />
         
-        { this.renderPage(this.props.selectedPage, this.props.pages, this.props.meowPage) }
+        { this.renderPage(this.props.selectedPage, this.props.pages) }
         { this.props.selectedPage === 'home' ? <Posts /> : null }
         { this.props.selectedPage === 'arch' ? <Archives /> : null }
         <Footer />
@@ -95,11 +137,14 @@ class Page extends Component {
 
 }
 
-const mapStateToProps = state => {
-  console.log('state in Page component', state)
+const mapStateToProps = (state) => {
+  //console.log('state in Page component', state)
+  //console.log('ownProps in Page component', ownProps)
   return {
+    router: state.router,
+    url: state.router.location.pathname,
     fetchingPages: state.pages.isFetching,
-    selectedLanguage: state.selectedLanguage,
+    selectedLanguage: state.selectedLanguage || defaultLanguage,
     selectedPage: 
       state.pages.isFetching ? 
       [] : 

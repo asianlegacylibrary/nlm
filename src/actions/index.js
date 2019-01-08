@@ -30,12 +30,14 @@ export const LanguageArray = [
     'Tibetan'
 ]
 
-export const defaultLanguage = 'en'
+export const defaultLanguage = 'English'
 
 export const languages = {
     en: "English",
     mn: "Mongolian"
 }
+
+export const LOCATION_CHANGE = '@@router/LOCATION_CHANGE'
 
 export const SET_LANG = 'SET_LANG';
 export const setLanguage = language => ({

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router'
-import { defaultLanguage } from '../actions'
+import { defaultLanguage, LOCATION_CHANGE } from '../actions'
 
 import {
     REQUEST_PAGES,
@@ -9,7 +9,7 @@ import {
     RECEIVE_POSTS,
     SET_LANG,
     SET_PAGE,
-    LanguageArray,
+    //LanguageArray,
     RECEIVE_DATA,
     REQUEST_DATA,
     RECEIVE_ID,
@@ -169,10 +169,15 @@ function posts(state = {}, action) {
     }
 }
 
-const selectedLanguage = (state = LanguageArray[0], action) => {
+// should use defaultLanguage code here
+const selectedLanguage = (state = defaultLanguage, action) => {
     switch (action.type) {
-      case SET_LANG:
-        return action.language
+        case SET_LANG:
+            return action.language
+        case LOCATION_CHANGE:
+            console.log('from the reducer, selected lang', action.payload)
+            //return action.payload.location.pathname.substring(1,3)
+            return action.payload.location.pathname.split('/')[1]
       default:
         return state
     }

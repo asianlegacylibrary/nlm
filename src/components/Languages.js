@@ -10,23 +10,19 @@ import { Link } from 'react-router-dom'
 // language codes, ISO 639-1
 // mongolian - mn, english - en, tibetan - bo
 const Languages = (props) => {
-    console.log(`${props.lng}/${props.page}`)
-    console.log(props)
     let list = []
-    //if(props.tReady) {
-    //<Link to={`/${l}/${props.page}`} >
     //list = Object.entries(props.t('languageCodes')).map(([k, l]) => {
         list = Object.entries(props.t('languages')).map(([k, l]) => {
-            console.log(props.t('pages').home, k, l)
+            //const p = props.page === 'home' ? '' : `/${props.t('pages')[props.page]}`
+            const p = props.page === 'home' ? '' : `/${props.page}`
             return (
                 <Language key={l} selectedLanguage={k}>
-                    <Link to={`/${k}/${props.page}`} >
+                    <Link to={`/${k}${p}`} >
                         {l}
                     </Link>
                 </Language>
             )
         })
-    //}
     return (
         <ul className="language-list">{list}</ul>
     );

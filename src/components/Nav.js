@@ -4,17 +4,16 @@ import { Link } from 'react-router-dom'
 import NavItem from '../containers/NavItem'
 import { withNamespaces } from 'react-i18next'
 
-//import { withRouter } from 'react-router-dom'
-
 //{ navigation, t, lang }
 const NavBar = (props) => {
     // matching page nav with translated 'pages' object // t('pages')[nav.match] // obj[key]
-    // nav.slug
-    console.log(props.lng, props.page)
     const slugs = props.navigation.map(nav => {
+      //console.log('from nav', nav.match, props.t('pages')[nav.match])
+      //const p = nav.match === 'home' ? '' : `/${props.t('pages')[nav.match]}`
+      const p = nav.match === 'home' ? '' : `/${nav.match}`
         return (
           <NavItem key={nav.slug} selectedPage={nav.match}>
-            <Link to={`/${props.lng}/${props.t('pages')[nav.match]}`}>
+            <Link to={`/${props.lng}${p}`}>
               {props.t('pages')[nav.match]}
             </Link>
           </NavItem>

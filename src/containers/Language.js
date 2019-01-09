@@ -27,6 +27,7 @@ const Language = ({ active, children, dispatch, lang, i18n }) => {
     >
     <button
       key={children}
+      disabled={active ? true : false}
       className="btn-lang">
       {children}
     </button>

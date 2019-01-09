@@ -15,6 +15,7 @@ const NavItem = ({ active, children, onClick }) => (
     >
     <button
       key={children}
+      disabled={active ? true : false}
       className="btn-nav">
       {children}
     </button>

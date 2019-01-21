@@ -9,8 +9,6 @@ const nodeWP = 'http://206.189.71.52/'
 const endpointWP = 'wp-json/wp/v2/'
 
 const iiifpres = "http://iiifpres.bdrc.io" ;
-//const iiifpres = "http://presentation.bdrc.io"
-//const iiifpres = "http://iiif.bdrc.io"
 
 const initialIDs = [
     'W22677',
@@ -24,13 +22,7 @@ const initialIDs = [
     'W1KG14700'
 ]
 
-export const LanguageArray = [
-    'English',
-    'Mongolian',
-    'Tibetan'
-]
-
-export const defaultLanguage = 'English'
+export const defaultLanguage = 'en'
 
 export const languages = {
     en: "English",
@@ -80,9 +72,11 @@ export function fetchPages() {
             )
             .then(json => {
                 //reduce using empty array to group by language
+                //console.log('json pages', json)
                 return json.reduce((r, a) => {
-                    r[a.acf.language] = r[a.acf.language] || [];
-                    r[a.acf.language].push(a);
+                    const x = Object.keys(languages).find(key => languages[key] === a.acf.language)
+                    r[x] = r[x] || [];
+                    r[x].push(a);
                     return r;
                 }, []);
             })
@@ -124,8 +118,9 @@ export function fetchPosts() {
             .then(json => {
                 //reduce using empty array to group by language
                 return json.reduce((r, a) => {
-                    r[a.acf.language] = r[a.acf.language] || [];
-                    r[a.acf.language].push(a);
+                    const x = Object.keys(languages).find(key => languages[key] === a.acf.language)
+                    r[x] = r[x] || [];
+                    r[x].push(a);
                     return r;
                 }, []);
             })

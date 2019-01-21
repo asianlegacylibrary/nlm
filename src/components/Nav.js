@@ -6,13 +6,19 @@ import { withNamespaces } from 'react-i18next'
 
 //{ navigation, t, lang }
 const NavBar = (props) => {
+  console.log(props.navigation)
     // matching page nav with translated 'pages' object // t('pages')[nav.match] // obj[key]
     const slugs = props.navigation.map(nav => {
       //console.log('from nav', nav.match, props.t('pages')[nav.match])
       //const p = nav.match === 'home' ? '' : `/${props.t('pages')[nav.match]}`
+      //const xx = Object.keys(props.t('pages')).find(key => props.t('pages')[nav.match] === nav.match)
+      //console.log('xx', xx, nav.match)
+      console.log('getting it from translation', props.t('pages')[nav.match])
+      //const p = nav.match === 'home' ? '' : `/${props.t('pages').find(key => props.t('pages')[nav.match] === nav.match)}`
+      
       const p = nav.match === 'home' ? '' : `/${nav.match}`
         return (
-          <Link to={`/${props.lng}${p}`}>
+          <Link key={nav.slug} to={`/${props.lng}${p}`}>
             <NavItem key={nav.slug} selectedPage={nav.match}>
               {props.t('pages')[nav.match]}
             </NavItem>
@@ -27,9 +33,11 @@ const NavBar = (props) => {
 }
 
 const createNavigation = (pages) => {
+  
     return pages.map(c => {
         return {
-          match: c.slug.substring(0,4),
+          //match: c.slug.substring(0,4),
+          match: c.slug.split('-')[0],
           title: c.slug.substring(0,4) ==='home' ? 'Home' : c.title.rendered,
           slug: c.slug,
           order: c.menu_order

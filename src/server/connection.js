@@ -2,7 +2,7 @@ import elasticsearch from 'elasticsearch';
 
 const port = 9200;
 //const host = process.env.NODE_ENV === 'production' ? '142.93.23.6' : 'localhost';
-const host = '142.93.23.6' // : 'localhost';
+const host = '157.230.172.69' // : 'localhost';
 
 let isConnected = false;
 let healthStatus = 'red';

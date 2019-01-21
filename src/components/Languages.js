@@ -12,11 +12,11 @@ import { Link } from 'react-router-dom'
 const Languages = (props) => {
     let list = []
     //list = Object.entries(props.t('languageCodes')).map(([k, l]) => {
-        list = Object.entries(props.t('languages')).map(([k, l]) => {
+        list = Object.entries(props.t('languageCodes')).map(([k, l]) => {
             //const p = props.page === 'home' ? '' : `/${props.t('pages')[props.page]}`
             const p = props.page === 'home' ? '' : `/${props.page}`
             return (
-                <Link to={`/${k}${p}`} >
+                <Link key={k} to={`/${k}${p}`} >
                     <Language key={l} selectedLanguage={k}>
                         {l}
                     </Language>

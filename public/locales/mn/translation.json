@@ -1,42 +1,45 @@
 {
-    "title": "National Library of Mongolia",
-    "sub-title": "Digital Archives",
-    "pages": {
-      "home": "Нүүр",
-      "arch": "Архивууд"
-    },
-    "technical": {
-      "loading": "Loading",
-      "loading-image": "Loading image...",
-      "btn-close": "Close"
-    },
-    "languageCodes": {
-      "en": "Англи",
-      "mn": "Монгол"
-    },
-    "languages": {
-      "English": "Англи хэл",
-      "Mongolian": "Монгол хэл"
-    },
-    "archives": {
-      "author": "Зохиогч",
-      "genre": "Төрөл",
-      "topic": "Сэдэв",
-      "more": "More details..."
-    },
-    "modal": {
-      "detail": "Details for record"
-    },
-    "bdrc-ontology": {
-      "work": "Work",
-      "person": "Person",
-      "topic": "Topic"
-    },
-    "footer": {
-      "terms": "Ашиглах нөхцөл",
-      "privacy": "Privacy policy",
-      "contact": "Contact us",
-      "rights": "All rights reserved"
-    }
+  "title": "Гарчиг",
+  "sub-title": "Дэд гарчиг",
+  "pages": {
+    "home": "Нүүр",
+    "archives": "Архивууд"
+  },
+  "technical": {
+    "loading": "Татаж авах",
+    "loading-image": "Зураг татах...",
+    "btn-close": "Хаах"
+  },
+  "languageCodes": {
+    "en": "English",
+    "mn": "Монгол хэл"
+  },
+  "languageCodeLookup": {
+    "English": "en",
+    "Mongolian": "mn"
+  },
+  "languages": {
+    "en": "English",
+    "mn": "Монгол хэл"
+  },
+  "archives": {
+    "author": "Зохиогч",
+    "genre": "Төрөл зүйл",
+    "topic": "Агуулга",
+    "more": "Дэлгэрэнгүй үзэх..."
+  },
+  "modal": {
+    "detail": "Нарийвчлан үзэх"
+  },
+  "bdrc-ontology": {
+    "work": "Aжил",
+    "person": "Бие хүн",
+    "topic": "Агуулга"
+  },
+  "footer": {
+    "terms": "Ашиглах журам",
+    "privacy": "Нууцлах журам",
+    "contact": "Холбоо барих",
+    "rights": "Зохиогчийн эрхээр хамгаалагдсан"
+  }
 }
-  

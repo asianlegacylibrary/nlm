@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 const Posts = ({ posts }) => {
     if(!posts) {
-        return <div>NO POSTS</div>
+        return <div></div>
     }
     else {
         
@@ -25,9 +25,9 @@ const Posts = ({ posts }) => {
                             </section>
                             <section>
                                 <p dangerouslySetInnerHTML={{__html: post.content.rendered}} />
-                                <ul className="actions">
+                                {/* <ul className="actions">
                                     <li><a href={`#${i+1}`} className="button">{post.acf.subtitle}</a></li>
-                                </ul>
+                                </ul> */}
                             </section>
                         </section>
                     </div>
@@ -41,9 +41,9 @@ const Posts = ({ posts }) => {
                         <section>
                             <h2>{post.acf.title}</h2>
                             <p dangerouslySetInnerHTML={{__html: post.content.rendered}} />
-                            <ul className="actions">
+                            {/* <ul className="actions">
                                 <li><a href={`#${i+1}`} className="button">{post.acf.subtitle}</a></li>
-                            </ul>
+                            </ul> */}
                         </section>
                         <section>
                             <span className="image"><img src={mediaURL} alt="" /></span>

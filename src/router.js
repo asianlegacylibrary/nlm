@@ -33,11 +33,12 @@ const Routes = () => {
                 {/* <Route key="en" path={`/en/:page`} component={Page} />
                 <Route key="mn" path={`/mn/:page`} component={Page} /> */}
                 {/* {route} */}
-                <Route path={`/English`} component={Page} />
-                <Route path={`/Mongolian`} component={Page} />
-                <Route path={`/English/arch`} component={Page} />
-                <Route path={`/Mongolian/arch`} component={Page} />
-                <Redirect push from="*" to="/English" component={Page} />
+                <Route path={`/en`} component={Page} />
+                <Route path={`/mn`} component={Page} />
+                <Route path={`/en/archives`} component={Page} />
+                <Route path={`/mn/archives`} component={Page} />
+                <Route path={`/mn/Архивууд`} component={Page} />
+                <Redirect push from="*" to="/en" component={Page} />
             </Switch>
         </Router>
     )

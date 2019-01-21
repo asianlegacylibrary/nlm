@@ -7,8 +7,8 @@ import Posts from './Posts'
 import Archives from './Archives'
 
 import { defaultLanguage, 
-  setLanguage, 
-  LanguageArray,
+  setLanguage,
+  languages,
   setPage } from '../actions'
 
 import { withNamespaces } from 'react-i18next'
@@ -43,7 +43,7 @@ class Page extends Component {
     const { history, url, selectedPage, dispatch, t } = this.props;
     if(url.split('/')[2] !== undefined) {
       if(Object.keys(t('pages')).includes(url.split('/')[2])) {
-        dispatch(setPage('arch'))
+        dispatch(setPage('archives'))
       } else {
         dispatch(setPage('home'))
         history.push(`/${url.split('/')[1]}`)
@@ -51,7 +51,7 @@ class Page extends Component {
     } else {
       dispatch(setPage('home'))
     }
-    if(LanguageArray.includes(url.split('/')[1])) {  
+    if(url.split('/')[1] in languages) { 
       this.setLang(url.split('/')[1], selectedPage)
     } else {
       this.setLang(defaultLanguage, selectedPage)
@@ -72,12 +72,12 @@ class Page extends Component {
   }
 
   renderPage(selectedPage, pages) {
-    if (!pages.some(e => e.slug.substring(0,4) === selectedPage)) {
+    if (!pages.some(e => e.slug.split('-')[0] === selectedPage)) {
       console.log('page not there');
       this.resetPage();
     }
     return pages
-      .filter(page => page.slug.substring(0,4) === selectedPage)
+      .filter(page => page.slug.split('-')[0] === selectedPage)
       .map((page, i) => {
         let mediaURL = null
         if(page._embedded["wp:featuredmedia"]) {
@@ -127,10 +127,10 @@ class Page extends Component {
     return (
       <div className="container">
         <Header />
-        
         { this.renderPage(this.props.selectedPage, this.props.pages) }
+        { console.log("is it archives?", this.props.selectedPage, this.props.pages)}
         { this.props.selectedPage === 'home' ? <Posts /> : null }
-        { this.props.selectedPage === 'arch' ? <Archives /> : null }
+        { this.props.selectedPage === 'archives' ? <Archives /> : null }
         <Footer />
       </div>
     );
@@ -141,6 +141,7 @@ class Page extends Component {
 const mapStateToProps = (state) => {
   //console.log('state in Page component', state)
   //console.log('ownProps in Page component', ownProps)
+  
   return {
     router: state.router,
     url: state.router.location.pathname,
@@ -149,7 +150,7 @@ const mapStateToProps = (state) => {
     selectedPage: 
       state.pages.isFetching ? 
       [] : 
-      state.pages.items[state.selectedLanguage].some(page => page.slug.substring(0,4) === state.selectedPage) ? 
+      state.pages.items[state.selectedLanguage].some(page => page.slug.split('-')[0] === state.selectedPage) ? 
       state.selectedPage : "home",
     pages: state.pages.isFetching ? [] : state.pages.items[state.selectedLanguage]
   }

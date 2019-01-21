@@ -1,12 +1,13 @@
 import React from 'react'
 import { withNamespaces } from 'react-i18next'
+import { onlyIP } from '../actions'
 
 const Footer = (props) => {
     return (
         <footer id="footer">
             <div className="icon">
               <img 
-                src="http://206.189.71.52/wp-content/uploads/2018/10/nlm-logo-no-text.png" 
+                src={`http://${onlyIP}/wp-content/uploads/2018/10/nlm-logo-no-text.png`} 
                 alt="mongolia-logo" />
             </div>
             <ul className="alt-icons">

@@ -233,6 +233,19 @@ section.special, article.special, header.special {
   padding: 2%;
 }
 
+/* VIDEO ? */
+.wp-video, video.wp-video-shortcode {
+	width: 100% !important;
+	height: 100% !important;
+}
+
+.wp-video, video.wp-video-shortcode {
+	max-width: 100% !important;
+}
+video.wp-video-shortcode {
+	position: relative;
+}
+
 /* MEDIA QUERIES
 breakpoints: 1680, 1280, 980, 736, 480
 */

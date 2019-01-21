@@ -5,7 +5,10 @@ import { initialSearch, searchID } from '../server/search'
 // possibly needed for authenticated requests?
 //import config from './config-defaults.json'
 
-const nodeWP = 'http://206.189.71.52/'
+//const nodeWP = 'http://206.189.71.52'
+export const nodeWP = 'http://178.128.7.239/'
+export const onlyIP = '178.128.7.239'
+
 const endpointWP = 'wp-json/wp/v2/'
 
 const iiifpres = "http://iiifpres.bdrc.io" ;

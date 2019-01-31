@@ -66,6 +66,7 @@ body {
 }
 #banner {
   background-size: cover;
+  margin-top: 40px;
 
 }
 #footer {
@@ -253,6 +254,18 @@ section.special, article.special, header.special {
 
 .modal-main {
   padding: 2%;
+}
+
+.wp-video, video.wp-video-shortcode {
+	width: 100% !important;
+	height: 100% !important;
+}
+
+.wp-video, video.wp-video-shortcode {
+	max-width: 100% !important;
+}
+video.wp-video-shortcode {
+	position: relative;
 }
 
 /* MEDIA QUERIES

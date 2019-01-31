@@ -101,17 +101,18 @@ class Page extends Component {
               <h1>{page.acf.title}</h1>
               <h3>{page.acf.subtitle}</h3>
               {/* {this.props.t('description.part2')} */}
-            </header>
-          </section>
-          {selectedPage === 'home' ? null : 
-          <section className={`wrapper special style1`}>
-            <div className="inner-page">
-                <section className="spotlights">
+              <div className="inner-page">
+                <section className="spotlights-page">
                   <p dangerouslySetInnerHTML={{__html: page.content.rendered}} />
                 </section>
             </div>
+            </header>
           </section>
-          }
+          {/* {selectedPage === 'home' ? null : 
+          <section className={`wrapper special style1`}>
+            spotlights orig location
+          </section>
+          } */}
           </div>
         )
     })

@@ -8,6 +8,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+ul {
+  margin: 0;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -16,7 +20,6 @@ code {
 .language-list {
   list-style: none;
   margin-right: auto;
-  
 }
 
 .lang, .lang-active {
@@ -70,6 +73,18 @@ body {
   background: #222; /*url("../images/bg.jpg")*/
 }
 
+#header {
+  position: fixed;
+  background: #ebebeb;
+  padding: 0.5em;
+}
+/* ul {
+  margin: 0;
+} */
+.language-list > ul, .nav-list > ul {
+  margin: 0;
+}
+
 .wrapper > .inner-page {
   margin: 0 auto;
   padding-bottom: 0.01em;
@@ -106,6 +121,13 @@ section.special, article.special, header.special {
 }
 .card-sub-item {
   padding-left: 10%;
+}
+
+.spotlights-page {
+  text-align: center;
+  display: block;
+  font-size: 1.2em;
+  padding: 1em 3em;
 }
 
 /* Modal Content/Box */
@@ -231,19 +253,6 @@ section.special, article.special, header.special {
 
 .modal-main {
   padding: 2%;
-}
-
-/* VIDEO ? */
-.wp-video, video.wp-video-shortcode {
-	width: 100% !important;
-	height: 100% !important;
-}
-
-.wp-video, video.wp-video-shortcode {
-	max-width: 100% !important;
-}
-video.wp-video-shortcode {
-	position: relative;
 }
 
 /* MEDIA QUERIES

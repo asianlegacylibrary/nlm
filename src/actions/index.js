@@ -25,6 +25,8 @@ const initialIDs = [
     'W1KG14700'
 ]
 
+export const clientName = 'National Library of Mongolia'
+
 export const defaultLanguage = 'en'
 
 export const languages = {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { withNamespaces } from 'react-i18next'
-import { onlyIP } from '../actions'
+import { onlyIP, clientName } from '../actions'
 
 const Footer = (props) => {
     return (
@@ -24,7 +24,7 @@ const Footer = (props) => {
                 <li><a href="#1">{props.t('footer.contact')}</a></li>
             </ul>
             <p className="copyright">
-                &copy;  ACIP. YO. {props.t('footer.rights')}.
+                &copy; {`2018 ${clientName}. ${props.t('footer.rights')}.`}
             </p>
         </footer>
     )

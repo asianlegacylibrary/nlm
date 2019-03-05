@@ -147,7 +147,7 @@ class Archives extends Component {
     render() {
         // loop over our initial 9 works
         const items = this.props.works.map((work, i) => {
-
+            //console.log(work)
             const { 
                 'skos:prefLabel': label,
                 '@id': id,
@@ -159,7 +159,7 @@ class Archives extends Component {
                 //'workHasPart': parts,
                 //'workNumberOfVolumes': volumes
             } = work._source
-
+            
             const author = work._source.creatorMainAuthor !== undefined ? work._source.creatorMainAuthor : null 
             const authorCode = author !== null ? author.item : null
             const genreCode = genre !== undefined ? genre.item : null

@@ -77,12 +77,31 @@ class Modal extends Component {
         
     }
 
+    buildAttribution = (t) => {
+        // SOMETHING ALONG THESE LINES, decide which field holds attribution
+        //let a = biblio !== null ? biblio : null
+        //let a = scan !== null ? scan : null
+
+        // if(Array.isArray(a)) { a = a[0] }
+        // if(a.hasOwnProperty('@value')) { a = a['@value'] }
+        // return a
+
+        return (
+            <p className="meta-detail">
+                <span>{t('archives.attribution')}</span>
+            </p>
+        )
+    }
+
     parseType = (source, hideModal, firstImage, t) => {
         let { 
             'skos:prefLabel': label,
             '@id': id,
             type,
             'workCatalogInfo': catalogInfo,
+            // ATTRIBUTION TEXT
+            //'workBiblioNote': biblio,
+            //'workScanInfo': scan
             personName,
             note,
             'adm:access': access
@@ -94,6 +113,10 @@ class Modal extends Component {
                 <span> {type}</span>
             </p>
         )
+
+        // ultimately use this block to fetch proper attribution from data
+        // workBiblioNote or workScanInfo
+        const attribution = this.buildAttribution(t)
 
         const closeBtn = (
             <button className="modal-btn" onClick={hideModal}>
@@ -153,6 +176,8 @@ class Modal extends Component {
                         {metaDetail}
                         
                         {img}
+
+                        {attribution}
                         
                         <div className="meta-catalog">{ this.unpack(catalogInfo) }</div>
                         

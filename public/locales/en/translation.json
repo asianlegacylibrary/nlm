@@ -27,7 +27,8 @@
     "author": "Author",
     "genre": "Genre",
     "topic": "Topic",
-    "more": "More details..."
+    "more": "More details...",
+    "attribution": "Scanned at the National Library of Mongolia by Asian Classics Input Project."
   },
   "modal": {
     "detail": "Detail for record",

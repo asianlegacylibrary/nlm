@@ -1,13 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { sortNested } from '../actions'
 import '../assets/css/posts.css'
 
+
+
 const Posts = ({ posts }) => {
+    //console.log(posts)
     if(!posts) {
         return <div></div>
     }
+
+    //const c = sortNested('acf', 'order', posts)
     
     return posts.map((post, i) => {
+
+        //strange method to make alternating styles
         let j = i % 2 === 0 ? 1 : 3;
         
         let mediaURL = ""
@@ -15,7 +23,8 @@ const Posts = ({ posts }) => {
             mediaURL = post._embedded["wp:featuredmedia"][0].source_url || ""
         }
 
-        if(j === 3) {
+        if(parseInt(post.acf.columns) === 2) {
+            console.log('2 columns!')
             return (
                 <section key={i} id={i} className={`wrapper special style${j}`}>
                     <div className="inner">
@@ -52,7 +61,7 @@ const Posts = ({ posts }) => {
 const mapStateToProps = (state) => ({
     fetchingPosts: state.posts.isFetching,
     selectedLanguage: state.selectedLanguage,
-    posts: state.posts.isFetching ? [] : state.posts.items[state.selectedLanguage]
+    posts: state.posts.isFetching ? [] : sortNested('acf', 'order', state.posts.items[state.selectedLanguage])
 })
 
 export default connect(mapStateToProps)(Posts)

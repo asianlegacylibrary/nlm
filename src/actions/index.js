@@ -50,6 +50,26 @@ export const log = (...msgs) => {
 	}
 }
 
+// ES6 sort
+export const sortNestedES6 = (nestedItem, prop, arr) => {
+    return arr.sort((a, b) => {
+        return a[nestedItem][prop].localeCompare((b[nestedItem][prop]))
+    })
+}
+
+// arr is the array of objects, prop is the property to sort by
+export const sortNested = (nestedObj, prop, arr) => {
+    return arr.sort((a, b) => {
+        if (a[nestedObj][prop] < b[nestedObj][prop]) {
+            return -1;
+        } else if (a[nestedObj][prop] > b[nestedObj][prop]) {
+            return 1;
+        } else {
+            return 0;
+        }
+    })
+}
+
 export const LOCATION_CHANGE = '@@router/LOCATION_CHANGE'
 
 export const SET_LANG = 'SET_LANG';
@@ -121,7 +141,6 @@ export function getGS() {
             let gsData = {}
             data.map(d => {
                 const key = d.StatName.split(' ').join('')
-                console.log(typeof(d.Value), isNaN(d.Value), d.Value)
                 gsData[key] = isNaN(d.Value) ? d.Value : String(d.Value).replace(/(.)(?=(\d{3})+$)/g,'$1,')
             })
             return dispatch(receiveGS(gsData))
@@ -193,11 +212,13 @@ export function fetchPosts() {
                     return r;
                 }, []);
             })
-            .then(json => 
+            .then(json =>
                 dispatch(receivePosts(json))
             )
     }
 }
+
+
 
 /* ******************************************
 DATA

@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css?family=Merriweather");
+
+.list-stats { 
+    font-size: 1.2em;
+    list-style: none;
+    border-left: 1px solid #999;
+}
+.list-stats li { }
+.list-stats li p { 
+    padding:8px 0 4px 8px; 
+    color: #ddd;
+    margin: 0 0 1.2em 0;
+}
+.list-stats li p em {
+    font-weight: normal;
+    font-style:normal;  
+    font-family: 'Merriweather';
+    color: #efefef;
+  }

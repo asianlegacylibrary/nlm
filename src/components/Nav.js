@@ -3,19 +3,12 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import NavItem from '../containers/NavItem'
 import { withNamespaces } from 'react-i18next'
+import { log } from '../actions'
 
-//{ navigation, t, lang }
 const NavBar = (props) => {
-  console.log(props.navigation)
+  log('creating navbar with props', props.navigation)
     // matching page nav with translated 'pages' object // t('pages')[nav.match] // obj[key]
     const slugs = props.navigation.map(nav => {
-      //console.log('from nav', nav.match, props.t('pages')[nav.match])
-      //const p = nav.match === 'home' ? '' : `/${props.t('pages')[nav.match]}`
-      //const xx = Object.keys(props.t('pages')).find(key => props.t('pages')[nav.match] === nav.match)
-      //console.log('xx', xx, nav.match)
-      console.log('getting it from translation', props.t('pages')[nav.match])
-      //const p = nav.match === 'home' ? '' : `/${props.t('pages').find(key => props.t('pages')[nav.match] === nav.match)}`
-      
       const p = nav.match === 'home' ? '' : `/${nav.match}`
         return (
           <Link key={nav.slug} to={`/${props.lng}${p}`}>
@@ -23,13 +16,15 @@ const NavBar = (props) => {
               {props.t('pages')[nav.match]}
             </NavItem>
           </Link>
-        );
-      });
+        )
+      })
+
     return (
 		<ul className="nav-list">
 			{slugs}
 		</ul>
-    );
+    )
+
 }
 
 const createNavigation = (pages) => {
@@ -42,7 +37,8 @@ const createNavigation = (pages) => {
           slug: c.slug,
           order: c.menu_order
         }
-      });
+      })
+      
 }
 
 const mapStateToProps = (state) => ({

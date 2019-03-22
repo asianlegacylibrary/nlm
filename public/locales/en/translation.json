@@ -23,6 +23,14 @@
     "en": "English",
     "mn": "Монгол хэл"
   },
+  "stats": {
+    "Title": "Archive Statistics",
+    "LastUpdate": "Last Update",
+    "PagesDigitized": "Pages Digitized",
+    "VolumesDigitized": "Volumes Digitized",
+    "VolumesCataloged": "Volumes Cataloged",
+    "TitlesCataloged": "Titles Cataloged"
+  },
   "archives": {
     "author": "Author",
     "genre": "Genre",

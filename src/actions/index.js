@@ -2,6 +2,16 @@ import fetch from 'cross-fetch'
 
 import { initialSearch, searchID } from '../server/search'
 
+import Tabletop from 'tabletop'
+
+const d = `https://docs.google.com/spreadsheets/d/`
+const gsKey = `1hPqe-Y2TWwMTAxIEXYvc8du_GMFUJQNPvZbJou7veAY`
+//const testKey = `1P6Dk9SN0af7GDitw7-tRXGc5N22AEXoaOpDIKzVdlK0`
+const spreadSheet = `${d}${gsKey}/edit?usp=sharing`
+
+
+
+
 // possibly needed for authenticated requests?
 //import config from './config-defaults.json'
 
@@ -34,6 +44,12 @@ export const languages = {
     mn: "Mongolian"
 }
 
+export const log = (...msgs) => {
+	if (process.env.NODE_ENV === 'development') {
+		console.log(...msgs)
+	}
+}
+
 export const LOCATION_CHANGE = '@@router/LOCATION_CHANGE'
 
 export const SET_LANG = 'SET_LANG';
@@ -64,6 +80,54 @@ function receivePages(json) {
         type: RECEIVE_PAGES,
         pages: json, //.filter(child => child.acf.language === lang), //.data.children.map(child => child.data),
         receivedAt: Date.now()
+    }
+}
+
+export const REQUEST_GS = 'REQUEST_GS'
+function requestGS() {
+    return {
+        type: REQUEST_GS
+    }
+}
+
+export const RECEIVE_GS = 'RECEIVE_GS'
+function receiveGS(gs) {
+    return {
+        type: RECEIVE_GS,
+        gs: gs,
+        receivedAt: Date.now()
+    }
+}
+
+const tableTopInit = async () => {
+    return await new Promise((response, error) => {
+        Tabletop.init({
+            key: spreadSheet,
+            callback: (data, tabletop) => { 
+                response(data)
+                error(tabletop)
+            }, 
+            simpleSheet: true
+        })
+    })
+}
+
+export function getGS() {
+    return async dispatch => {
+        dispatch(requestGS())
+        try {
+            const data = await tableTopInit()
+            // add some data processing
+            let gsData = {}
+            data.map(d => {
+                const key = d.StatName.split(' ').join('')
+                console.log(typeof(d.Value), isNaN(d.Value), d.Value)
+                gsData[key] = isNaN(d.Value) ? d.Value : String(d.Value).replace(/(.)(?=(\d{3})+$)/g,'$1,')
+            })
+            return dispatch(receiveGS(gsData))
+        } catch(error) {
+            console.error('error from tabletop', error)
+        }
     }
 }
 
@@ -187,11 +251,11 @@ function receiveID(json) {
 
 export function fetchSpecificID(doc_id) {
     return dispatch => {  
-        console.log('fetchSpecificID!', doc_id)
+        log('fetchSpecificID!', doc_id)
         dispatch(requestID())
         try {
             searchID([doc_id]).then((dataDetail) => {
-                console.log('THEN', dataDetail)
+                log('THEN', dataDetail)
                 const imageAsset = dataDetail.hits.hits[0]._source.workHasItemImageAsset
                 const volumes = dataDetail.hits.hits[0]._source.workNumberOfVolumes
                 dispatch(fetchManifest(imageAsset, volumes))
@@ -207,7 +271,7 @@ export function fetchSpecificID(doc_id) {
 
 function fetchManifest(imageAsset, volumes) {
     return dispatch => {
-        console.log('INSIDE fetchManifest', imageAsset)
+        log('INSIDE fetchManifest', imageAsset)
         dispatch(requestManifest())
         try {
             let imageURL
@@ -220,10 +284,10 @@ function fetchManifest(imageAsset, volumes) {
                     // W22677 > workHasItem > bdr:I22677 > HasVolume > V22677_I1KG1714
                     // BDRC "http://iiifpres.bdrc.io/2.1.1/v:bdr:V22677_I1KG1714/manifest"
                     searchID([id]).then((dataDetail) => {
-                        console.log('THEN', dataDetail)
+                        log('THEN', dataDetail)
                         const volumeID = dataDetail.hits.hits[0]._source.itemHasVolume
                         imageURL = `${iiifpres}/2.1.1/v:${volumeID}/manifest`
-                        console.log('THIS IS IMAGE URL', imageURL)
+                        log('THIS IS IMAGE URL', imageURL)
                         dispatch(fetchIIIF(imageURL))
                         return dispatch(receiveManifest(imageURL))
                     })
@@ -231,7 +295,7 @@ function fetchManifest(imageAsset, volumes) {
                     // bdr:W1GS135873
                     // BDRC "http://iiifpres.bdrc.io/2.1.1/collection/i:bdr:I1GS135873"
                     imageURL = `${iiifpres}/2.1.1/collection/i:${imageAsset}`
-                    console.log('THIS IS IMAGE URL', imageURL)
+                    log('THIS IS IMAGE URL', imageURL)
                     dispatch(fetchIIIF(imageURL))
                     return dispatch(receiveManifest(imageURL))
                 }
@@ -255,7 +319,7 @@ function receiveManifest(manifestURL) {
 
 export const REQUEST_MANIFEST = 'REQUEST_MANIFEST';
 function requestManifest() {
-    console.log('requesting manifest!')
+    log('requesting manifest!')
     return {
         type: REQUEST_MANIFEST
     }
@@ -280,7 +344,7 @@ function receiveIIIF(firstImage) {
 
 export const REQUEST_IIIF = 'REQUEST_IIIF';
 function requestIIIF() {
-    console.log('requesting IIIF!')
+    log('requesting IIIF!')
     return {
         type: REQUEST_IIIF,
         firstImage: null
@@ -300,13 +364,13 @@ export function fetchIIIF(url) {
             fetch(url, {method: 'GET'}).then((manifest) => {
                 return manifest.json()
             }).then(data => {
-                console.log('MANIFEST?!', data)
+                log('MANIFEST?!', data)
                 let image ;
 
                 //collection ?
                 if(!data.sequences ) {
                     if (data.manifests) {
-                        console.log('I AM A COLLECTION')
+                        log('I AM A COLLECTION')
                         dispatch(fetchIIIF(data.manifests[0]["@id"]))
                     }
                 }

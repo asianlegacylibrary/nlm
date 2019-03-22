@@ -12,6 +12,8 @@ import {
     //LanguageArray,
     RECEIVE_DATA,
     REQUEST_DATA,
+    RECEIVE_GS,
+    REQUEST_GS,
     RECEIVE_ID,
     REQUEST_ID,
     REQUEST_MANIFEST,
@@ -60,6 +62,16 @@ function content(
             return Object.assign({}, state, {
                 isFetching: false,
                 items: action.data,
+                lastUpdated: action.receivedAt
+            })
+        case REQUEST_GS:
+            return Object.assign({}, state, {
+                isFetching: true
+            })
+        case RECEIVE_GS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                gs: action.gs,
                 lastUpdated: action.receivedAt
             })
         case REQUEST_ID:
@@ -138,6 +150,16 @@ function detailData(state = {}, action) {
     }
 }
 
+function gsData(state = {}, action) {
+    switch(action.type) {
+        case RECEIVE_GS:
+        case REQUEST_GS:
+            return Object.assign({}, state, content(state, action))
+        default:
+            return state
+    }
+}
+
 function manifestData(state = {}, action) {
     switch(action.type) {
         case RECEIVE_MANIFEST:
@@ -209,6 +231,7 @@ const rootReducer = (history) => combineReducers({
     pages,
     posts,
     data,
+    gsData,
     detailData,
     manifestData,
     IIIFData,

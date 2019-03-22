@@ -22,13 +22,16 @@
     "react-scripts": "2.0.5",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "tabletop": "^1.5.2",
+    "universalviewer": "^3.0.16"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "copy-uv-to-public": "rm -rf public/uv && cp -R node_modules/universalviewer/uv public/uv",
     "deploy-surge": "yarn build && mv build/index.html build/200.html && surge build nlm.asianclassics.org",
     "deploy-do": "yarn build && scp -pr build/. root@nlm:/var/www/html"
   },

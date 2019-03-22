@@ -192,9 +192,9 @@ class Modal extends Component {
     buildScansBtn(access, t) {
         let btn = null
         if(this.props.manifestURL !== undefined) {
-            localStorage.setItem("manifestURL", this.props.manifestURL)
+            //window.localStorage.setItem("manifestURL", this.props.manifestURL)
             if(this.props.manifestURL.length === 0) {
-                localStorage.setItem("manifestURL", "")
+                //window.localStorage.setItem("manifestURL", "")
                 btn = null
             } else if(access === 'bdr:AccessRestrictedByTbrc') {
                 btn = (
@@ -203,8 +203,11 @@ class Modal extends Component {
                     </button>
                 )
             } else {
-                btn = (
-                    <a target="_blank" href="/viewer.html">
+                btn = ( 
+                    <a 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        href={process.env.PUBLIC_URL + '/uv.html?manifest=' + this.props.manifestURL}>
                         <button>
                             <i className="fa fa-2x fa-eye"></i> {t('modal.scans')}
                         </button>

@@ -4,15 +4,17 @@ import { connect } from 'react-redux';
 import { Header } from './Header';
 import Footer from './Footer';
 import Posts from './Posts'
+import Stats from './Stats'
 import Archives from './Archives'
 
 import { defaultLanguage, 
   setLanguage,
   languages,
-  setPage } from '../actions'
+  setPage,
+  log
+} from '../actions'
 
 import { withNamespaces } from 'react-i18next'
-
 
 class Page extends Component {
 
@@ -29,7 +31,7 @@ class Page extends Component {
   }
 
   componentWillMount() { 
-    this.languageCheckAndUpdate() 
+    this.languageCheckAndUpdate()
   }
 
   componentDidUpdate() {
@@ -73,7 +75,7 @@ class Page extends Component {
 
   renderPage(selectedPage, pages) {
     if (!pages.some(e => e.slug.split('-')[0] === selectedPage)) {
-      console.log('page not there');
+      log('page not there');
       this.resetPage();
     }
     return pages
@@ -101,6 +103,7 @@ class Page extends Component {
               <h1>{page.acf.title}</h1>
               <h3>{page.acf.subtitle}</h3>
               {/* {this.props.t('description.part2')} */}
+             
               <div className="inner-page">
                 <section className="spotlights-page">
                   <p dangerouslySetInnerHTML={{__html: page.content.rendered}} />
@@ -123,18 +126,22 @@ class Page extends Component {
     if(this.props.fetchingPages || this.props.fetchingPosts) {
         return (
           <div className="blinky">{this.props.t('technical.loading')}</div>
-        );
+        )
     }
     return (
       <div className="container">
         <Header />
         { this.renderPage(this.props.selectedPage, this.props.pages) }
-        { console.log("is it archives?", this.props.selectedPage, this.props.pages)}
-        { this.props.selectedPage === 'home' ? <Posts /> : null }
+        { log("is it archives?", this.props.selectedPage, this.props.pages)}
+        { this.props.selectedPage === 'home' ? 
+          <div>
+            <Stats stats={this.props.gs} t={this.props.t} />
+            <Posts />
+          </div> : null }
         { this.props.selectedPage === 'archives' ? <Archives /> : null }
         <Footer />
       </div>
-    );
+    )
   }
 
 }
@@ -153,7 +160,8 @@ const mapStateToProps = (state) => {
       [] : 
       state.pages.items[state.selectedLanguage].some(page => page.slug.split('-')[0] === state.selectedPage) ? 
       state.selectedPage : "home",
-    pages: state.pages.isFetching ? [] : state.pages.items[state.selectedLanguage]
+    pages: state.pages.isFetching ? [] : state.pages.items[state.selectedLanguage],
+    gs: state.gsData.isFetching ? {} : state.gsData.gs
   }
 };
 

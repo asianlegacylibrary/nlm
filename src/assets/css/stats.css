@@ -4,6 +4,7 @@
     font-size: 1.2em;
     list-style: none;
     border-left: 1px solid #999;
+    margin-bottom: 3em;
 }
 .list-stats li { }
 .list-stats li p { 

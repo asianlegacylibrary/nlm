@@ -22,6 +22,14 @@
     "en": "English",
     "mn": "Монгол хэл"
   },
+  "stats": {
+    "Title": "Архивын статистик",
+    "LastUpdate": "Сүүлд шинэчлэгдсэн",
+    "PagesDigitized": "Хуудаснууд Digitized",
+    "VolumesDigitized": "Эзлэхүүнүүд Digitized",
+    "VolumesCataloged": "Эзлэхүүнүүд Cataloged",
+    "TitlesCataloged": "Гарчиг Cataloged"
+  },
   "archives": {
     "author": "Зохиогч",
     "genre": "Төрөл зүйл",

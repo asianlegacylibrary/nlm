@@ -1,0 +1,12 @@
+{
+    "options": {
+      "leftPanelEnabled": true
+    },
+    "modules": {
+      "footerPanel": {
+        "options": {
+          "downloadEnabled": false
+        }
+      }
+    }
+}

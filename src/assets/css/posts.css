@@ -1,0 +1,7 @@
+.spotlights.col1 > section {
+    width: 100%;
+}
+
+.spotlights.col1 > section:nth-child(odd) {
+    border-right: none;
+}

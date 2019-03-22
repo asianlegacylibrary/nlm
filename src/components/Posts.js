@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import '../assets/css/posts.css'
 
 const Posts = ({ posts }) => {
     if(!posts) {
@@ -25,9 +26,6 @@ const Posts = ({ posts }) => {
                             </section>
                             <section>
                                 <p dangerouslySetInnerHTML={{__html: post.content.rendered}} />
-                                {/* <ul className="actions">
-                                    <li><a href={`#${i+1}`} className="button">{post.acf.subtitle}</a></li>
-                                </ul> */}
                             </section>
                         </section>
                     </div>
@@ -37,17 +35,14 @@ const Posts = ({ posts }) => {
         return (
             <section key={i} id={i} className={`wrapper special style${j}`}>
                 <div className="inner">
-                    <section className="spotlights">
+                    <section className="spotlights col1">
                         <section>
                             <h2>{post.acf.title}</h2>
+                            <span className="image"><img src={mediaURL} alt="" /></span>
                             <p dangerouslySetInnerHTML={{__html: post.content.rendered}} />
-                            {/* <ul className="actions">
-                                <li><a href={`#${i+1}`} className="button">{post.acf.subtitle}</a></li>
-                            </ul> */}
                         </section>
                         <section>
-                            <span className="image"><img src={mediaURL} alt="" /></span>
-                            {/* <h2>Lacus elementum</h2>	 */}
+                           
                         </section>
                     </section>
                 </div>

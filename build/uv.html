@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="uv/uv.css">
+    <script src="uv/lib/offline.js"></script>
+    <script src="uv/helpers.js"></script>
+    <title>NLM IIIF Viewer</title>
+</head>
+<body>
+    
+    <div id="uv" class="uv"></div>
+
+    <script>
+
+        var myUV;
+
+        window.addEventListener('uvLoaded', function (e) {
+            //const manifest = localStorage.getItem("manifestURL")
+            const urlParams = new URLSearchParams(window.location.search)
+            const manifest = urlParams.get('manifest')
+            
+            console.log("event on window, uvLoaded")
+            console.log("window.UV", window.UV)
+            myUV = createUV('#uv', {
+                iiifResourceUri: manifest, //localStorage.getItem("manifestURL"),
+                configUri: 'uv.json'
+            }, new UV.URLDataProvider());
+
+            console.log("new UV created", myUV)
+
+            myUV.on("created", function(obj) {
+                //window.Utils.Urls.setHashParameter('manifest', localStorage.getItem("manifestURL"))
+                console.log('parsed metadata', myUV.extension.helper.manifest.getMetadata());
+                console.log('raw jsonld', myUV.extension.helper.manifest.__jsonld);
+            });
+
+        }, false);
+
+    </script>
+
+    <script defer src="uv/uv.js"></script>
+</body>
+</html>

@@ -14,6 +14,9 @@ import { defaultLanguage,
   log
 } from '../actions'
 
+import icon from '../assets/images/calligraphy_icon.ico'
+import png from '../assets/images/endless-knot.png'
+
 import { withNamespaces } from 'react-i18next'
 
 class Page extends Component {
@@ -99,7 +102,10 @@ class Page extends Component {
                   url(${mediaURL})`
             }}>
             <header className="major">
-              <span className="icon fa-book style7"></span>
+              {/* <span className="icon fa-book style7"></span> */}
+              <span className="icon style7">
+                <img width="90px" alt="hi" src={icon} />
+              </span>
               <h1>{page.acf.title}</h1>
               <h3>{page.acf.subtitle}</h3>
               {/* {this.props.t('description.part2')} */}

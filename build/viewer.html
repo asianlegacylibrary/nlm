@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8">
+    <!-- <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
         <style type="text/css">
             .loading {
                 padding: 40px;
@@ -29,7 +32,7 @@
             id="viewer"
             class="uv"
             data-locale="en-GB:English (GB),cy-GB:Cymraeg"
-            //data-config="/config.json"
+            data-config="/config.json"
             //data-uri="https://eap.bl.uk/archive-file/EAP676-12-4/manifest"
             //data-uri={this.state.dataDetail.imageAsset}
             data-collectionindex="0"
@@ -46,6 +49,12 @@
 <script type="text/javascript">
     var node = document.getElementById("viewer"); 
     node.setAttribute("data-uri", localStorage.getItem("manifestURL"))
+    //node.setAttribute("data-config", "http://localhost:3000/uv.json")
 </script>
- <script type="text/javascript" src="http://universalviewer.io/uv/lib/embed.js"></script>
+ <!-- <script 
+    type="text/javascript" 
+    src="http://universalviewer.io/uv/lib/embed.js"></script> -->
+ <script 
+    type="text/javascript" 
+    src="/public/static/uv/lib/embed.js"></script>
  </html>

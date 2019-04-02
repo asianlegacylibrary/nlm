@@ -15,8 +15,7 @@ src/python/venv
 src/python/.idea
 src/python/archive
 src/python/config
-src/python/__pycache__
-
+src/python/log.txt
 
 # production, keeping build in repo for webhook to DO
 #/build

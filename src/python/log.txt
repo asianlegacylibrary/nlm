@@ -1,8 +1,0 @@
-Creating ElasticSearch client for production
-Creating recursive listing from  ['bdr:W14260', 'bdr:P5061', 'bdr:P6161']
-Creating recursive listing from  ['bdr:I14260', 'bdr:P2093', 'bdr:P5054', 'bdr:P5061', 'bdr:P6161', 'bdr:T1029', 'bdr:T417', 'bdr:W14260']
-Creating recursive listing from  ['bdr:G16', 'bdr:G394', 'bdr:G4153', 'bdr:G4654', 'bdr:G723', 'bdr:I14260', 'bdr:P1302', 'bdr:P1591', 'bdr:P1789', 'bdr:P2093', 'bdr:P252', 'bdr:P264', 'bdr:P2923', 'bdr:P3158', 'bdr:P3230', 'bdr:P3307', 'bdr:P4006', 'bdr:P4174', 'bdr:P431', 'bdr:P432', 'bdr:P451', 'bdr:P491', 'bdr:P5054', 'bdr:P5055', 'bdr:P5056', 'bdr:P5057', 'bdr:P5059', 'bdr:P5060', 'bdr:P5061', 'bdr:P5062', 'bdr:P5063', 'bdr:P5067', 'bdr:P55', 'bdr:P6161', 'bdr:P6306', 'bdr:P64', 'bdr:P6744', 'bdr:P701', 'bdr:P7168', 'bdr:P75', 'bdr:P7997', 'bdr:P80', 'bdr:P8687', 'bdr:P8688', 'bdr:P8704', 'bdr:P992', 'bdr:P995', 'bdr:T1029', 'bdr:T11MS31', 'bdr:T417', 'bdr:W14260', 'bdr:W19836', 'bdr:W22359', 'bdr:W22389', 'bdr:W26629', 'bdr:W27401']
-Growth during recursion {'branch_0': 3, 'branch_1': 8, 'branch_2': 56, 'branch_3': 774}
-{'Stats': 0, 'Works': 361358489, '___RecursiveWorks': 2126557870, 'RecursiveWorks': 930002283}
-deleting worksheet RecursiveWorks
-Recreating worksheet. Data has length:  774

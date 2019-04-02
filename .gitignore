@@ -11,13 +11,12 @@
 
 # PYTHON
 # python interpreter files
-src/python/venv
-src/python/.idea
-src/python/archive
-src/python/config
-src/python/log.txt
-
-src/python/__pycache__
+python/venv
+python/.idea
+python/archive
+python/config
+python/log.txt
+python/__pycache__
 
 # production, keeping build in repo for webhook to DO
 #/build

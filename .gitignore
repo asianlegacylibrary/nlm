@@ -9,9 +9,14 @@
 # within src, there's an archive of old code
 /src/archive
 
+# PYTHON
 # python interpreter files
 src/python/venv
 src/python/.idea
+src/python/archive
+src/python/config
+src/python/__pycache__
+
 
 # production, keeping build in repo for webhook to DO
 #/build

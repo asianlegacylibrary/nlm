@@ -1,9 +1,9 @@
 import elasticsearch from 'elasticsearch'
-import { log } from '../actions'
+import { log } from './actions'
 
 const port = 9200;
-const host = process.env.NODE_ENV === 'production' ? '157.230.172.69' : 'localhost';
-//const host = '157.230.172.69' // : 'localhost';
+//const host = process.env.NODE_ENV === 'production' ? '157.230.172.69' : 'localhost';
+const host = '157.230.172.69' // : 'localhost';
 
 
 let isConnected = false

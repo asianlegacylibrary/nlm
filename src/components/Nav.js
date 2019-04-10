@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import NavItem from '../containers/NavItem'
 import { withNamespaces } from 'react-i18next'
-import { log } from '../actions'
+import { log } from '../store/actions'
 
 const NavBar = (props) => {
   log('creating navbar with props', props.navigation)

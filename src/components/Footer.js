@@ -1,6 +1,6 @@
 import React from 'react'
 import { withNamespaces } from 'react-i18next'
-import { onlyIP, buildYear } from '../actions'
+import { onlyIP, buildYear } from '../store/actions'
 
 const Footer = (props) => {
     return (

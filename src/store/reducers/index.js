@@ -1,30 +1,7 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
-import { defaultLanguage, LOCATION_CHANGE } from '../actions'
-
-import {
-    REQUEST_PAGES,
-    RECEIVE_PAGES,
-    REQUEST_POSTS,
-    RECEIVE_POSTS,
-    SET_LANG,
-    SET_PAGE,
-    //LanguageArray,
-    RECEIVE_DATA,
-    REQUEST_DATA,
-    RECEIVE_GS,
-    REQUEST_GS,
-    RECEIVE_ID,
-    REQUEST_ID,
-    REQUEST_MANIFEST,
-    RECEIVE_MANIFEST,
-    REQUEST_IIIF,
-    RECEIVE_IIIF,
-    NULLIFY_IIIF,
-    DETAIL_MODAL
-} from '../actions';
-
-
+import { defaultLanguage } from '../actions/index'
+import * as types from '../actions/types'
 
 function content(
     state = {
@@ -34,51 +11,81 @@ function content(
     action
 ) {
     switch(action.type) {
-        case REQUEST_PAGES:
+        case types.REQUEST_PAGES:
             return Object.assign({}, state, {
                 isFetching: true
             })
-        case RECEIVE_PAGES:
+        case types.RECEIVE_PAGES:
             return Object.assign({}, state, {
                 isFetching: false,
                 items: action.pages,
                 lastUpdated: action.receivedAt
             })
-        case REQUEST_POSTS:
+        case types.REQUEST_POSTS:
             return Object.assign({}, state, {
                 isFetching: true
             })
-        case RECEIVE_POSTS:
+        case types.RECEIVE_POSTS:
             return Object.assign({}, state, {
                 isFetching: false,
                 items: action.posts,
                 lastUpdated: action.receivedAt
             })
-        case REQUEST_DATA:
+        case types.REQUEST_DATA:
             return Object.assign({}, state, {
                 isFetching: true
             })
-        case RECEIVE_DATA:
+        case types.RECEIVE_DATA:
             return Object.assign({}, state, {
                 isFetching: false,
                 items: action.data,
                 lastUpdated: action.receivedAt
             })
-        case REQUEST_GS:
+        case types.REQUEST_RESOURCES:
             return Object.assign({}, state, {
                 isFetching: true
             })
-        case RECEIVE_GS:
+        case types.RECEIVE_RESOURCES:
+            return Object.assign({}, state, {
+                isFetching: false,
+                items: action.data,
+                lastUpdated: action.receivedAt
+            })
+        case types.RECEIVE_AUTHORS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                items: action.data,
+                lastUpdated: action.receivedAt
+            })
+        case types.REQUEST_AUTHORS:
+            return Object.assign({}, state, {
+                isFetching: true
+            })
+        case types.RECEIVE_TOPICS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                items: action.data,
+                lastUpdated: action.receivedAt
+            })
+        case types.REQUEST_TOPICS:
+            return Object.assign({}, state, {
+                isFetching: true
+            })
+        case types.REQUEST_GS:
+            return Object.assign({}, state, {
+                isFetching: true
+            })
+        case types.RECEIVE_GS:
             return Object.assign({}, state, {
                 isFetching: false,
                 gs: action.gs,
                 lastUpdated: action.receivedAt
             })
-        case REQUEST_ID:
+        case types.REQUEST_ID:
             return Object.assign({}, state, {
                 isFetching: true
             })
-        case RECEIVE_ID:
+        case types.RECEIVE_ID:
             return Object.assign({}, state, {
                 isFetching: false,
                 item: action.data,
@@ -86,33 +93,34 @@ function content(
                 volume: action.volume,
                 lastUpdated: action.receivedAt
             })
-        case REQUEST_MANIFEST:
+        case types.REQUEST_MANIFEST:
             return Object.assign({}, state, {
                 isFetching: true
             })
-        case RECEIVE_MANIFEST:
+        case types.RECEIVE_MANIFEST:
             return Object.assign({}, state, {
                 isFetching: false,
                 manifestURL: action.manifestURL,
                 lastUpdated: action.receivedAt
             })
-        case REQUEST_IIIF:
+        case types.REQUEST_IIIF:
             return Object.assign({}, state, {
                 isFetching: true
             })
-        case RECEIVE_IIIF:
+        case types.RECEIVE_IIIF:
             return Object.assign({}, state, {
                 isFetching: false,
                 firstImage: action.firstImage,
                 lastUpdated: action.receivedAt
             })
-        case NULLIFY_IIIF:
+        case types.NULLIFY_IIIF:
             return Object.assign({}, state, {
                 firstImage: null
             })
-        case DETAIL_MODAL:
+        case types.DETAIL_MODAL:
             return Object.assign({}, state, {
                 modalID: action.modalID,
+                image: action.image,
                 show: action.show
             })
         default:
@@ -122,28 +130,58 @@ function content(
 
 function pages(state = {}, action) {
     switch(action.type) {
-        case RECEIVE_PAGES:
-        case REQUEST_PAGES:
+        case types.RECEIVE_PAGES:
+        case types.REQUEST_PAGES:
             return Object.assign({}, state, content(state, action))
         default:
             return state;
     }
 }
 
-function data(state = {}, action) {
+function works(state = {}, action) {
     switch(action.type) {
-        case RECEIVE_DATA:
-        case REQUEST_DATA:
+        case types.RECEIVE_DATA:
+        case types.REQUEST_DATA:
             return Object.assign({}, state, content(state, action))
         default:
-            return state;
+            return state
+    }
+}
+
+function resources(state = {}, action) {
+    switch(action.type) {
+        case types.RECEIVE_RESOURCES:
+        case types.REQUEST_RESOURCES:
+            return Object.assign({}, state, content(state, action))
+        default:
+            return state
+    }
+}
+
+function authors(state = {}, action) {
+    switch(action.type) {
+        case types.RECEIVE_AUTHORS:
+        case types.REQUEST_AUTHORS:
+            return Object.assign({}, state, content(state, action))
+        default:
+            return state
+    }
+}
+
+function topics(state = {}, action) {
+    switch(action.type) {
+        case types.RECEIVE_TOPICS:
+        case types.REQUEST_TOPICS:
+            return Object.assign({}, state, content(state, action))
+        default:
+            return state
     }
 }
 
 function detailData(state = {}, action) {
     switch(action.type) {
-        case RECEIVE_ID:
-        case REQUEST_ID:
+        case types.RECEIVE_ID:
+        case types.REQUEST_ID:
             return Object.assign({}, state, content(state, action))
         default:
             return state;
@@ -152,8 +190,8 @@ function detailData(state = {}, action) {
 
 function gsData(state = {}, action) {
     switch(action.type) {
-        case RECEIVE_GS:
-        case REQUEST_GS:
+        case types.RECEIVE_GS:
+        case types.REQUEST_GS:
             return Object.assign({}, state, content(state, action))
         default:
             return state
@@ -162,8 +200,8 @@ function gsData(state = {}, action) {
 
 function manifestData(state = {}, action) {
     switch(action.type) {
-        case RECEIVE_MANIFEST:
-        case REQUEST_MANIFEST:
+        case types.RECEIVE_MANIFEST:
+        case types.REQUEST_MANIFEST:
             return Object.assign({}, state, content(state, action))
         default:
             return state;
@@ -172,9 +210,9 @@ function manifestData(state = {}, action) {
 
 function IIIFData(state = {}, action) {
     switch(action.type) {
-        case RECEIVE_IIIF:
-        case NULLIFY_IIIF:
-        case REQUEST_IIIF:
+        case types.RECEIVE_IIIF:
+        case types.NULLIFY_IIIF:
+        case types.REQUEST_IIIF:
             return Object.assign({}, state, content(state, action))
         default:
             return state;
@@ -183,8 +221,8 @@ function IIIFData(state = {}, action) {
 
 function posts(state = {}, action) {
     switch(action.type) {
-        case RECEIVE_POSTS:
-        case REQUEST_POSTS:
+        case types.RECEIVE_POSTS:
+        case types.REQUEST_POSTS:
             return Object.assign({}, state, content(state, action))
         default:
             return state;
@@ -194,9 +232,9 @@ function posts(state = {}, action) {
 // should use defaultLanguage code here
 const selectedLanguage = (state = defaultLanguage, action) => {
     switch (action.type) {
-        case SET_LANG:
+        case types.SET_LANG:
             return action.language
-        case LOCATION_CHANGE:
+        case types.LOCATION_CHANGE:
             if(action.payload.location.pathname.split('/')[1].length === 0) {
                 return state
             }
@@ -206,9 +244,9 @@ const selectedLanguage = (state = defaultLanguage, action) => {
     }
 }
 
-function detailModal(state = { modalID: 0 }, action) {
+function detailModal(state = { modalID: 0, image: null }, action) {
     switch(action.type) {
-        case DETAIL_MODAL:
+        case types.DETAIL_MODAL:
             return Object.assign({}, state, content(state, action))
         default:
             return state;
@@ -217,7 +255,7 @@ function detailModal(state = { modalID: 0 }, action) {
 
 const selectedPage = (state = 'home', action) => {
     switch (action.type) {
-        case SET_PAGE:
+        case types.SET_PAGE:
             return action.page
         default:
             return state
@@ -230,12 +268,15 @@ const rootReducer = (history) => combineReducers({
     selectedPage,
     pages,
     posts,
-    data,
+    works,
+    authors,
+    topics,
+    resources,
     gsData,
     detailData,
     manifestData,
     IIIFData,
     detailModal
-});
+})
 
-export default rootReducer;
+export default rootReducer

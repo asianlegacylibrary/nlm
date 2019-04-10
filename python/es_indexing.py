@@ -92,12 +92,12 @@ def assign_index(x, index_prefix):
 # need to work on how to create this, but for now there's a _resources leaf
 # with all bdr: ID's that resource needs
 # ####################
-def direct_index(doc, client):
+def direct_index(doc, client, collection=""):
     # print('DIRECT INDEX of', doc['@id'])
     doc_number = doc['@id'].split(":")[1] if doc['@id'].split(":")[0] == "bdr" else doc['@id']
-    index_name = assign_index(doc_number, conf_es["index_prefix"])
+    index_name = assign_index(doc_number, f"v{collection}{conf_es['index_prefix']}")
     try:
-        client.index(
+        client.create(
                     index=index_name,
                     doc_type=conf_es["type"],
                     body=json.dumps(doc),
@@ -111,8 +111,8 @@ def direct_index(doc, client):
         pass
 
 
-def recreate_indices(client):
-    wild_card_indices = conf_es["index_prefix"] + "*"
+def recreate_indices(client, collection=""):
+    wild_card_indices = f"v{collection}{conf_es['index_prefix']}*"
     target_indices = client.indices.get_alias(wild_card_indices)
     for i in target_indices:
         print("Deleting index", i)

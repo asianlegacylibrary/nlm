@@ -11,12 +11,18 @@ import thunkMiddleware from 'redux-thunk'
 import { createBrowserHistory } from 'history'
 import { routerMiddleware, ConnectedRouter } from 'connected-react-router'
 
-import { fetchPages, fetchPosts, fetchData, getGS } from './actions'
-import rootReducer from './reducers'
+import { 
+    fetchPages, 
+    fetchPosts, 
+    fetchData, 
+    fetchAuthors,
+    fetchTopics,
+    getGS } from './store/actions'
+import rootReducer from './store/reducers'
 
 import Routes from './router'
 
-import { checkConnection } from './server/connection'
+import { checkConnection } from './store/connection'
 
 import './assets/css/main.css'
 import './assets/css/index.css'
@@ -48,6 +54,8 @@ store.dispatch(fetchPosts())
 store.dispatch(getGS())
 checkConnection()
 store.dispatch(fetchData())
+store.dispatch(fetchAuthors())
+store.dispatch(fetchTopics())
 
 const App = () => {
     document.body.classList.add('landing');

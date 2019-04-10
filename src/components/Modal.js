@@ -226,7 +226,7 @@ class Modal extends Component {
             data = this.parseType(
                 this.props.workDetail._source, 
                 this.props.hideModal,
-                this.props.firstImage,
+                this.props.image,
                 this.props.t)
         } else {
             data = <div className="blinky">{this.props.t('technical.loading')} {this.props.doc_id}</div>
@@ -247,9 +247,11 @@ class Modal extends Component {
 
 const mapStateToProps = (state) => ({
     workDetail: state.detailData.isFetching || state.detailModal.modalID === 0 ? {} : state.detailData.item.hits.hits[0],
+    resources: state.resources.isFetching ? [] : state.resources,
+    image: state.detailModal.image,
     manifestURL: state.manifestData.isFetching || state.detailData.isFetching ? '' : state.manifestData.manifestURL,
     numberVolumes: state.detailData.isFetching || state.detailModal.modalID === 0 ? null : state.detailData.item.hits.hits[0]._source.workNumberOfVolumes,
-    firstImage: state.IIIFData.isFetching || state.detailModal.modalID === 0 ? null : state.IIIFData.firstImage
+    //firstImage: state.IIIFData.isFetching || state.detailModal.modalID === 0 ? null : state.IIIFData.firstImage
 })
 
 const withN = withNamespaces()(Modal)

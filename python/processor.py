@@ -49,18 +49,17 @@ logging.basicConfig(
 # settings on run
 environment = "production"
 bulk_chunk_size = 40
-branches = 2
+how_many_levels = 2
 current_listing = conf_bdrc["test_works"]
-use_existing_gs_data = False  # use a previously generated list, now stored at GS
+which_collection = 1
 index_altered_json = True  # while generating a list, alter document and index that document
 
+delete_indices = True
+
 # booleans for each step, for testing purposes
-step_0 = False  # Google Sheets data
+step_0 = True  # Google Sheets data
 step_1 = True  # list generation
 step_2 = False  # ElasticSearch indexing
-step_3 = False  # ??
-
-delete_indices = False
 
 client = None
 if index_altered_json or step_2:
@@ -69,7 +68,7 @@ if index_altered_json or step_2:
     if delete_indices:
         Del = input('Would you like to delete and recreate the target indices?').lower()
         if Del.startswith('y'):
-            recreate_indices(client)
+            recreate_indices(client, collection=which_collection)
 
 # authorize GS and get workbook
 gs_cred = authorize_gs(conf_gs)
@@ -78,26 +77,34 @@ workbook = get_workbook(gs_cred, conf_gs)
 # STEP 0, get list of bdrc items from google sheet ##################
 # authorize, specify workbook, grab original listing
 if step_0:
-    works = get_googlesheet_data(workbook, conf_gs, use_existing_list=use_existing_gs_data)
+    works = get_googlesheet_data(workbook, conf_gs, which_collection)
     current_listing = works
     print("Generating list / Using existing list from Google Sheets ", works)
-else:
-    use_existing_gs_data = False
+
 
 # STEP 1, Generate list ##################################
 # create listing of all selected documents and referenced documents within them
-if step_1 and not use_existing_gs_data:
+if step_1:
     # if we're not using an existing list, then generate one
     # keep track of growth of leaves
     # write back to GS for documentation, or to use later as index list
-    branch_size = dict()
-    branch_size["branch_0"] = len(current_listing)
-    for i in range(1, branches + 1):
-        current_branch = generate_listing(conf_bdrc, current_listing, index_json=index_altered_json, client=client)
-        branch_size["branch_{0}".format(i)] = len(current_branch)
+    branches = dict()
+    current_level = 0
+    branches["level_0"] = len(current_listing)
+    print(f"Branch 0 has {len(current_listing)} leaves...")
+    for i in range(1, how_many_levels + 1):
+        current_branch = generate_listing(conf_bdrc,
+                                          current_listing,
+                                          index_json=index_altered_json,
+                                          client=client,
+                                          level=current_level,
+                                          collection=which_collection)
+        branches["level_{0}".format(i)] = len(current_branch)
+        print(f"Branch {i} has {len(current_branch)} leaves...")
         current_listing = current_branch
+        current_level = i
 
-    print("Growth during recursion", branch_size)
+    print("Growth during recursion", branches)
 
     write_googlesheet_data(workbook, conf_gs, current_listing)
 

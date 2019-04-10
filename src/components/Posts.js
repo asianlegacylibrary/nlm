@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { sortNested } from '../actions'
+import { sortNested } from '../store/actions'
 import '../assets/css/posts.css'
 
 

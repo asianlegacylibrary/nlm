@@ -11,7 +11,7 @@
 
 # PYTHON
 # python interpreter files
-python/venv
+python/.venv
 python/.idea
 python/archive
 python/config

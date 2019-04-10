@@ -17,12 +17,13 @@ def get_workbook(gc, config):
     return workbook
 
 
-def get_googlesheet_data(workbook, config, use_existing_list=False):
+def get_googlesheet_data(workbook, conf_gs, collection):
 
-    sh = config["read_sheet_name"]
+    if collection == 1:
+        sh = conf_gs["read_collection_1"]
+    else:
+        sh = conf_gs["read_collection_2"]
 
-    if use_existing_list:
-        sh = config["existing_sheet_data"]
     wks = workbook.worksheet(sh)
     works = wks.col_values(1)
 

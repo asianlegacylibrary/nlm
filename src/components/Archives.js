@@ -1,9 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchSpecificID } from '../actions'
-import Modal from './Modal'
 
 import { withNamespaces } from 'react-i18next'
+
+import Modal from './Modal'
+
+import { 
+    log, 
+    IIIFsuffix, 
+    fetchSpecificID, 
+    fetchResources} from '../store/actions'
+
+import '../assets/css/archives.css'
 
 /* of interest 
 
@@ -32,10 +40,11 @@ workCatalogInfo
 class Archives extends Component {
 
     // fetch ID from ES and show modal
-    showModal = (doc_id) => {
+    showModal = (doc_id, resources = null, imageURL = null) => {
         this.props.dispatch(fetchSpecificID(doc_id))
+        this.props.dispatch(fetchResources(doc_id, resources))
         this.props.dispatch(
-            { type: 'DETAIL_MODAL', modalID: doc_id, show: true }
+            { type: 'DETAIL_MODAL', modalID: doc_id, image: imageURL, show: true }
         )
     }
 
@@ -78,6 +87,7 @@ class Archives extends Component {
 
     // parse out json
     unpack = (arr) => {
+        
         if(arr === null || arr === undefined) {
             return null
         } else if(Array.isArray(arr)) {
@@ -88,7 +98,7 @@ class Archives extends Component {
                 } else if(a.substring(0,3) === 'bdr') {
                     return (
                         <div key={i} className="card-sub-item">
-                            <div onClick={() => this.showModal(a.split(":")[1])}>{a}</div>
+                            <div>{a}</div>
                         </div> 
                     )
                 } else {
@@ -107,6 +117,9 @@ class Archives extends Component {
                         // return a frontend index item
                         return this.unpackFrontend(arr.code, arr)
                     }
+                
+                } else if('noteText' in arr) {
+                    return this.unpack(arr.noteText)
 
                 // part of a language / value pair
                 } else if(arr.hasOwnProperty('@value')) {
@@ -119,7 +132,7 @@ class Archives extends Component {
         } else if (typeof arr === 'string') {
             // if string begins with bdr then we assume its indexed
             if(arr.substring(0,3) === 'bdr') {
-                return ( <div onClick={() => this.showModal(arr.split(":")[1])}>{arr}</div> )
+                return ( <div>{arr}</div> )
             } else {
                 return (
                     <span>{arr}</span>
@@ -128,67 +141,201 @@ class Archives extends Component {
         }
     }
 
-    // build an item for the CARD (grid item)
-    buildCardItem(item, code, lead) {
-        if(code === null) {
+    getAuthorNames = (code) => {
+        let n = null
+        if(code === null || code === undefined) {
             return null
-        } else {
-            return (
-                <div className="card-item">
-                    <span className="item-lead">{lead} </span> 
-                    <span className="item-btn" onClick={() => this.showModal(code)}>
-                        { this.unpack(item) }
-                    </span>
-                </div>
-            )
+        } else if(Array.isArray(code)) {
+            code = code[0]
         }
+        try {
+            const p = this.props.authors.find(p => code === p._id)
+            if(p !== undefined) {
+                if(Array.isArray(p._source.personName)) {
+                    const nameArray = p._source.personName.find(n => "PersonPrimaryName" === n.type)
+                    n = nameArray["rdfs:label"]["@value"]
+                }
+                else if(typeof p._source.personName === 'object') {
+                    n = p._source.personName["rdfs:label"]["@value"]
+                } 
+            } else {
+                n = null
+            }
+        } catch(error) {
+            console.log('error in finding author name', error)
+        }
+        return n
+    }
+
+    getPrefLabel = (codes, dataType) => {
+        let n = null
+        let resources = null
+        if(codes === null || codes === undefined) {
+            return null
+        } else if(Array.isArray(codes)) {
+            codes = codes[0]
+        }
+        try {
+            const p = this.props[dataType].find(p => codes === p._id)
+            if(p !== undefined) {
+                if('skos:prefLabel' in p._source) {
+                    
+                    if(Array.isArray(p._source["skos:prefLabel"])) {
+                        if (p._source["skos:prefLabel"].some(l => l["@language"] === 'en')) {
+                            n = p._source["skos:prefLabel"].find(t => "en" === t["@language"])
+                            n = n["@value"]
+                        } else if (p._source["skos:prefLabel"].some(l => l["@language"] === 'bo-x-ewts')) {
+                            n = p._source["skos:prefLabel"].find(t => "bo-x-ewts" === t["@language"])
+                            n = n["@value"]
+                        }
+                    } else if(typeof p._source["skos:prefLabel"] === 'object') {
+                        n = p._source["skos:prefLabel"]["@value"]
+                    }
+
+                } else {
+                    n = null
+                }
+                if('_resources' in p._source) {
+                    resources = p._source._resources
+                }
+            }
+        } catch(error) {
+            console.error('getPrefLabel error in Archives component', error)
+        }
+        return { code: codes, label: n, resources: resources }
+    }
+
+    getImage = (URL) => {
+        // const {
+        //     region,
+        //     size,
+        //     rotation,
+        //     qualityAndFormat
+        // } = IIIFImageAPI
+        // let imageURL = `${URL}/${region}/${size}/${rotation}/${qualityAndFormat}` 
+        fetch(URL)
+            .then(response => {
+                log(response)
+        }).catch(error => {
+            console.error(error)
+            //return null
+            //return imageURL
+        })
+    }
+
+    g = (URL) => {
+        let image = null
+        
+        
+        fetch(URL).then(resp => {
+            if(resp.ok) {
+                log(URL)
+                image = `${URL}/${IIIFsuffix}`
+                return image
+            }
+        })
+        
     }
 
     render() {
-        // loop over our initial 9 works
+        if(!this.props.authors.length) {
+            return (
+                <div className="blinky">LOADING</div>
+            )
+        }
         const items = this.props.works.map((work, i) => {
             //console.log(work)
             const { 
                 'skos:prefLabel': label,
                 '@id': id,
-                // 'creatorMainAuthor': author,
-                //'workCreator': creator,
-                'workGenre': genre,
-                'workIsAbout': topic,
-                //'workTitle': title,
-                //'workHasPart': parts,
-                //'workNumberOfVolumes': volumes
+                'note': notes,
+                workCreator,
+                workIsAbout,
+                _manifestURL,
+                _firstImageURL,
+                _resources
             } = work._source
             
-            const author = work._source.creatorMainAuthor !== undefined ? work._source.creatorMainAuthor : null 
-            const authorCode = author !== null ? author.item : null
-            const genreCode = genre !== undefined ? genre.item : null
-            const topicCode = topic !== undefined ? topic.item : null
-            const workCode = id !== undefined ? id.item : null
+            // get authors
+            let authors = this.getPrefLabel(workCreator, "authors")
+
+            // get subjects
+            let subjects = this.getPrefLabel(workIsAbout, "subjects")
+
+            let imageURL = _firstImageURL === "Not Found" 
+                ? null 
+                : `${_firstImageURL}/${IIIFsuffix}`
             
-            const itemAuthor = this.buildCardItem(author, authorCode, `${this.props.t('archives.author')}:`)
-            const itemGenre = this.buildCardItem(genre, genreCode, `${this.props.t('archives.genre')}:`)
-            const itemTopic = this.buildCardItem(topic, topicCode, `${this.props.t('archives.topic')}:`)
-            
+                // if(_firstImageURL !== "Not Found") {
+            //     fetch(URL).then(resp => {
+            //         if(resp.ok) {
+            //             //log(URL)
+            //             imageURL = 
+            //         }
+            //     })
+            // }
+
+            //let imageURL = _firstImageURL === "Not Found" ? null : this.g(_firstImageURL)
+            //log('image URL is', imageURL)
+
             // CARD
             return (
                 
                 <div key={i} className="card">
-                    <p className="meta-detail">{workCode}</p>
+
+                    <p className="meta-detail">{id}</p>
+
+                    { imageURL == null ? null :
+                    <div className="card-item card-item-img-link">
+                        <div className="image-first-image-scan">
+                            <img src={imageURL} alt="scan" width="100%" />
+                        </div> 
+                    </div> }
+
                     <div className="card-item">
-                        <span className="item-work"> 
-                            { this.unpack(label) }
+                        <span className="item-work-label">Title: </span>
+                        <span className="item-work">
+                            <span
+                                className="card-item-link"
+                                key={id}
+                                onClick={() => this.showModal(id, _resources, imageURL)}>
+                                {this.unpack(label)}
+                            </span>
                         </span>
                     </div>
 
-                    {itemAuthor}
-                    {itemGenre}
-                    {itemTopic}
                     
-                    <button onClick={() => this.showModal(id.item)}>
-                        {`${this.props.t('archives.more')}:`}
-                    </button>
-                   
+
+                    { authors == null ? null : 
+                    <div className="card-item">
+                        <span className="item-work-label">Author: </span>
+                        <span className="item-work">
+                            <span 
+                                className="card-item-link"
+                                key={authors.code}
+                                onClick={() => this.showModal(authors.code, authors.resources)}>
+                                {authors.label}
+                            </span>
+                        </span>
+                    </div> }
+
+                    { subjects == null ? null : 
+                    <div className="card-item">
+                        <span className="item-work-label">Subject: </span>
+                        <span className="item-work">
+                            <span
+                                className="card-item-link"
+                                key={subjects.code}
+                                onClick={() => this.showModal(subjects.code, subjects.resources)}>
+                                {subjects.label}
+                            </span>
+                        </span>
+                    </div> }
+
+                    
+
+                    <p className="meta-detail">{this.unpack(notes)}</p>
+
                 </div>
             )
         })
@@ -196,7 +343,6 @@ class Archives extends Component {
         return (
             <div className="grid">
                 {items}
-                {/* modal returned based on show prop */}
                 <Modal 
                     key={this.props.doc_id}
                     hideModal={this.hideModal}
@@ -209,7 +355,9 @@ class Archives extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    works: state.data.isFetching ? [] : state.data.items.hits.hits,
+    works: state.works.isFetching ? [] : state.works.items.hits.hits,
+    authors: state.authors.isFetching ? [] : state.authors.items.hits.hits,
+    subjects: state.topics.isFetching ? [] : state.topics.items.hits.hits,
     workDetail: state.detailData.isFetching || state.detailModal.modalID === 0 ? {} : state.detailData.item.hits.hits[0],
     doc_id: state.detailModal.modalID,
     showModal: state.detailModal.show,

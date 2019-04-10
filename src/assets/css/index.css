@@ -107,24 +107,6 @@ section.special, article.special, header.special {
   text-align: left;
 }
 
-.item-lead {
-  font-weight: bold;
-}
-.item-work {
-  font-weight: bold;
-  text-transform: uppercase;
-}
-.item-btn {
-  text-decoration: underline;
-  cursor: pointer;
-}
-.item-btn:hover {
-  opacity: 0.8;
-}
-.card-sub-item {
-  padding-left: 10%;
-}
-
 .spotlights-page {
   text-align: center;
   display: block;
@@ -234,24 +216,6 @@ section.special, article.special, header.special {
     }
 }
 
-.grid {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-  flex-flow: row wrap;
-  align-content: flex-end; /*flex-start, space-between, space-around, stretch */
-}
-.card {
-  border: 1px solid #222;
-  align-content: flex-start;
-  padding: 10px;
-  margin: 1%;
-  min-width: 22%;
-  width: 22%;
-  height: 100%;
-}
 
 .modal-main {
   padding: 2%;
@@ -274,25 +238,6 @@ breakpoints: 1680, 1280, 980, 736, 480
 */
 @media screen and (max-width: 1680px) {
 
-  .grid {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: row;
-    flex-wrap: wrap;
-    flex-flow: row wrap;
-    align-content: flex-end; /*flex-start, space-between, space-around, stretch */
-  }
-  .card {
-    border: 1px solid #222;
-    align-content: flex-start;
-    padding: 10px;
-    margin: 1%;
-    min-width: 30%;
-    width: 30%;
-    height: 100%;
-  }
-
   .modal-main {
     padding: 2%;
   }
@@ -307,17 +252,13 @@ breakpoints: 1680, 1280, 980, 736, 480
 
 @media screen and (max-width: 980px) {
 
-  .card {
-    width: 44%;
-  }
+  
 
 }
 
 @media screen and (max-width: 736px) {
 
-  .card {
-    width: 94%;
-  }
+  
   .modal-main {
     padding: 2%;
   }

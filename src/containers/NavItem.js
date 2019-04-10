@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { setPage } from '../actions'
+import { setPage } from '../store/actions'
 import { connect } from 'react-redux'
 
 const NavItem = ({ active, children, onClick }) => (

@@ -4,11 +4,13 @@ import copy
 import logging
 from es_indexing import direct_index
 
+from generate_IIIF import get_manifest, get_first_image_url
+
 
 # ####################
 # Crawl the document, recursively
 # ####################
-def generate_listing(conf_bdrc, list_to_traverse, index_json=False, client=None):
+def generate_listing(conf_bdrc, list_to_traverse, index_json=False, client=None, level=None, collection=None):
 
     print("Creating recursive listing from ", list_to_traverse)
     full_listing = []
@@ -17,19 +19,15 @@ def generate_listing(conf_bdrc, list_to_traverse, index_json=False, client=None)
     for d in list_to_traverse:
         doc_number = d.split(":")[1] if d.split(":")[0] == "bdr" else d
 
-        # print(conf_bdrc["endpoint"] + doc_number + conf_bdrc["file_type"])
-
-        # load the json document
-        # document = {}
         try:
             document = json.load(urllib.request.urlopen(
                 conf_bdrc["endpoint"] + doc_number + conf_bdrc["file_type"])
             )
         except urllib.error.HTTPError as HTTP_error:
-            logging.error("error during url request", HTTP_error.code)
+            logging.error(f"error during url request {HTTP_error.code}")
             continue
         except urllib.error.URLError as URL_error:
-            logging.error("error during url request", URL_error)
+            logging.error(f"error during url request {URL_error}")
             continue
 
         # new empty list to send to traverse
@@ -45,7 +43,17 @@ def generate_listing(conf_bdrc, list_to_traverse, index_json=False, client=None)
         if index_json:
             # add leaf of all linked resources
             document['_resources'] = make_unique(additional_listing)
-            direct_index(document, client)
+            document['_distance'] = level
+            # if level == 0:
+            document['_collection'] = collection
+
+            if 'workHasItemImageAsset' in document:
+                manifest = get_manifest(document)
+                first_image = get_first_image_url(manifest)
+                document['_manifestURL'] = manifest
+                document['_firstImageURL'] = first_image
+
+            direct_index(document, client, collection)
 
     unique_listing = make_unique(full_listing)
 
@@ -92,7 +100,7 @@ def walk(document, results_listing, previous_key=None, doc_number=None):
                     results_listing.append(n)
 
     else:
-        logging.error("Not Iterable", node)
+        logging.error(f"Not Iterable {node}")
 
     return results_listing
 

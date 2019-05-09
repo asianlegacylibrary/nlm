@@ -1,7 +1,9 @@
 import json
 import urllib
 import logging
-from elasticsearch import Elasticsearch, helpers, RequestError, TransportError  # , NotFoundError
+import time
+from socket import timeout
+from elasticsearch import Elasticsearch, helpers, RequestError, TransportError, ConflictError  # , NotFoundError
 from config.config import conf_es, conf_bdrc
 
 
@@ -12,7 +14,18 @@ def create_es_client(env):
         # refresh nodes after a node fails to respond
         sniff_on_connection_fail=True,
         # and also every 60 seconds
-        sniffer_timeout=60
+        sniffer_timeout=60,
+        retry_on_timeout=True
+    )
+
+
+def create_es_client_no_sniffer(env):
+    return Elasticsearch(
+        [conf_es[env]],
+        sniff_on_start=False,
+        # refresh nodes after a node fails to respond
+        sniff_on_connection_fail=False,
+        retry_on_timeout=True
     )
 
 
@@ -117,3 +130,37 @@ def recreate_indices(client, collection=""):
     for i in target_indices:
         print("Deleting index", i)
         client.indices.delete(i)
+
+
+def index_mysql_items(items, client):
+    index_name = "tmp_mysql_index"
+    for d in items:
+        try:
+            client.create(
+                index=index_name,
+                doc_type=conf_es["type"],
+                body=json.dumps(d),
+                id=d["catNoNorm"]
+            )
+        except ConflictError as e:
+            print(f"Document already exists...skipping {d['catNoNorm']}, {e}")
+            continue
+
+
+def index_mysql_item(item, client):
+    index_name = "nlm_mysql_8"
+    doc_id = f"no_assigned_id_{time.time()}" if "@id" not in item else item["@id"]
+    try:
+        client.create(
+            index=index_name,
+            doc_type=conf_es["type"],
+            body=json.dumps(item),
+            id=doc_id,
+            request_timeout=1000
+        )
+    except ConflictError as e:
+        print(f"Document already exists...skipping {item['@id']}, {e}")
+    except timeout as e:
+        print(f"Socket timeout at {doc_id}, {e}")
+    except TransportError as e:
+        print(f"Some sort of Timeout when connecting to ES, {e}")

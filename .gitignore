@@ -17,6 +17,10 @@ python/archive
 python/config
 python/log.txt
 python/__pycache__
+python/mapping/__pycache__
+python/mapping/log.txt
+python/transfer/__pycache__
+python/transfer/log.txt
 
 # production, keeping build in repo for webhook to DO
 #/build

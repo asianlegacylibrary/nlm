@@ -3,28 +3,28 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 
 def authorize_gs(config):
-    credentials = ServiceAccountCredentials.from_json_keyfile_name(
-        config["json_creds"], config["scope"]
-    )
+    gc = None
+    try:
+        credentials = ServiceAccountCredentials.from_json_keyfile_name(
+            config["json_creds"], config["scope"]
+        )
 
-    gc = gspread.authorize(credentials)
+        gc = gspread.authorize(credentials)
+        print(f"Authorizing script for Google Sheets...")
+    except IOError as e:
+        print(e)
 
     return gc
 
 
-def get_workbook(gc, config):
-    workbook = gc.open_by_key(config["sheet_key"])
+def get_workbook(gc, key):
+    workbook = gc.open_by_key(key)
     return workbook
 
 
-def get_googlesheet_data(workbook, conf_gs, collection):
+def get_googlesheet_data(workbook, sheet):
 
-    if collection == 1:
-        sh = conf_gs["read_collection_1"]
-    else:
-        sh = conf_gs["read_collection_2"]
-
-    wks = workbook.worksheet(sh)
+    wks = workbook.worksheet(sheet)
     works = wks.col_values(1)
 
     return sorted(works[1:])

@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "acip-nlm",
+  "private_key_id": "dae04cbb4456628035d38576fa4ab25cbd8e4a50",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCvCECyBSExLaK/\nQvuEI7onxYVSyH0Y3OBcBBtkKS4quuw2e8Uh+R60WpcMv1uW10SgVikE1VOD7IHn\ndB1R3w8T5fJ7OvTMxzTJVasGPZGGJeudYAdhbBjy/nZwrMfN/BzbCgq7piDCxbhd\nmUUHyWU+ZlzR9JYUDcc4BipttxQKiMTyenVzVmHpn/NEwPN/kNk5MJYdUJ/zPCBH\ncDr3FyLe7zX/jgBNIm75Vdn/yhV96jiL/YVqaabKDFwpHoMohk0yBF7EFGyoGAIE\n+Qw0cShYA3JjzyNqhF/NoxxqKPud0tCLAOCSi2AYaIfwyI/P0N5sA4jlB4F+QrCT\nM0yiT8IxAgMBAAECggEAEXJUpIn/W3wNh1wBXxQCl7lIB07lrUdC89kS8+Jo8Chu\nqCWhKjg/N8H54XLnibsOY58C+rDa4MD/19bKn2EJCzY1+9OOGCVZHSJ1aCtV6JW6\nDRdH1Q2l1P7JRoTqa51QMQMou7ic9l0n+ehvqY2JEnW4ldL37KrM60guDX6cuEns\nbnFX2NNUy9Tu527BWbcOBLEAVJW2cmaf8m9mFn8A+klrwKqeTtkSIQ2jAe/YA2P/\n8II+c3EwQIHouTGblifYNc8igvqGX0CVRWeHLMjo4v+fslkakjM0ve6q/+pFtRpX\nLEBITJ3XitqYhWFJOP6+Mmei4PSE3YQNnZd5+ZtUOQKBgQDi7bJ0p8bwn+vMzeOp\nYWKSbeUPiomec/VL9mfloit3/g9aom9+LIiVYulK2Arrq9xKS+mJygY0cSw6SZSM\n5JkBZK9OBbHXC/IKcQGci+vS7I8C9AzxTpBdSi3PNCwdhNElABKnX/bXvkNu45oR\nyaj4jj/Mqsl22qKpMiG30s7KhQKBgQDFdJNmirw6/FEScbRxnwluFzjpAw0c9seb\n+v/3NGPwRSmHsUgqt+TCjzPy4zYpZl0KJv14eW3xDloZF0WWGwlINdW/mV616P/B\n2c8Ci3WIrp+xIzEVUC5JIEZ0R1t21yXop2IfOC28CMioHFXpfOsg2+jgANC7Vuqe\nizZlfKqmvQKBgHc7MOJ+LNbND9Xh79ZVJreNKidKQRiSELZC10AePvyi7mpOoooG\n2BS1jaIXdVVyTSJ0VFZjYXM4a2aMtpJ4obPLtRgngdNdoWS/D3uzQMroJBQHKq22\n+78odH1EClHQMRthuGtczpN4knG3AIKMFE3UX80nhwb9xS1k+7Zb+u8JAoGAdWsJ\nbGT74ifBHjK3lwl31hvBH+9MkPi/YqY0KJDjDTJTq/lkbOLGClyWC83Jm3zfvvXI\nrSeolTxvn5QTMVwKfQJmhXVyuMJBtMkNLPo5fno5RGElAwOXQq0KuILmhRkT1fIT\ni3Ug3Txr9mxDOoGqYPPk27AgcAcTpgwq4NbttBECgYEArEOwZ5JBGb19cgmA3VfQ\nSzf7bwVBpICjkvimpqLC4fyXtKgFnX3TZ7TGRF32NcdIFflBKV4v3tkDtS1uSUpX\nkxyUUIMLVQuV0O7zRWtwuRLOZOWULF6gi1pR5/ALaCpROhN3Y8BG4c59Li3QoGWB\nsfZ2GCfZn3IJXsNZ5o8pCD4=\n-----END PRIVATE KEY-----\n",
+  "client_email": "python-access-to-drive@acip-nlm.iam.gserviceaccount.com",
+  "client_id": "116408182589083107550",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/python-access-to-drive%40acip-nlm.iam.gserviceaccount.com"
+}

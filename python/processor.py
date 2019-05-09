@@ -1,4 +1,3 @@
-# from collections import defaultdict
 import logging
 import sys
 from config.print_logger import Logger
@@ -51,14 +50,16 @@ environment = "production"
 bulk_chunk_size = 40
 how_many_levels = 2
 current_listing = conf_bdrc["test_works"]
+current_gs_key = conf_gs["key_mappings"]
+current_gs_sheet = conf_gs["read_mapping"]
 which_collection = 1
 index_altered_json = True  # while generating a list, alter document and index that document
 
-delete_indices = True
+delete_indices = False
 
 # booleans for each step, for testing purposes
 step_0 = True  # Google Sheets data
-step_1 = True  # list generation
+step_1 = False  # list generation
 step_2 = False  # ElasticSearch indexing
 
 client = None
@@ -72,14 +73,14 @@ if index_altered_json or step_2:
 
 # authorize GS and get workbook
 gs_cred = authorize_gs(conf_gs)
-workbook = get_workbook(gs_cred, conf_gs)
+workbook = get_workbook(gs_cred, current_gs_key)
 
 # STEP 0, get list of bdrc items from google sheet ##################
 # authorize, specify workbook, grab original listing
 if step_0:
-    works = get_googlesheet_data(workbook, conf_gs, which_collection)
+    works = get_googlesheet_data(workbook, current_gs_sheet)
     current_listing = works
-    print("Generating list / Using existing list from Google Sheets ", works)
+    print(f"Generating list / Using existing list from Google Sheets {works}")
 
 
 # STEP 1, Generate list ##################################
@@ -104,7 +105,7 @@ if step_1:
         current_listing = current_branch
         current_level = i
 
-    print("Growth during recursion", branches)
+    print(f"Growth during recursion {branches}")
 
     write_googlesheet_data(workbook, conf_gs, current_listing)
 
@@ -112,7 +113,7 @@ if step_1:
 # STEP 2, create the as-is index
 if step_2:
     # create the as-is indices for the bdrc items
-    print("Bulk indexing as is...", current_listing[1:])
+    print(f"Bulk indexing as is...{current_listing[1:]}")
     bulk_index(client, current_listing[1:], chunk=bulk_chunk_size)
 
 

@@ -10,7 +10,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine.url import URL
 from sqlalchemy.exc import SQLAlchemyError
 
-
+# 0. SET UP CONFIGURATION ################################
 # configure the logger
 sys.stdout = Logger()
 # levels: debug, info, warning, error, critical
@@ -32,14 +32,16 @@ db_url = URL(
     port=conf_mysql['port'],
     database=conf_mysql['database']
 )
+# ########################################################
 
 # 1. CREATE CONNECTIONS ##################################
 # connect to MySQL
+engine = create_engine(db_url, echo=False)
 try:
-    engine = create_engine(db_url, echo=False)
-    print(f"Creating connection to MySQL at {conf_mysql['host']}")
+    cnx = engine.connect()
+    print(f"Successful connection to MySQL at {conf_mysql['host']}")
 except SQLAlchemyError as e:
-    print(f"Error on connecting to MySQL, {str(e.__dict__['orig'])}")
+    sys.exit(f"Error on connecting to MySQL, {str(e.__dict__['orig'])}")
 
 # authorize GS and get workbook
 gs_cred = authorize_gs(conf_gs)
@@ -85,6 +87,11 @@ for df in new_listing:
 
     print(f"Writing table to MySQL: {df.name} ({len(df)} records)")
     # write the data frame to MySQL, using replace if table exists
-    df.to_sql(df.name, con=engine, if_exists='replace', index=False)
+    df.to_sql(df.name, con=cnx, if_exists='replace', index=False)
+# #########################################################
+
+# 4. CLOSE CONNECTION #####################################
+cnx.detach()
+cnx.close()
 # #########################################################
 

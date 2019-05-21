@@ -32,44 +32,26 @@ function content(
                 lastUpdated: action.receivedAt
             })
         case types.REQUEST_DATA:
+        case types.REQUEST_WORKS:
+        case types.REQUEST_ES_DATA:
+        case types.REQUEST_RESOURCES:
+        case types.REQUEST_AUTHORS:
+        case types.REQUEST_TOPICS:
+        case types.REQUEST_SUBJECTS:
             return Object.assign({}, state, {
                 isFetching: true
             })
         case types.RECEIVE_DATA:
-            return Object.assign({}, state, {
-                isFetching: false,
-                items: action.data,
-                lastUpdated: action.receivedAt
-            })
-        case types.REQUEST_RESOURCES:
-            return Object.assign({}, state, {
-                isFetching: true
-            })
+        case types.RECEIVE_WORKS:
         case types.RECEIVE_RESOURCES:
-            return Object.assign({}, state, {
-                isFetching: false,
-                items: action.data,
-                lastUpdated: action.receivedAt
-            })
         case types.RECEIVE_AUTHORS:
-            return Object.assign({}, state, {
-                isFetching: false,
-                items: action.data,
-                lastUpdated: action.receivedAt
-            })
-        case types.REQUEST_AUTHORS:
-            return Object.assign({}, state, {
-                isFetching: true
-            })
+        case types.RECEIVE_ES_DATA:
         case types.RECEIVE_TOPICS:
+        case types.RECEIVE_SUBJECTS:
             return Object.assign({}, state, {
                 isFetching: false,
                 items: action.data,
                 lastUpdated: action.receivedAt
-            })
-        case types.REQUEST_TOPICS:
-            return Object.assign({}, state, {
-                isFetching: true
             })
         case types.REQUEST_GS:
             return Object.assign({}, state, {
@@ -121,6 +103,7 @@ function content(
             return Object.assign({}, state, {
                 modalID: action.modalID,
                 image: action.image,
+                manifest: action.manifest,
                 show: action.show
             })
         default:
@@ -138,17 +121,21 @@ function pages(state = {}, action) {
     }
 }
 
-function works(state = {}, action) {
+function esWorks(state = {}, action) {
     switch(action.type) {
         case types.RECEIVE_DATA:
+        case types.RECEIVE_WORKS:
+        case types.RECEIVE_ES_DATA:
+        case types.REQUEST_ES_DATA:
         case types.REQUEST_DATA:
+        case types.REQUEST_WORKS:
             return Object.assign({}, state, content(state, action))
         default:
             return state
     }
 }
 
-function resources(state = {}, action) {
+function esResources(state = {}, action) {
     switch(action.type) {
         case types.RECEIVE_RESOURCES:
         case types.REQUEST_RESOURCES:
@@ -158,7 +145,7 @@ function resources(state = {}, action) {
     }
 }
 
-function authors(state = {}, action) {
+function esAuthors(state = {}, action) {
     switch(action.type) {
         case types.RECEIVE_AUTHORS:
         case types.REQUEST_AUTHORS:
@@ -168,10 +155,12 @@ function authors(state = {}, action) {
     }
 }
 
-function topics(state = {}, action) {
+function esSubjects(state = {}, action) {
     switch(action.type) {
         case types.RECEIVE_TOPICS:
+        case types.RECEIVE_SUBJECTS:
         case types.REQUEST_TOPICS:
+        case types.REQUEST_SUBJECTS:
             return Object.assign({}, state, content(state, action))
         default:
             return state
@@ -262,16 +251,36 @@ const selectedPage = (state = 'home', action) => {
     }
 }
 
+const setCollapse = (state = true, action) => {
+    switch (action.type) {
+        case types.SET_COLLAPSE:
+            return action.collapse
+        default:
+            return state
+    }
+}
+
+const setBrowse = (state = 'Title', action) => {
+    switch (action.type) {
+        case types.SET_BROWSE:
+            return action.browse
+        default:
+            return state
+    }
+}
+
 const rootReducer = (history) => combineReducers({
     router: connectRouter(history),
     selectedLanguage,
     selectedPage,
+    setCollapse,
+    setBrowse,
     pages,
     posts,
-    works,
-    authors,
-    topics,
-    resources,
+    esWorks,
+    esAuthors,
+    esSubjects,
+    esResources,
     gsData,
     detailData,
     manifestData,

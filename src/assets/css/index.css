@@ -160,12 +160,6 @@ section.special, article.special, header.special {
   display: none;
 }
 
-.meta-detail {
-  font-style: italic;
-  font-size: 0.8em;
-  margin: 0 0 0.5em 0;
-}
-
 .modal-title {
   font-size: 1.6em;
 
@@ -208,6 +202,7 @@ section.special, article.special, header.special {
 
 .blinky {
   animation: blinker 1s linear infinite;
+  text-transform: uppercase;
 }
 
 @keyframes blinker {

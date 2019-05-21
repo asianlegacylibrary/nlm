@@ -15,7 +15,7 @@ import { defaultLanguage,
 } from '../store/actions/index'
 
 import icon from '../assets/images/calligraphy_icon.ico'
-import png from '../assets/images/endless-knot.png'
+// import png from '../assets/images/endless-knot.png'
 
 import { withNamespaces } from 'react-i18next'
 

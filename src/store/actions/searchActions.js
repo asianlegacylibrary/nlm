@@ -6,23 +6,30 @@ import {
     initialTopicsSearch,
     initialAuthorSearch,
     searchByID,
-    searchResources
+    searchResources,
+    searchIDSbyTerm
 } from '../queries'
-
 
 /* ******************************************
 DATA
 Elasticsearch data from http://142.93.23.6:9200
 ********************************************/
-function requestData() {
-    return {
-        type: types.REQUEST_DATA
+function requestESData(type) {
+    switch(type) {
+        case types.REQUEST_WORKS:
+            return { type: types.REQUEST_WORKS }
+        case types.REQUEST_AUTHORS:
+            return { type: types.REQUEST_AUTHORS }
+        case types.REQUEST_SUBJECTS:
+            return { type: types.REQUEST_SUBJECTS }
+        default:
+            return null
     }
 }
 
-function receiveData(json) {
+function receiveESData(type, json) {
     return {
-        type: types.RECEIVE_DATA,
+        type: type,
         data: json, //.filter(child => child.acf.language === lang), //.data.children.map(child => child.data),
         receivedAt: Date.now()
     }
@@ -30,10 +37,11 @@ function receiveData(json) {
 
 export function fetchData() {
     return async dispatch => {
-        dispatch(requestData())
+        dispatch(requestESData(types.REQUEST_WORKS))
         try {
             const data = await searchByID(collection_v1, collection_v1.length, "W")
-            return dispatch(receiveData(data))
+            const modifiedData = injectPrefLabel(data)
+            return dispatch(receiveESData(types.RECEIVE_WORKS, modifiedData))
         } catch (error) {
             console.error('there been fetchData error ', error)
         }
@@ -42,62 +50,45 @@ export function fetchData() {
 
 export function fetchAuthors() {
     return async dispatch => {
-        dispatch(requestAuthors())
+        dispatch(requestESData(types.REQUEST_AUTHORS))
         try {
             const a = await initialAuthorSearch(collection_v1)
             const authors = a.aggregations.uniqueAuthors.buckets.map(a => {
                 return a.key
             })
             const data = await searchByID(authors, authors.length, "P")
-            return dispatch(receiveAuthors(data))
+            await mutateDataWithRelatedDocs(data, 'workCreator.keyword')
+            log('did it await the big AUTHORS mutation?', data)
+            const modifiedData = injectPrefLabel(data)
+            return dispatch(receiveESData(types.RECEIVE_AUTHORS, modifiedData))
         } catch(error) {
-            console.error('been done error', error)
+            console.error('been done error in fetchAuthors', error)
         }
     }
 }
 
 export function fetchTopics() {
     return async dispatch => {
-        dispatch(requestTopics())
+        dispatch(requestESData(types.REQUEST_SUBJECTS))
         try {
             const t = await initialTopicsSearch(collection_v1)
             log('initial topic search', t)
             const topics = t.aggregations.uniqueTopics.buckets.map(t => {
                 return t.key
             })
-            log(topics, topics.length)
+            //log(topics, topics.length)
             const data = await searchByID(topics, topics.length, "T")
-            log(data)
-            return dispatch(receiveTopics(data))
+            log('did it await searchByID?', data)
+
+            await mutateDataWithRelatedDocs(data, 'workIsAbout.keyword')
+            log('did it await the big TOPICS mutation?', data)
+            
+            const modifiedData = injectPrefLabel(data)
+            
+            return dispatch(receiveESData(types.RECEIVE_SUBJECTS, modifiedData))
         } catch(error) {
-            console.error('been topic error', error)
+            console.error('been error in da fetchTopics', error)
         }
-    }
-}
-
-function requestAuthors() {
-    return {
-        type: types.REQUEST_AUTHORS
-    }
-}
-function receiveAuthors(data) {
-    return {
-        type: types.RECEIVE_AUTHORS,
-        data: data,
-        receivedAt: Date.now()
-    }
-}
-
-function requestTopics() {
-    return {
-        type: types.REQUEST_TOPICS
-    }
-}
-function receiveTopics(data) {
-    return {
-        type: types.RECEIVE_TOPICS,
-        data: data,
-        receivedAt: Date.now()
     }
 }
 
@@ -117,27 +108,27 @@ function receiveID(json) {
     }
 }
 
-function requestResources() {
-    return {
-        type: types.REQUEST_RESOURCES
-    }
-}
+// function requestResources() {
+//     return {
+//         type: types.REQUEST_RESOURCES
+//     }
+// }
 
-function receiveResources(json) {
-    return {
-        type: types.RECEIVE_RESOURCES,
-        data: json.hits,
-        receivedAt: Date.now()
-    }
-}
+// function receiveResources(json) {
+//     return {
+//         type: types.RECEIVE_RESOURCES,
+//         data: json.hits,
+//         receivedAt: Date.now()
+//     }
+// }
 
 export const fetchResources = (id, resources) => {
     return dispatch => {
         log('fetch resources', id, resources)
-        dispatch(requestResources())
+        dispatch(requestESData(types.REQUEST_RESOURCES))
         try {
             searchResources(resources).then((data) => {
-                dispatch(receiveResources(data))
+                dispatch(receiveESData(types.RECEIVE_RESOURCES, data))
             })
         } catch (error) {
             console.error('fetch resources error, ', error)
@@ -157,4 +148,56 @@ export function fetchSpecificID(doc_id) {
             console.error('fetch ID error! ', error)
         }
     }
+}
+
+const mutateDataWithRelatedDocs = async (data, searchField) => {
+    // YO!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // async within an array.map for a Promise.all :)
+    // but, this is mutating data directly
+    // THIS IS AN ANTI-PATTERN, learn correct pattern
+    await Promise.all(data.hits.hits.map(async (d, i) => {
+        if('_id' in d) {
+            return await searchIDSbyTerm(d._id, searchField, collection_v1, searchParams.initialIndex).then(newData => {
+                const modifiedData = injectPrefLabel(newData)
+                return d["_related"] = modifiedData
+            })
+        }
+    }))
+}
+
+const injectPrefLabel = (data) => {
+    //log('trying to inject preflabel now...')
+    data.hits.hits.map(async p => {
+        let tid
+
+        if(p !== undefined) {
+            if('skos:prefLabel' in p._source) {
+                if(Array.isArray(p._source["skos:prefLabel"])) {
+
+                    if (p._source["skos:prefLabel"].some(l => l["@language"] === 'en')) {
+                        tid = p._source["skos:prefLabel"].find(t => "en" === t["@language"])
+                        tid = tid["@value"]
+
+                    } else if (p._source["skos:prefLabel"].some(l => l["@language"] === 'bo-x-ewts')) {
+                        tid = p._source["skos:prefLabel"].find(t => "bo-x-ewts" === t["@language"])
+                        tid = tid["@value"]
+
+                    }
+                } else if(typeof p._source["skos:prefLabel"] === 'object') {
+                    tid = p._source["skos:prefLabel"]["@value"]
+
+                }
+
+            } else {
+                tid = null
+            }
+        }
+
+        return p["_tid"] = tid
+
+    })
+    
+    data.hits.hits.sort((a, b) => a._tid.localeCompare(b._tid))
+
+    return data
 }

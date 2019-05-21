@@ -38,7 +38,13 @@
     "attribution": "ACIP-ийн Монгол Улсын Үндэсний номын санд сканнердсан"
   },
   "modal": {
-    "detail": "Нарийвчлан үзэх"
+    "detail": "Нарийвчлан үзэх",
+    "names": "Name(s)",
+    "note": "Note",
+    "scans": "Scans",
+    "scans-restricted": "Scans Restricted",
+    "image-restricted": "RESTRICTED ACCESS TO IMAGE FILE",
+    "image-not-found": "PREVIEW IMAGE NOT CURRENTLY AVAILABLE."
   },
   "bdrc-ontology": {
     "work": "Aжил",

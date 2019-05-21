@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withNamespaces } from 'react-i18next'
+import { log } from '../store/actions'
 
 class Modal extends Component {
 
@@ -128,6 +129,7 @@ class Modal extends Component {
         // set undefined to null for pre-render check
         note !== undefined ? note = note.noteText : note = null
     
+        log('modal type', type)
         switch(type) {
             case 'Person':  
                 return (
@@ -153,13 +155,18 @@ class Modal extends Component {
                     </div>
                 )
             case 'Work':
+                
                 let scanBtn = this.buildScansBtn(access, t)
-                let img
+                let img = null
                 if(access === 'bdr:AccessRestrictedByTbrc') {
                     img = (
                         <div>{t('modal.image-restricted')}</div>
                     )
-                } else if(firstImage === null || firstImage === undefined) {
+                } else if(firstImage === 'Not Found') {
+                    img = (
+                        <div>{t('modal.image-not-found')}</div>
+                    )
+                } else if(firstImage == null) {
                     img = (
                         <div className="blinky">{t('technical.loading-image')}</div>
                     )
@@ -168,14 +175,17 @@ class Modal extends Component {
                         <img src={firstImage} width="100%" alt="scan" />
                     )
                 }
+
+                log('img ===', img.props.src, firstImage)
                 
                 return (
                     <div className="detail-data">
                         <div className="modal-title">{ this.unpack(label) }</div>
                         
                         {metaDetail}
-                        
-                        {img}
+                         
+                        {/* make sure to null the blinky Loading Image if no image :) */}
+                        {firstImage == null ? null : img}
 
                         {attribution}
                         
@@ -227,6 +237,7 @@ class Modal extends Component {
                 this.props.workDetail._source, 
                 this.props.hideModal,
                 this.props.image,
+                //this.props.manifest,
                 this.props.t)
         } else {
             data = <div className="blinky">{this.props.t('technical.loading')} {this.props.doc_id}</div>
@@ -247,9 +258,9 @@ class Modal extends Component {
 
 const mapStateToProps = (state) => ({
     workDetail: state.detailData.isFetching || state.detailModal.modalID === 0 ? {} : state.detailData.item.hits.hits[0],
-    resources: state.resources.isFetching ? [] : state.resources,
+    resources: state.esResources.isFetching ? [] : state.esResources,
     image: state.detailModal.image,
-    manifestURL: state.manifestData.isFetching || state.detailData.isFetching ? '' : state.manifestData.manifestURL,
+    manifestURL: state.detailModal.manifest,
     numberVolumes: state.detailData.isFetching || state.detailModal.modalID === 0 ? null : state.detailData.item.hits.hits[0]._source.workNumberOfVolumes,
     //firstImage: state.IIIFData.isFetching || state.detailModal.modalID === 0 ? null : state.IIIFData.firstImage
 })

@@ -15,6 +15,7 @@ def create_new_map(active_mappings):
             }
     return new_map
 
+
 def create_leaf(old_key, new_key, data):
     if data[old_key] == "":
         return None

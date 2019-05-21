@@ -1,4 +1,4 @@
-import { SET_LANG, SET_PAGE } from './types'
+import { SET_LANG, SET_PAGE, SET_COLLAPSE, SET_BROWSE } from './types'
 
 export * from './searchActions'
 export * from './iiifActions'
@@ -14,6 +14,12 @@ export const languages = {
   mn: "Mongolian"
 }
 
+export const browseOptions = ['Title', 'Author', 'Subject']
+export const browseOptionsObj = [
+  {browse: 'Title', stateType: 'esWorks'},
+  {browse: 'Author', stateType: 'esAuthors'},
+  {browse: 'Subject', stateType: 'esSubjects'}
+]
 export const searchParams = {
   initialIndex: 'v1_bdrc_work',
   type: '_doc',
@@ -41,4 +47,14 @@ export const setLanguage = language => ({
 export const setPage = page => ({
     type: SET_PAGE,
     page
+})
+
+export const setCollapse = collapse => ({
+  type: SET_COLLAPSE,
+  collapse
+})
+
+export const setBrowse = browse => ({
+  type: SET_BROWSE,
+  browse
 })

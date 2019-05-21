@@ -1,28 +1,57 @@
+@import url(font-awesome.min.css);
+
+.hide-me {
+  opacity: 0;
+  display: none;
+}
+
+.content {
+  display: flex;
+  min-height: 100%;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-flow: row wrap;
+  align-content: flex-end; /*flex-start, space-between, space-around, stretch */
+}
 .grid {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: row;
-    flex-wrap: wrap;
-    flex-flow: row wrap;
-    align-content: flex-end; /*flex-start, space-between, space-around, stretch */
-  }
-  .card {
-    border: 1px solid #222;
+    height: 100%;
+    width: 80%;
+    flex: 1;
+}
+
+.card {
+    /* border: 1px solid #7c759a; */
     align-content: flex-start;
     padding: 10px;
-    margin: 1%;
+    margin: 10px; /*1%;*/
     min-width: 30%;
-    width: 80%;
     height: 100%;
-  }
-  .card-item-link, .card-item-img-link {
+}
+.card-item.browse {
+  display: list-item;          /* This has to be "list-item"                                               */
+  list-style-type: none;  
+  margin-left: 1.4em; 
+  padding-left: 0;     /* See https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type     */
+  list-style-position: inside;
+  color: #33303f;
+}
+.card-item.browse:before {
+  content: "\f101"; /* FontAwesome Unicode */
+  font-family: FontAwesome;
+  display: inline-block;
+  margin-left: -1.3em; /* same as padding-left set on li */
+  width: 1.3em; /* same as padding-left set on li */
+}
+
+.card-item-link, .card-item-img-link {
     text-decoration: underline;
     cursor: pointer;
-  }
-  .item-lead {
+}
+.item-lead {
     font-weight: bold;
-  }
+}
   .item-work {
     font-weight: bold;
     text-transform: uppercase;
@@ -43,8 +72,26 @@
 }
 
 .image-first-image-scan {
-  margin: 1em;
+  margin: 0 1em 1em 1em;
 }
+
+.meta-detail {
+  font-style: italic;
+  font-size: 0.8em;
+  margin: 0 0 0.5em 0;
+}
+.meta-detail-id {
+  font-style: italic;
+  font-size: 0.8em;
+  margin: 0 0 0.5em 0;
+  /* float: right; */
+}
+
+.archives-title {
+  margin: 0 0 20px 10px;
+  font-size: 2.2em;
+}
+
 /* MEDIA QUERIES
 breakpoints: 1680, 1280, 980, 736, 480
 */

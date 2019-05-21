@@ -44,7 +44,8 @@
     "note": "Note",
     "scans": "Scans",
     "scans-restricted": "Scans Restricted",
-    "image-restricted": "RESTRICTED ACCESS TO IMAGE FILE"
+    "image-restricted": "RESTRICTED ACCESS TO IMAGE FILE",
+    "image-not-found": "PREVIEW IMAGE NOT CURRENTLY AVAILABLE."
   },
   "bdrc-ontology": {
     "work": "Work",

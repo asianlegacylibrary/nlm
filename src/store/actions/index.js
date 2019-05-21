@@ -1,7 +1,6 @@
 import { SET_LANG, SET_PAGE, SET_COLLAPSE, SET_BROWSE } from './types'
 
 export * from './searchActions'
-export * from './iiifActions'
 export * from './googleSheetsActions'
 export * from './WPPagesActions'
 export * from './WPPostsActions'

@@ -176,7 +176,7 @@ class Modal extends Component {
                     )
                 }
 
-                log('img ===', img.props.src, firstImage)
+                //log('img ===', img.props.src, firstImage)
                 
                 return (
                     <div className="detail-data">
@@ -185,7 +185,7 @@ class Modal extends Component {
                         {metaDetail}
                          
                         {/* make sure to null the blinky Loading Image if no image :) */}
-                        {firstImage == null ? null : img}
+                        {img}
 
                         {attribution}
                         

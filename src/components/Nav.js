@@ -6,7 +6,9 @@ import { withNamespaces } from 'react-i18next'
 import { log } from '../store/actions'
 
 const NavBar = (props) => {
-  log('creating navbar with props', props.navigation)
+  
+  // THIS NAV BAR GETS RENDERED TOO MUCH, NEED TO REFACTOR
+  //log('creating navbar with props', props.navigation)
     // matching page nav with translated 'pages' object // t('pages')[nav.match] // obj[key]
     const slugs = props.navigation.map(nav => {
       const p = nav.match === 'home' ? '' : `/${nav.match}`

@@ -39,7 +39,7 @@ const store = createStore(
         applyMiddleware(
             routerMiddleware(history),
             thunkMiddleware,
-            loggerMiddleware 
+            //loggerMiddleware 
         )
     )
 )

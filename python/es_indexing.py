@@ -106,9 +106,10 @@ def assign_index(x, index_prefix):
 # with all bdr: ID's that resource needs
 # ####################
 def direct_index(doc, client, collection=""):
+    force_collection = "1"
     # print('DIRECT INDEX of', doc['@id'])
     doc_number = doc['@id'].split(":")[1] if doc['@id'].split(":")[0] == "bdr" else doc['@id']
-    index_name = assign_index(doc_number, f"v{collection}{conf_es['index_prefix']}")
+    index_name = assign_index(doc_number, f"v{force_collection}{conf_es['index_prefix']}")
     try:
         client.create(
                     index=index_name,

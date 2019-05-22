@@ -269,12 +269,22 @@ const setBrowse = (state = 'Title', action) => {
     }
 }
 
+const setCollection = (state = false, action) => {
+    switch (action.type) {
+        case types.SET_COLLECTION:
+            return action.collection
+        default:
+            return state
+    }
+}
+
 const rootReducer = (history) => combineReducers({
     router: connectRouter(history),
     selectedLanguage,
     selectedPage,
     setCollapse,
     setBrowse,
+    setCollection,
     pages,
     posts,
     esWorks,

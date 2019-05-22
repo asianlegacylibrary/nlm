@@ -2,14 +2,24 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withNamespaces } from 'react-i18next'
 
-import { setBrowse, browseOptions } from '../store/actions'
+import { setBrowse, setCollection, browseOptions, log, fetchData } from '../store/actions'
 
 import '../assets/css/sidebar.css'
+import { searchByID } from '../store/queries';
 
 class Sidebar extends Component {
 
-    
+    constructor(props) {
+        super(props)
+        this.state = {
+            collection: false
+        }
+    }
 
+    handleCollectionFiltering = (updatedCollection) => {
+        this.props.dispatch(setCollection(updatedCollection))
+    }
+    
     render() {
         return (
             <div className="sidenav wrapper style1">
@@ -40,6 +50,16 @@ class Sidebar extends Component {
                         />
                         <label htmlFor="collapse">Collapse All</label>
                     </div> */}
+                    <div className="col-4 col-12-small">
+                        <input
+                            id="filter-collection"
+                            type="checkbox"
+                            value="Collapse All"
+                            checked={this.props.collection}
+                            onChange={() => this.handleCollectionFiltering(!this.props.collection)}
+                        />
+                        <label htmlFor="filter-collection">Limit results to current collection</label>
+                    </div>
                 
                 </form>
                     
@@ -50,7 +70,8 @@ class Sidebar extends Component {
 
 const mapStateToProps = (state) => ({
     collapse: state.setCollapse,
-    browse: state.setBrowse
+    browse: state.setBrowse,
+    collection: state.setCollection
 })
 
 const withN = new withNamespaces()(Sidebar)

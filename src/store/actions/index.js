@@ -1,4 +1,4 @@
-import { SET_LANG, SET_PAGE, SET_COLLAPSE, SET_BROWSE } from './types'
+import { SET_LANG, SET_PAGE, SET_COLLAPSE, SET_BROWSE, SET_COLLECTION } from './types'
 
 export * from './searchActions'
 export * from './googleSheetsActions'
@@ -19,6 +19,12 @@ export const browseOptionsObj = [
   {browse: 'Author', stateType: 'esAuthors'},
   {browse: 'Subject', stateType: 'esSubjects'}
 ]
+
+export const collections = [
+  {key: '1', name: 'Collection 1'},
+  {key: '2', name: 'Collection 2'}
+]
+
 export const searchParams = {
   initialIndex: 'v1_bdrc_work',
   type: '_doc',
@@ -51,6 +57,11 @@ export const setPage = page => ({
 export const setCollapse = collapse => ({
   type: SET_COLLAPSE,
   collapse
+})
+
+export const setCollection = collection => ({
+  type: SET_COLLECTION,
+  collection
 })
 
 export const setBrowse = browse => ({

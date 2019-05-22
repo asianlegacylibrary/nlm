@@ -1,12 +1,35 @@
 import { client, log } from '../connection'
 import { searchParams } from '../../store/actions'
 
-export const searchByID = (ids, size, code, allSource = false) => {
+export const searchByID = (ids, size, code, allSource = false, collection = null) => {
 
     let sortValue = null
     let index
     let source = []
     let sort = "asc"
+    let body
+    //collection = 'YO'
+    
+    const id_filter = {
+        type: searchParams.type,
+        values: ids
+    }
+
+    const term_filter = {
+        '_collection': {
+            value: collection
+        }
+    }
+
+    const agg_terms = {
+        collections: {
+            terms: {
+                field: '_collection',
+                order: { _count: 'desc' }
+            }
+        }
+    }
+
 
     if(code === "P") {
         index = "v1_bdrc_person"
@@ -31,19 +54,34 @@ export const searchByID = (ids, size, code, allSource = false) => {
         ]
 
     }
-	
-	const body = {
-		
-        size: size,
-        
-		query: {
-            ids: {
-                type: searchParams.type,
-                values: ids
+    
+    if(collection == null) {
+        body = {
+            size: size,
+            aggregations: agg_terms,
+            query: {
+                bool: {
+                    filter: [
+                        { ids: id_filter }
+                    ]
+                }
             }
         }
-        
+    } else {
+        body = {
+            size: size,
+            aggregations: agg_terms,
+            query: {
+                bool: {
+                    filter: [
+                        { ids: id_filter },
+                        { term: term_filter }
+                    ]
+                }
+            }
+        }
     }
+	
 
     if(!allSource) { body._source = source }
     

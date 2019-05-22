@@ -51,15 +51,15 @@ bulk_chunk_size = 40
 how_many_levels = 2
 current_listing = conf_bdrc["test_works"]
 current_gs_key = conf_gs["key_mappings"]
-current_gs_sheet = conf_gs["read_mapping"]
-which_collection = 1
+current_gs_sheet = conf_gs["read_NLM_2"]
+which_collection = 2
 index_altered_json = True  # while generating a list, alter document and index that document
 
 delete_indices = False
 
 # booleans for each step, for testing purposes
 step_0 = True  # Google Sheets data
-step_1 = False  # list generation
+step_1 = True  # list generation
 step_2 = False  # ElasticSearch indexing
 
 client = None
@@ -107,7 +107,9 @@ if step_1:
 
     print(f"Growth during recursion {branches}")
 
-    write_googlesheet_data(workbook, conf_gs, current_listing)
+    # link to a new workbook to write
+    write_workbook = get_workbook(gs_cred, conf_gs["key_collections"])
+    write_googlesheet_data(write_workbook, conf_gs, current_listing)
 
 
 # STEP 2, create the as-is index

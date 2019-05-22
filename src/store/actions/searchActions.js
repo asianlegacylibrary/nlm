@@ -1,6 +1,7 @@
 import { log, searchParams } from './index'
 import * as types from './types'
 import { collection_v1 } from '../collections/nlm01'
+import { collection_v2 } from '../collections/nlm02'
 
 import {
     initialTopicsSearch,
@@ -9,6 +10,8 @@ import {
     searchResources,
     searchIDSbyTerm
 } from '../queries'
+
+//collection_v1.push(...collection_v2)
 
 /* ******************************************
 DATA
@@ -35,11 +38,19 @@ function receiveESData(type, json) {
     }
 }
 
-export function fetchData() {
+export function fetchData(collection = false) {
+    let filteredCollection
+    if(!collection) {
+        filteredCollection = collection_v1.concat(collection_v2)
+    } else {
+        filteredCollection = collection_v2
+    }
+    //log('in fetchData with this many to search', collection, filteredCollection.length)
     return async dispatch => {
         dispatch(requestESData(types.REQUEST_WORKS))
         try {
-            const data = await searchByID(collection_v1, collection_v1.length, "W")
+            const data = await searchByID(filteredCollection, filteredCollection.length, "W")
+            log('buckets', filteredCollection.length, data.aggregations.collections.buckets)
             const modifiedData = injectPrefLabel(data)
             return dispatch(receiveESData(types.RECEIVE_WORKS, modifiedData))
         } catch (error) {

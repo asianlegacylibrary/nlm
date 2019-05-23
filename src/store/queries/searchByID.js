@@ -7,18 +7,10 @@ export const searchByID = (ids, size, code, allSource = false, collection = null
     let index
     let source = []
     let sort = "asc"
-    let body
-    //collection = 'YO'
     
     const id_filter = {
         type: searchParams.type,
         values: ids
-    }
-
-    const term_filter = {
-        '_collection': {
-            value: collection
-        }
     }
 
     const agg_terms = {
@@ -29,7 +21,6 @@ export const searchByID = (ids, size, code, allSource = false, collection = null
             }
         }
     }
-
 
     if(code === "P") {
         index = "v1_bdrc_person"
@@ -43,7 +34,6 @@ export const searchByID = (ids, size, code, allSource = false, collection = null
             "_*"
         ]
     }
-    
     else if(code === "W") {
         index = "v1_bdrc_work"
         sortValue = "skos:prefLabel.@value.keyword"
@@ -55,29 +45,14 @@ export const searchByID = (ids, size, code, allSource = false, collection = null
 
     }
     
-    if(collection == null) {
-        body = {
-            size: size,
-            aggregations: agg_terms,
-            query: {
-                bool: {
-                    filter: [
-                        { ids: id_filter }
-                    ]
-                }
-            }
-        }
-    } else {
-        body = {
-            size: size,
-            aggregations: agg_terms,
-            query: {
-                bool: {
-                    filter: [
-                        { ids: id_filter },
-                        { term: term_filter }
-                    ]
-                }
+    const body = {
+        size: size,
+        aggregations: agg_terms,
+        query: {
+            bool: {
+                filter: [
+                    { ids: id_filter }
+                ]
             }
         }
     }
@@ -90,7 +65,7 @@ export const searchByID = (ids, size, code, allSource = false, collection = null
         body.sort = [ { [sortValue]: { "order" : sort } }]
     }
 
-	log('search by id body', body)
+	log('search by id body', code, body)
 
 	return client.search({ index: index, body })
 

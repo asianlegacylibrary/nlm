@@ -229,29 +229,38 @@ class Modal extends Component {
     }
     
     render() {
+        log('modal is being rendered...')
         const showHideClassName = this.props.show ? 'modal display-block' : 'modal display-none';
-        let data
-        
-        if(Object.keys(this.props.workDetail).length > 0) {
-            data = this.parseType(
-                this.props.workDetail._source, 
-                this.props.hideModal,
-                this.props.image,
-                //this.props.manifest,
-                this.props.t)
-        } else {
-            data = <div className="blinky">{this.props.t('technical.loading')} {this.props.doc_id}</div>
-        }
-        return ( 
-            <div 
+        //let data
+
+        if(Object.keys(this.props.workDetail).length === 0) {
+            return (
+                <div 
                 className={showHideClassName}
                 onClick={this.props.hideModal}
-            >
-                <section className='modal-main'>
-                    {data}
-                </section>
-            </div>
-        )
+                >
+                    <section className='modal-main'>
+                        <div className="blinky">{this.props.t('technical.loading')} {this.props.doc_id}</div>
+                    </section>
+                </div>
+            )
+        } else {
+            return (
+                <div 
+                className={showHideClassName}
+                onClick={this.props.hideModal}
+                >
+                    <section className='modal-main'>
+                        {this.parseType(
+                        this.props.workDetail._source, 
+                        this.props.hideModal,
+                        this.props.image,
+                        //this.props.manifest,
+                        this.props.t)}
+                    </section>
+                </div>
+            )
+        }
     }
 
 }

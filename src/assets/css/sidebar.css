@@ -29,6 +29,13 @@
     color: #f1f1f1;
   }
   
+  .meta-count {
+    letter-spacing: 0.2em;
+    margin: 0 0 1em 0;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 0.8em;
+  }
   /* MEDIA QUERIES
   breakpoints: 1680, 1280, 980, 736, 480
   */

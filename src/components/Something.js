@@ -47,12 +47,13 @@ const Something = ({related, dispatch, doc_id, showModal}) => {
     return (
         <div>
             {relatedItems}
+        {doc_id == null ? null : 
         <Modal 
             key={doc_id}
             hideModal={handleHideModal}
             doc_id={doc_id}
             show={showModal}
-        />
+        />}
         </div>
     )
 }

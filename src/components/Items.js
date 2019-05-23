@@ -19,6 +19,21 @@ const Items = (props) => {
             <div className="blinky">LOADING {`${props.browse}S`}</div>
         )
     }
+    //log('currentWorks!', props.currentWorks)
+    // const getVisibleTodos = (todos, filter) => {
+    //     switch (filter) {
+    //         case 'SHOW_ALL':
+    //             return todos
+    //         case 'SHOW_COMPLETED':
+    //             return todos.filter(t => t.completed)
+    //         case 'SHOW_ACTIVE':
+    //             return todos.filter(t => !t.completed)
+    //         default:
+    //             return todos
+    //     }
+    // }
+
+    
 
     // fetch ID from ES and show modal
     const handleShowModal = (doc_id, resources = null, imageURL = null, manifestURL = null) => {
@@ -53,6 +68,8 @@ const Items = (props) => {
         )
     })
 
+    //log('THINGS!', things)
+
     return (
         <div>
             {things}
@@ -67,12 +84,22 @@ const Items = (props) => {
     )
 }
 
+// pseudo-selector, rewrite this using re-select package (selectors)
+const getCurrentData = (data, filter) => {
+    if(filter) {
+        return data.filter(t => t._source._collection === 2)
+    } else {
+        return data
+    }
+}
+
 const mapStateToProps = (state) => ({
-    esWorks: state.esWorks.isFetching ? [] : state.esWorks.items.hits.hits,
-    esAuthors: state.esAuthors.isFetching ? [] : state.esAuthors.items.hits.hits,
-    esSubjects: state.esSubjects.isFetching ? [] : state.esSubjects.items.hits.hits,
+    esWorks: state.esWorks.isFetching ? [] : getCurrentData(state.esWorks.items.hits.hits, state.setCollection),
+    esAuthors: state.esAuthors.isFetching ? [] : getCurrentData(state.esAuthors.items.hits.hits, state.setCollection),
+    esSubjects: state.esSubjects.isFetching ? [] : getCurrentData(state.esSubjects.items.hits.hits, state.setCollection),
     browse: state.setBrowse,
     collapse: state.setCollapse,
+    collection: state.setCollection,
     doc_id: state.detailModal.modalID,
     showModal: state.detailModal.show
 })

@@ -2,19 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withNamespaces } from 'react-i18next'
 
-import { setBrowse, setCollection, browseOptions, log, fetchData } from '../store/actions'
+import { setBrowse, setCollection, log, browseOptionsObj } from '../store/actions'
 
 import '../assets/css/sidebar.css'
-import { searchByID } from '../store/queries';
 
 class Sidebar extends Component {
-
-    constructor(props) {
-        super(props)
-        this.state = {
-            collection: false
-        }
-    }
 
     handleCollectionFiltering = (updatedCollection) => {
         this.props.dispatch(setCollection(updatedCollection))
@@ -25,17 +17,19 @@ class Sidebar extends Component {
             <div className="sidenav wrapper style1">
                 Browse by:
                 <form>
-                    {browseOptions.map(o => {
+                    {browseOptionsObj.map(o => {
+                        o.browse === 'Title' ? log(this.props[`number_${o.stateType}`]) : log('hi')
                         return (
-                            <div key={o} className="col-4 col-12-small">
+                            <div key={o.browse} className="col-4 col-12-small">
                                 <input
-                                    id={o}
+                                    id={o.browse}
                                     type="radio"
-                                    value={o}
-                                    checked={this.props.browse === o}
+                                    value={o.browse}
+                                    checked={this.props.browse === o.browse}
                                     onChange={(e) => this.props.dispatch(setBrowse(e.target.value))}
                                 />
-                                <label htmlFor={o}>{o}</label>
+                                <label htmlFor={o.browse}>{o.browse}</label>
+                                <span className="meta-count">({this.props[`number_${o.stateType}`]})</span>
                             </div>
                         )
                     })}
@@ -68,10 +62,24 @@ class Sidebar extends Component {
     }
 }
 
+const getNumberOfItems = (data, filter) => {
+    let d
+    if(filter) {
+        d = data.aggregations.collections.buckets.find(t => t.key === 2)
+        d = d.doc_count
+    } else {
+        d = data.hits.total
+    }
+    return d 
+}
+
 const mapStateToProps = (state) => ({
     collapse: state.setCollapse,
     browse: state.setBrowse,
-    collection: state.setCollection
+    collection: state.setCollection,
+    number_esWorks: state.esWorks.isFetching ? [] : getNumberOfItems(state.esWorks.items, state.setCollection),
+    number_esAuthors: state.esAuthors.isFetching ? [] : getNumberOfItems(state.esAuthors.items, state.setCollection),
+    number_esSubjects: state.esSubjects.isFetching ? [] : getNumberOfItems(state.esSubjects.items, state.setCollection)
 })
 
 const withN = new withNamespaces()(Sidebar)

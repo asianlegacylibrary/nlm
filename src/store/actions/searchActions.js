@@ -11,7 +11,7 @@ import {
     searchIDSbyTerm
 } from '../queries'
 
-//collection_v1.push(...collection_v2)
+collection_v1.push(...collection_v2)
 
 /* ******************************************
 DATA
@@ -38,19 +38,23 @@ function receiveESData(type, json) {
     }
 }
 
-export function fetchData(collection = false) {
-    let filteredCollection
-    if(!collection) {
-        filteredCollection = collection_v1.concat(collection_v2)
-    } else {
-        filteredCollection = collection_v2
-    }
-    //log('in fetchData with this many to search', collection, filteredCollection.length)
+// const filterCollection = (collection = false) => {
+//     let filteredCollection
+//     if(!collection) {
+//         filteredCollection = collection_v1.concat(collection_v2)
+//     } else {
+//         filteredCollection = collection_v2
+//     }
+//     return filteredCollection
+// }
+
+export function fetchData() {
+    //const fc = filterCollection(collection)
     return async dispatch => {
         dispatch(requestESData(types.REQUEST_WORKS))
         try {
-            const data = await searchByID(filteredCollection, filteredCollection.length, "W")
-            log('buckets', filteredCollection.length, data.aggregations.collections.buckets)
+            const data = await searchByID(collection_v1, collection_v1.length, "W")
+            log('buckets', collection_v1.length, data.aggregations.collections.buckets)
             const modifiedData = injectPrefLabel(data)
             return dispatch(receiveESData(types.RECEIVE_WORKS, modifiedData))
         } catch (error) {
@@ -60,6 +64,8 @@ export function fetchData(collection = false) {
 }
 
 export function fetchAuthors() {
+    //const fc = filterCollection(collection)
+    //log('fetchAuthors receiving', fc.length, fc)
     return async dispatch => {
         dispatch(requestESData(types.REQUEST_AUTHORS))
         try {
@@ -67,6 +73,7 @@ export function fetchAuthors() {
             const authors = a.aggregations.uniqueAuthors.buckets.map(a => {
                 return a.key
             })
+            //log('authors keys', authors)
             const data = await searchByID(authors, authors.length, "P")
             await mutateDataWithRelatedDocs(data, 'workCreator.keyword')
             log('did it await the big AUTHORS mutation?', data)

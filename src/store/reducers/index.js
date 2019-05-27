@@ -102,6 +102,8 @@ function content(
         case types.DETAIL_MODAL:
             return Object.assign({}, state, {
                 modalID: action.modalID,
+                label: action.label,
+                resources: action.resources,
                 image: action.image,
                 manifest: action.manifest,
                 show: action.show

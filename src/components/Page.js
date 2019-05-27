@@ -144,7 +144,7 @@ class Page extends Component {
             <Stats stats={this.props.gs} t={this.props.t} />
             <Posts />
           </div> : null }
-        { this.props.selectedPage === 'archives' ? <Archives /> : null }
+        { this.props.selectedPage === 'archives' ? <Archives browse={this.props.browse} /> : null }
         <Footer />
       </div>
     )
@@ -167,7 +167,8 @@ const mapStateToProps = (state) => {
       state.pages.items[state.selectedLanguage].some(page => page.slug.split('-')[0] === state.selectedPage) ? 
       state.selectedPage : "home",
     pages: state.pages.isFetching ? [] : state.pages.items[state.selectedLanguage],
-    gs: state.gsData.isFetching ? {} : state.gsData.gs
+    gs: state.gsData.isFetching ? {} : state.gsData.gs,
+    browse: state.setBrowse
   }
 };
 

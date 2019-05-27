@@ -36,12 +36,20 @@ const Items = (props) => {
         props.dispatch({ type: 'NULLIFY_IIIF'})
     }
 
+    const setImageURL = (img) => {
+        if(img == null) {
+            return 'No Image'
+        } else if(img === 'Not Found') {
+            return 'Not Found'
+        } else {
+            return `${img}/${IIIFsuffix}`
+        }
+    }
+
     const things = props[currentESdata.stateType].map((d, i) => {
         //let _id = null, _resources = null, _firstImageURL = null, _manifestURL = null
         const { _resources, _firstImageURL, _manifestURL } = d._source
-        let imageURL = _firstImageURL === "Not Found" 
-                ? "Not Found"
-                : `${_firstImageURL}/${IIIFsuffix}`
+        let imageURL = setImageURL(_firstImageURL)
         return (
             <div key={i} className="item">
                 <span 

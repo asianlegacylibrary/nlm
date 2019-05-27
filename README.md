@@ -15,6 +15,7 @@
 - [Create-React-App](#create-react-app)
 
 ## To-Do's
+- favicon!
 - create store based on dev / prod
 - update modal to incorporate more ES data
     - especially for Subjects and Authors
@@ -24,6 +25,9 @@
     - currently MODAL will not render until esSubjects and esAuthors received
 
 - type checking, re-factor to use either prop-types or flow
+
+- PYTHON
+    - injectPrefLabel could be moved to pre-processing in PYTHON
 
 ## Data and APIs
 Info on the Elasticsearch

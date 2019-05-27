@@ -70,13 +70,15 @@ export function fetchAuthors() {
         dispatch(requestESData(types.REQUEST_AUTHORS))
         try {
             const a = await initialAuthorSearch(collection_v1)
+            log('#0, authors...')
             const authors = a.aggregations.uniqueAuthors.buckets.map(a => {
                 return a.key
             })
-            //log('authors keys', authors)
+            log('#1, authors keys', authors.length)
             const data = await searchByID(authors, authors.length, "P")
+            log('#2, authors in works')
             await mutateDataWithRelatedDocs(data, 'workCreator.keyword')
-            log('did it await the big AUTHORS mutation?', data)
+            log('#3, authors add related docs')
             const modifiedData = injectPrefLabel(data)
             return dispatch(receiveESData(types.RECEIVE_AUTHORS, modifiedData))
         } catch(error) {
@@ -90,16 +92,15 @@ export function fetchTopics() {
         dispatch(requestESData(types.REQUEST_SUBJECTS))
         try {
             const t = await initialTopicsSearch(collection_v1)
-            log('initial topic search', t)
+            log('#0, topics...')
             const topics = t.aggregations.uniqueTopics.buckets.map(t => {
                 return t.key
             })
-            //log(topics, topics.length)
+            log('#1, topics keys', topics.length)
             const data = await searchByID(topics, topics.length, "T")
-            log('did it await searchByID?', data)
-
+            log('#2, topics in works')
             await mutateDataWithRelatedDocs(data, 'workIsAbout.keyword')
-            log('did it await the big TOPICS mutation?', data)
+            log('#3, topic add related docs')
             
             const modifiedData = injectPrefLabel(data)
             
@@ -176,13 +177,17 @@ const mutateDataWithRelatedDocs = async (data, searchField) => {
     await Promise.all(data.hits.hits.map(async (d, i) => {
         if('_id' in d) {
             return await searchIDSbyTerm(d._id, searchField, collection_v1, searchParams.initialIndex).then(newData => {
+                //log('within the mutate with related', newData)
                 const modifiedData = injectPrefLabel(newData)
                 return d["_related"] = modifiedData
+                
             })
         }
     }))
 }
 
+// this function should be done in python as pre-processing
+// add _tid to each document before indexing to ES
 const injectPrefLabel = (data) => {
     //log('trying to inject preflabel now...')
     data.hits.hits.map(async p => {

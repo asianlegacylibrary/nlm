@@ -1,6 +1,6 @@
 import React from 'react'
 import { IIIFsuffix } from '../store/actions'
-import '../assets/css/something.css'
+import '../assets/css/items.css'
 
 const SubItems = ({related, handleShowModal}) => {
     if(related == null) {
@@ -15,7 +15,7 @@ const SubItems = ({related, handleShowModal}) => {
         return (
             <div 
                 key={i} 
-                className="something-items card-item-link"
+                className="subitems card-item-link"
                 onClick={() =>  handleShowModal(d._id, d._tid, _resources, imageURL, _manifestURL)}
             >
                 {d._tid}

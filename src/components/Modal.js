@@ -107,7 +107,9 @@ class Modal extends Component {
             note,
             'adm:access': access
         } = source
-    
+
+        log('firstImage', firstImage)
+
         const metaDetail = (
             <p className="meta-detail">
                 <span>{t('modal.detail')} {id}, </span>
@@ -162,6 +164,8 @@ class Modal extends Component {
                     img = (
                         <div>{t('modal.image-restricted')}</div>
                     )
+                } else if(firstImage === 'No Image') {
+                    img = null
                 } else if(firstImage === 'Not Found') {
                     img = (
                         <div>{t('modal.image-not-found')}</div>
@@ -201,6 +205,9 @@ class Modal extends Component {
 
     buildScansBtn(access, t) {
         let btn = null
+        if(this.props.manifestURL == null) {
+            return null
+        }
         if(this.props.manifestURL !== undefined) {
             //window.localStorage.setItem("manifestURL", this.props.manifestURL)
             if(this.props.manifestURL.length === 0) {
@@ -265,10 +272,23 @@ class Modal extends Component {
 
 }
 
+//pseudo-selector
+const getImageURL = (img) => {
+    log(img)
+    if(img === null) {
+        return null
+    }
+    else if(img.substring(0,8) === 'undefined') {
+        return null
+    } else {
+        return img
+    }
+}
+
 const mapStateToProps = (state) => ({
     workDetail: state.detailData.isFetching || state.detailModal.modalID === 0 ? {} : state.detailData.item.hits.hits[0],
     resources: state.esResources.isFetching ? [] : state.esResources,
-    image: state.detailModal.image,
+    image: getImageURL(state.detailModal.image), // === null ? 'Not Found' : state.detailModal.image,
     manifestURL: state.detailModal.manifest,
     numberVolumes: state.detailData.isFetching || state.detailModal.modalID === 0 ? null : state.detailData.item.hits.hits[0]._source.workNumberOfVolumes,
     //firstImage: state.IIIFData.isFetching || state.detailModal.modalID === 0 ? null : state.IIIFData.firstImage

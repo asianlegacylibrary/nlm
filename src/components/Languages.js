@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Language from '../containers/Language'
-
+import Language from './containers/Language'
 
 import { withNamespaces } from 'react-i18next'
 

@@ -1,42 +1,33 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import Something from './Something'
+import SubItems from './SubItems'
 import Modal from './Modal'
-
 import { fetchSpecificID, browseOptionsObj, IIIFsuffix } from '../store/actions'
 
 import { log } from '../store/connection'
 
 import '../assets/css/items.css'
 
-
-const Items = (props) => {
-    let currentESdata = browseOptionsObj.find(x => x.browse === props.browse)
-    
-    if(!props[currentESdata.stateType].length) {
-        return (
-            <div className="blinky">LOADING {`${props.browse}S`}</div>
-        )
-    }
+class Items extends Component {
 
     // fetch ID from ES and show modal
-    const handleShowModal = (doc_id, resources = null, imageURL = null, manifestURL = null) => {
-        props.dispatch(fetchSpecificID(doc_id))
+    handleShowModal = (doc_id, label = '', resources = null, imageURL = null, manifestURL = null) => {
+        this.props.dispatch(fetchSpecificID(doc_id))
         //this.props.dispatch(fetchResources(doc_id, resources))
-        props.dispatch(
-            { type: 'DETAIL_MODAL', modalID: doc_id, image: imageURL, manifest: manifestURL, show: true }
+        this.props.dispatch(
+            { type: 'DETAIL_MODAL', modalID: doc_id, label: label, resources: resources, image: imageURL, manifest: manifestURL, show: true }
         )
     }
 
     // close modal and nullify the IIIF image so there's no flash
     // of previous image on next modal
-    const handleHideModal = () => {
-        props.dispatch({ type: 'DETAIL_MODAL', show: false})
-        props.dispatch({ type: 'NULLIFY_IIIF'})
+    handleHideModal = () => {
+        this.props.dispatch({ type: 'DETAIL_MODAL', show: false})
+        this.props.dispatch({ type: 'NULLIFY_IIIF'})
     }
 
-    const setImageURL = (img) => {
+    setImageURL = (img) => {
         if(img == null) {
             return 'No Image'
         } else if(img === 'Not Found') {
@@ -46,33 +37,51 @@ const Items = (props) => {
         }
     }
 
-    const things = props[currentESdata.stateType].map((d, i) => {
-        //let _id = null, _resources = null, _firstImageURL = null, _manifestURL = null
-        const { _resources, _firstImageURL, _manifestURL } = d._source
-        let imageURL = setImageURL(_firstImageURL)
+    render() {
+
+        let currentESdata = browseOptionsObj.find(x => x.browse === this.props.browse)
+
+        if(!this.props[currentESdata.stateType].length) {
+            return (
+                <div className="blinky">LOADING {`${this.props.browse}S`}</div>
+            )
+        }
+
+        const items = this.props[currentESdata.stateType].map((d, i) => {
+            //let _id = null, _resources = null, _firstImageURL = null, _manifestURL = null
+            const { _resources, _firstImageURL, _manifestURL } = d._source
+            let imageURL = this.setImageURL(_firstImageURL)
+            return (
+                <div key={i} className="item">
+                    <span 
+                        className="item-title card-item-link"
+                        onClick={() => this.handleShowModal(d._id, d._tid, _resources, imageURL, _manifestURL)}
+                    >{d._tid}</span>
+                    { d._related ? 
+                        <SubItems 
+                            key={d._id} 
+                            related={d._related}
+                            handleShowModal={this.handleShowModal}
+                        /> : null }
+                </div>
+            )
+        })
+    
         return (
-            <div key={i} className="item">
-                <span 
-                    className="item-title card-item-link"
-                    onClick={() => handleShowModal(d._id, _resources, imageURL, _manifestURL)}
-                >{d._tid}</span>
-                {d._related ? <Something key={d._id} related={d._related} /> : null}
+            <div>
+                {items}
+                {this.props.doc_id == null ? null : 
+                <Modal 
+                    key={this.props.doc_id}
+                    hideModal={this.handleHideModal}
+                    doc_id={this.props.doc_id}
+                    show={this.props.showModal}
+                /> }
             </div>
         )
-    })
+    }
 
-    return (
-        <div>
-            {things}
-            {props.doc_id == null ? null : 
-            <Modal 
-                key={props.doc_id}
-                hideModal={handleHideModal}
-                doc_id={props.doc_id}
-                show={props.showModal}
-            /> }
-        </div>
-    )
+    
 }
 
 // pseudo-selector, rewrite this using re-select package (selectors)

@@ -94,9 +94,9 @@ class Modal extends Component {
         )
     }
 
-    parseType = (source, hideModal, firstImage, t) => {
+    parseType = (modalDetails, source, hideModal, firstImage, t) => {
         let { 
-            'skos:prefLabel': label,
+            //'skos:prefLabel': label,
             '@id': id,
             type,
             'workCatalogInfo': catalogInfo,
@@ -137,7 +137,7 @@ class Modal extends Component {
                 return (
                     <div className="detail-data">
                         {metaDetail}
-                        <div className="modal-title">{ this.unpack(label) }</div>
+                        <div className="modal-title">{modalDetails.label}</div>
                         <div className="">
                             <span className="lead-item">{t('modal.names')}: </span>
                             <span className="meta-catalog">{ this.unpack(personName) }</span>
@@ -149,7 +149,7 @@ class Modal extends Component {
                 return (
                     <div className="detail-data">
                         {metaDetail}
-                        <div className="modal-title">{ this.unpack(label) }</div>
+                        <div className="modal-title">{modalDetails.label}</div>
                         {note === null ? null : (
                             <div className="meta-catalog">{t('modal.note')}: { note !== null ? this.unpack(note) : null }</div>
                         )}
@@ -184,7 +184,7 @@ class Modal extends Component {
                 
                 return (
                     <div className="detail-data">
-                        <div className="modal-title">{ this.unpack(label) }</div>
+                        <div className="modal-title">{modalDetails.label}</div>
                         
                         {metaDetail}
                          
@@ -259,6 +259,7 @@ class Modal extends Component {
                 >
                     <section className='modal-main'>
                         {this.parseType(
+                        this.props.modalDetails,
                         this.props.workDetail._source, 
                         this.props.hideModal,
                         this.props.image,
@@ -272,23 +273,11 @@ class Modal extends Component {
 
 }
 
-//pseudo-selector
-const getImageURL = (img) => {
-    log(img)
-    if(img === null) {
-        return null
-    }
-    else if(img.substring(0,8) === 'undefined') {
-        return null
-    } else {
-        return img
-    }
-}
-
 const mapStateToProps = (state) => ({
+    modalDetails: state.detailData.isFetching || state.detailData.modalID === 0 ? {} : state.detailModal,
     workDetail: state.detailData.isFetching || state.detailModal.modalID === 0 ? {} : state.detailData.item.hits.hits[0],
     resources: state.esResources.isFetching ? [] : state.esResources,
-    image: getImageURL(state.detailModal.image), // === null ? 'Not Found' : state.detailModal.image,
+    image: state.detailModal.image, // === null ? 'Not Found' : state.detailModal.image,
     manifestURL: state.detailModal.manifest,
     numberVolumes: state.detailData.isFetching || state.detailModal.modalID === 0 ? null : state.detailData.item.hits.hits[0]._source.workNumberOfVolumes,
     //firstImage: state.IIIFData.isFetching || state.detailModal.modalID === 0 ? null : state.IIIFData.firstImage

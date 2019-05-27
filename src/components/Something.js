@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import Modal from './Modal'
+//import Modal from './Modal'
 
 import { fetchSpecificID, IIIFsuffix } from '../store/actions'
 
 import '../assets/css/something.css'
 
-const Something = ({related, dispatch, doc_id, showModal}) => {
+const Something = ({related, dispatch}) => {
     if(related == null) {
         return null
     }
@@ -21,14 +21,6 @@ const Something = ({related, dispatch, doc_id, showModal}) => {
         )
     }
 
-    // close modal and nullify the IIIF image so there's no flash
-    // of previous image on next modal
-    const handleHideModal = () => {
-        dispatch({ type: 'DETAIL_MODAL', show: false})
-        dispatch({ type: 'NULLIFY_IIIF'})
-    }
-
-    
     const relatedItems = related.hits.hits.map((d, i) => {
         const { _resources, _firstImageURL, _manifestURL } = d._source
         let imageURL = _firstImageURL === "Not Found" 
@@ -47,20 +39,8 @@ const Something = ({related, dispatch, doc_id, showModal}) => {
     return (
         <div>
             {relatedItems}
-        {doc_id == null ? null : 
-        <Modal 
-            key={doc_id}
-            hideModal={handleHideModal}
-            doc_id={doc_id}
-            show={showModal}
-        />}
         </div>
     )
 }
 
-const mapStateToProps = (state) => ({
-    doc_id: state.detailModal.modalID,
-    showModal: state.detailModal.show
-})
-
-export default connect(mapStateToProps)(Something)
+export default connect()(Something)

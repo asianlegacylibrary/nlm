@@ -237,7 +237,7 @@ class Modal extends Component {
             return (
                 <div 
                 className={showHideClassName}
-                onClick={this.props.hideModal}
+                //onClick={this.props.hideModal}
                 >
                     <section className='modal-main'>
                         <div className="blinky">{this.props.t('technical.loading')} {this.props.doc_id}</div>
@@ -248,7 +248,7 @@ class Modal extends Component {
             return (
                 <div 
                 className={showHideClassName}
-                onClick={this.props.hideModal}
+                //onClick={this.props.hideModal}
                 >
                     <section className='modal-main'>
                         {this.parseType(

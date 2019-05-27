@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withNamespaces } from 'react-i18next'
 
-import { defaultLanguage, setLanguage } from '../store/actions'
+import { defaultLanguage, setLanguage } from '../../store/actions'
 
 const Language = ({ active, children, dispatch, lang, i18n }) => {
 

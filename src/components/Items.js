@@ -19,21 +19,6 @@ const Items = (props) => {
             <div className="blinky">LOADING {`${props.browse}S`}</div>
         )
     }
-    //log('currentWorks!', props.currentWorks)
-    // const getVisibleTodos = (todos, filter) => {
-    //     switch (filter) {
-    //         case 'SHOW_ALL':
-    //             return todos
-    //         case 'SHOW_COMPLETED':
-    //             return todos.filter(t => t.completed)
-    //         case 'SHOW_ACTIVE':
-    //             return todos.filter(t => !t.completed)
-    //         default:
-    //             return todos
-    //     }
-    // }
-
-    
 
     // fetch ID from ES and show modal
     const handleShowModal = (doc_id, resources = null, imageURL = null, manifestURL = null) => {
@@ -58,17 +43,15 @@ const Items = (props) => {
                 ? "Not Found"
                 : `${_firstImageURL}/${IIIFsuffix}`
         return (
-            <div key={i}>
+            <div key={i} className="item">
                 <span 
                     className="item-title card-item-link"
                     onClick={() => handleShowModal(d._id, _resources, imageURL, _manifestURL)}
                 >{d._tid}</span>
-                {d._related ? <Something related={d._related} /> : null}
+                {d._related ? <Something key={d._id} related={d._related} /> : null}
             </div>
         )
     })
-
-    //log('THINGS!', things)
 
     return (
         <div>

@@ -1,3 +1,15 @@
+@import url(font-awesome.min.css);
+
 .item-title {
     font-weight: bold;
 }
+.item {
+    margin-bottom: 1em;
+}
+.card-item-link:before {
+    content: "\f101"; /* FontAwesome Unicode */
+    font-family: FontAwesome;
+    display: inline-block;
+    /* margin-left: -1.3em; same as padding-left set on li */
+    width: 1.3em; /* same as padding-left set on li */
+  }

@@ -17,8 +17,10 @@
 ## To-Do's
 - favicon!
 - ability to collapse, expand each item in archives
+- add 'loading' to meta-counts in sidebar for additional info to users
 - ability to close modal before it loads
 - create store based on dev / prod
+    - add logger middleware only when in development
 - update modal to incorporate more ES data
     - especially for Subjects and Authors
 - add 'reselect' and refactor to memoized selectors

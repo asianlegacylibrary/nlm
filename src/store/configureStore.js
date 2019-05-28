@@ -2,21 +2,33 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger';
 import rootReducer from './reducers'
+import { log } from '../store/actions'
 
 import { createBrowserHistory } from 'history'
 
 export default function configureStore(preloadedState) {
 
-    const loggerMiddleware = createLogger()
+    
     const history = createBrowserHistory()
-  
-    const middlewares = [loggerMiddleware, thunkMiddleware]
+
+    const middlewares = [thunkMiddleware]
+
+    if (process.env.NODE_ENV === 'development') {
+        log('In Dev, will add logger middleware...')
+        const loggerMiddleware = createLogger()
+        middlewares.push(loggerMiddleware)
+    }
+
     const middlewareEnhancer = applyMiddleware(...middlewares)
 
     const enhancers = [middlewareEnhancer]
     const composedEnhancers = compose(...enhancers)
 
-  const store = createStore(rootReducer(history), preloadedState, composedEnhancers)
+    const store = createStore(
+        rootReducer(history), 
+        preloadedState, 
+        composedEnhancers
+    )
 
   return store
 }

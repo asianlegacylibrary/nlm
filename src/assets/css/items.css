@@ -1,6 +1,5 @@
 @import url(font-awesome.min.css);
 
-
 .card {
     /* border: 1px solid #7c759a; */
     align-content: flex-start;
@@ -9,39 +8,64 @@
     min-width: 30%;
     height: 100%;
 }
-.card-item.browse {
-  display: list-item;          /* This has to be "list-item"                                               */
-  list-style-type: none;  
-  margin-left: 1.4em; 
-  padding-left: 0;     /* See https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type     */
-  list-style-position: inside;
-  color: #33303f;
+.card-item-link {
+  cursor: pointer;
+  padding: 0.4em;
+  background: transparent;
+  border: 1px solid #efefef;
+  transition: background 100ms linear, border 160ms linear;
+  border-radius: 4px;
+  line-height: 1.4em;
 }
-.card-item.browse:before {
+.card-item-link:hover {
+  background: #fff;
+  border: 1px solid #80799c;
+  transition: background 200ms linear, border 220ms linear;
+}
+.card-item-link:before {
   content: "\f101"; /* FontAwesome Unicode */
   font-family: FontAwesome;
   display: inline-block;
-  margin-left: -1.3em; /* same as padding-left set on li */
+  /* margin-left: -1.3em; same as padding-left set on li */
+  width: 1.3em; /* same as padding-left set on li */
+}
+.card-sub-item {
+  padding-left: 10%;
+}
+.item {
+  margin-top: 0.6em;
+}
+.item-title {
+  font-weight: bold;
+}
+
+.subitems {
+  margin-left: 20px;
+}
+
+.subitems.card-item-link::before {
+  content: "\f105"; /* FontAwesome Unicode */
+  font-family: FontAwesome;
+  display: inline-block;
+  /* margin-left: -1.3em; same as padding-left set on li */
   width: 1.3em; /* same as padding-left set on li */
 }
 
 .item-lead {
     font-weight: bold;
 }
-  .item-work {
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-  .item-btn {
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  .item-btn:hover {
-    opacity: 0.8;
-  }
-  .card-sub-item {
-    padding-left: 10%;
-  }
+.item-work {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.item-btn {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.item-btn:hover {
+  opacity: 0.8;
+}
+
 .item-work-label {
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -61,42 +85,6 @@
   font-size: 0.8em;
   margin: 0 0 0.5em 0;
   /* float: right; */
-}
-
-.item-title {
-    font-weight: bold;
-}
-
-.card-item-link {
-    cursor: pointer;
-    padding: 0.3em 0.6em;
-    background: transparent;
-    transition: background 100ms linear;
-    border-radius: 4px;
-    line-height: 1.4em;
-}
-.card-item-link:hover {
-    background: #fff;
-    transition: background 200ms linear;
-}
-.card-item-link:before {
-    content: "\f101"; /* FontAwesome Unicode */
-    font-family: FontAwesome;
-    display: inline-block;
-    /* margin-left: -1.3em; same as padding-left set on li */
-    width: 1.3em; /* same as padding-left set on li */
-  }
-
-.subitems {
-    margin-left: 20px;
-}
-
-.subitems.card-item-link::before {
-    content: "\f105"; /* FontAwesome Unicode */
-    font-family: FontAwesome;
-    display: inline-block;
-    /* margin-left: -1.3em; same as padding-left set on li */
-    width: 1.3em; /* same as padding-left set on li */
 }
 
 /* MEDIA QUERIES
@@ -122,15 +110,11 @@ breakpoints: 1680, 1280, 980, 736, 480
 }
 
 @media screen and (max-width: 736px) {
-
   .card {
     width: 94%;
   }
-  
-
 }
 
 @media screen and (max-width: 480px) {
-
-
+  
 }

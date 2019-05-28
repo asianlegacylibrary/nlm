@@ -1,0 +1,14 @@
+#banner {
+    background-size: cover;
+    margin-top: 40px;
+    font-family: 'Noto Serif', serif;
+    color: #fff;
+}
+#banner h3 {
+    color: #fff;
+}
+#header {
+    position: fixed;
+    background: #ebebeb;
+    padding: 0.5em;
+}

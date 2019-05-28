@@ -12,8 +12,8 @@
     border: 1px solid #484459;
     width: 33%;
     z-index: 1;
-    padding: 10px;
-    margin: 10px;
+    padding: 1em;
+    margin: 1em;
     /* background-color: #111; */
   }
   
@@ -52,9 +52,15 @@
   }
   
   @media screen and (max-width: 736px) {
-  
+   
+  }
+
+  @media screen and (max-width: 632px) {
+    .sidenav {
+      width: 100%;
+    }
   }
   
   @media screen and (max-width: 480px) {
-  
+    
   }

@@ -6,6 +6,8 @@ import { withNamespaces } from 'react-i18next'
 
 import { Link } from 'react-router-dom'
 
+import '../assets/css/navbar.css'
+
 // language codes, ISO 639-1
 // mongolian - mn, english - en, tibetan - bo
 const Languages = (props) => {

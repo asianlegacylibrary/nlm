@@ -4,6 +4,8 @@ import { withNamespaces } from 'react-i18next'
 
 import { defaultLanguage, setLanguage } from '../../store/actions'
 
+import '../../assets/css/navbar.css'
+
 const Language = ({ active, children, dispatch, lang, i18n }) => {
 
   const changeI18n = (lng) => {

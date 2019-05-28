@@ -2,6 +2,8 @@ import React from 'react'
 import { withNamespaces } from 'react-i18next'
 import { onlyIP, buildYear } from '../store/actions'
 
+import '../assets/css/footer.css'
+
 const Footer = (props) => {
     return (
         <footer id="footer">

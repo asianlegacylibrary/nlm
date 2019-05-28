@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withNamespaces } from 'react-i18next'
 import { log } from '../store/actions'
+import '../assets/css/modal.css'
 
 class Modal extends Component {
 

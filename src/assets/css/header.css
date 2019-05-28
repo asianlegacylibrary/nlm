@@ -7,8 +7,13 @@
 #banner h3 {
     color: #fff;
 }
+
+#banner header {
+    padding: 5em 0 2em 0;
+}
 #header {
     position: fixed;
     background: #ebebeb;
     padding: 0.5em;
 }
+

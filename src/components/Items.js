@@ -5,7 +5,7 @@ import SubItems from './SubItems'
 import Modal from './Modal'
 import { fetchSpecificID, browseOptionsObj, IIIFsuffix } from '../store/actions'
 
-import { log } from '../store/connection'
+//import { log } from '../store/connection'
 
 import '../assets/css/items.css'
 

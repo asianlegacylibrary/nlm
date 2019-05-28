@@ -16,6 +16,7 @@
 
 ## To-Do's
 - favicon!
+- ability to collapse, expand each item in archives
 - create store based on dev / prod
 - update modal to incorporate more ES data
     - especially for Subjects and Authors
@@ -24,10 +25,10 @@
 - MODAL
     - currently MODAL will not render until esSubjects and esAuthors received
 
-- type checking, re-factor to use either prop-types or flow
-
-- PYTHON
-    - injectPrefLabel could be moved to pre-processing in PYTHON
+- Secondary
+    - type checking, re-factor to use either prop-types or flow
+    - PYTHON
+        - injectPrefLabel could be moved to pre-processing in PYTHON
 
 ## Data and APIs
 Info on the Elasticsearch

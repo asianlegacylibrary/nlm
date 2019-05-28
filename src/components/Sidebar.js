@@ -15,7 +15,7 @@ class Sidebar extends Component {
     render() {
         return (
             <div className="sidenav wrapper style1">
-                Browse by:
+                <div className="sidenav-title">Browse by:</div>
                 <form>
                     {browseOptionsObj.map(o => {
                         o.browse === 'Title' ? log(this.props[`number_${o.stateType}`]) : log('hi')

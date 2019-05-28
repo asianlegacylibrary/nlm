@@ -18,9 +18,10 @@
 - TUESDAY **********************
     - favicon!
     - CSS!
-    - add 'loading' to meta-counts in sidebar for additional info to users
-
+    
 - WEDNESDAY ********************
+    - fix broken firstImage
+    - translation to mongolian for site, send to christina to send to NLM
     - ability to collapse, expand each item in archives
     - currently MODAL will not render until esSubjects and esAuthors received
     - update modal to incorporate more ES data
@@ -35,6 +36,7 @@
     - type checking, re-factor to use either prop-types or flow
     - PYTHON
         - injectPrefLabel could be moved to pre-processing in PYTHON
+    - final CSS
 
 ## Data and APIs
 Info on the Elasticsearch

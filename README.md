@@ -15,20 +15,23 @@
 - [Create-React-App](#create-react-app)
 
 ## To-Do's
-- favicon!
-- ability to collapse, expand each item in archives
-- add 'loading' to meta-counts in sidebar for additional info to users
-- ability to close modal before it loads
-- create store based on dev / prod
-    - add logger middleware only when in development
-- update modal to incorporate more ES data
-    - especially for Subjects and Authors
-- add 'reselect' and refactor to memoized selectors
-    - possibly re-think state shape, esp. for ES data
-- MODAL
-    - currently MODAL will not render until esSubjects and esAuthors received
+- TUESDAY **********************
+    - favicon!
+    - CSS!
+    - add 'loading' to meta-counts in sidebar for additional info to users
 
-- Secondary
+- WEDNESDAY ********************
+    - ability to collapse, expand each item in archives
+    - currently MODAL will not render until esSubjects and esAuthors received
+    - update modal to incorporate more ES data
+        - child components for each of TITLES / AUTHORS / SUBJECTS
+        - each will have more detailed data for modal
+
+    - add 'reselect' and refactor to memoized selectors
+        - possibly re-think state shape, esp. for ES data
+
+- THURSDAY ************************
+    - how to speed up secondary searches (topics and authors in works)?
     - type checking, re-factor to use either prop-types or flow
     - PYTHON
         - injectPrefLabel could be moved to pre-processing in PYTHON

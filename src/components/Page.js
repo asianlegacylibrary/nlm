@@ -14,7 +14,7 @@ import { defaultLanguage,
   log
 } from '../store/actions/index'
 
-import icon from '../assets/images/calligraphy_icon.ico'
+//import icon from '../assets/images/calligraphy_icon.ico'
 // import png from '../assets/images/endless-knot.png'
 
 import { withNamespaces } from 'react-i18next'
@@ -31,6 +31,9 @@ class Page extends Component {
       3: 'three',
       4: 'four'
     }
+
+    this.rgbLight = [239, 239, 239]
+    this.rgbDark = [0, 0, 0]
   }
 
   componentWillMount() { 
@@ -97,15 +100,15 @@ class Page extends Component {
             style={{
               backgroundImage: 
                 `linear-gradient(to bottom, 
-                  rgba(0, 0, 0,0.1) 50%,
-                  rgba(0, 0, 0,1.0) 100%), 
+                  rgba(${this.rgbLight},0.1) 70%,
+                  rgba(${this.rgbLight},1.0) 100%), 
                   url(${mediaURL})`
             }}>
             <header className="major">
               {/* <span className="icon fa-book style7"></span> */}
-              <span className="icon style7">
+              {/* <span className="icon style7">
                 <img width="90px" alt="hi" src={icon} />
-              </span>
+              </span> */}
               <h1>{page.acf.title}</h1>
               <h3>{page.acf.subtitle}</h3>
               {/* {this.props.t('description.part2')} */}

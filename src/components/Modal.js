@@ -249,7 +249,12 @@ class Modal extends Component {
                 >
                     <section className='modal-main'>
                         <div className="blinky">{this.props.t('technical.loading')} {this.props.doc_id}</div>
+                        <button className="modal-btn" onClick={this.props.hideModal}>
+                            <i className="fa fa-2x fa-times"></i> 
+                            {this.props.t('technical.btn-close')}
+                        </button>
                     </section>
+                    
                 </div>
             )
         } else {

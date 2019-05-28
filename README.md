@@ -17,6 +17,7 @@
 ## To-Do's
 - favicon!
 - ability to collapse, expand each item in archives
+- ability to close modal before it loads
 - create store based on dev / prod
 - update modal to incorporate more ES data
     - especially for Subjects and Authors

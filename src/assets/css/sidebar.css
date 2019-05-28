@@ -28,7 +28,12 @@
   .sidenav a:hover {
     color: #f1f1f1;
   }
-  
+  .sidenav-title {
+    font-family: 'Noto-Serif', serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding-bottom: 0.6em;
+  }
   .meta-count {
     letter-spacing: 0.2em;
     margin: 0 0 1em 0;

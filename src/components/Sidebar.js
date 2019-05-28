@@ -77,9 +77,9 @@ const mapStateToProps = (state) => ({
     collapse: state.setCollapse,
     browse: state.setBrowse,
     collection: state.setCollection,
-    number_esWorks: state.esWorks.isFetching ? [] : getNumberOfItems(state.esWorks.items, state.setCollection),
-    number_esAuthors: state.esAuthors.isFetching ? [] : getNumberOfItems(state.esAuthors.items, state.setCollection),
-    number_esSubjects: state.esSubjects.isFetching ? [] : getNumberOfItems(state.esSubjects.items, state.setCollection)
+    number_esWorks: state.esWorks.isFetching ? 'Loading...' : getNumberOfItems(state.esWorks.items, state.setCollection),
+    number_esAuthors: state.esAuthors.isFetching ? 'Loading...' : getNumberOfItems(state.esAuthors.items, state.setCollection),
+    number_esSubjects: state.esSubjects.isFetching ? 'Loading...' : getNumberOfItems(state.esSubjects.items, state.setCollection)
 })
 
 const withN = new withNamespaces()(Sidebar)

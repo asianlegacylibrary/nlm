@@ -11,6 +11,10 @@ body {
   background: #efefef;
 }
 
+h1, h2, h3 {
+  font-family: 'Noto Serif', serif;
+}
+
 ul {
   margin: 0;
 }

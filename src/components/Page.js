@@ -97,8 +97,8 @@ class Page extends Component {
             style={{
               backgroundImage: 
                 `linear-gradient(to bottom, 
-                  rgba(239, 239, 239,0.1) 50%,
-                  rgba(239, 239, 239,1.0) 100%), 
+                  rgba(0, 0, 0,0.1) 50%,
+                  rgba(0, 0, 0,1.0) 100%), 
                   url(${mediaURL})`
             }}>
             <header className="major">

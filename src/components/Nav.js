@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import NavItem from './containers/NavItem'
 import { withNamespaces } from 'react-i18next'
+import '../assets/css/navbar.css'
 
 const NavBar = (props) => {
   

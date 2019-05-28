@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { setPage } from '../../store/actions'
 import { connect } from 'react-redux'
+import '../../assets/css/navbar.css'
 
 const NavItem = ({ active, children, onClick }) => (
     <li

@@ -53,10 +53,10 @@ class Items extends Component {
             let imageURL = this.setImageURL(_firstImageURL)
             return (
                 <div key={i} className="item">
-                    <span 
+                    <div 
                         className="item-title card-item-link"
                         onClick={() => this.handleShowModal(d._id, d._tid, _resources, imageURL, _manifestURL)}
-                    >{d._tid}</span>
+                    >{d._tid}</div>
                     { d._related ? 
                         <SubItems 
                             key={d._id} 

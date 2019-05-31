@@ -37,6 +37,10 @@
     "more": "Дэлгэрэнгүй үзэх...",
     "attribution": "ACIP-ийн Монгол Улсын Үндэсний номын санд сканнердсан"
   },
+  "sidebar": {
+    "browse": "MN Browse by",
+    "filter": "MN Limit results to current collection"
+  },
   "modal": {
     "detail": "Нарийвчлан үзэх",
     "names": "Name(s)",
@@ -46,10 +50,17 @@
     "image-restricted": "RESTRICTED ACCESS TO IMAGE FILE",
     "image-not-found": "PREVIEW IMAGE NOT CURRENTLY AVAILABLE."
   },
+  "browse": {
+    "Title": "MN Title",
+    "Author": "MN Author",
+    "Subject": "MN Subject"
+  },
   "bdrc-ontology": {
     "work": "Aжил",
     "person": "Бие хүн",
-    "topic": "Агуулга"
+    "topic": "Агуулга",
+    "geography": "geography",
+    "item": "item"
   },
   "footer": {
     "terms": "Ашиглах журам",

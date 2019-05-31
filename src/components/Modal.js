@@ -45,7 +45,7 @@ class Modal extends Component {
         //let pubLoc = workPublisherLocation ? <span>{` at ${workPublisherLocation}`}</span> : null
         return (
             <ul className="meta-detail-list">
-                {!objectType ? null : <li className="meta-item all-caps">Object type: <span className="no-trans">{bdrObjectType[objectType]}</span></li>}
+                {!objectType ? null : <li className="meta-item all-caps">Print type: <span className="no-trans">{bdrObjectType[objectType]}</span></li>}
                 
                 {!pubName ? null : <li className="meta-item all-caps">Published by: <span className="no-trans">{pubName}</span></li>}
                 {!workExtentStatement ? null : 
@@ -54,17 +54,6 @@ class Modal extends Component {
                 {!workLangScript ? null : <li className="meta-item all-caps">Language: <span className="no-trans">{workLangScript}</span></li>}
             </ul>
         )
-    }
-
-    buildPersonalDetails = (gender, lifeEvents, workEvents) => {
-        // let g = !gender ? null : <p className="meta-item">{`Gender: ${gender}`}</p>
-        // let l = !lifeEvents ? null : <p className="meta-item">{ lifeEvents }</p>
-        // let w = !workEvents ? null : <p className="meta-item">{ workEvents }</p>
-        return [gender, lifeEvents, workEvents].map(d => {
-            if(d) { 
-                return <p className="meta-item">{ d }</p>
-            }
-        })
     }
 
     buildAttribution = (t) => {
@@ -107,8 +96,9 @@ class Modal extends Component {
         return btn
     }
 
-    parseModalDetails = (modalDetails, source, hideModal, firstImage, t) => {
+    parseModalDetails = ({ modalDetails, workDetail, hideModal, firstImage, t }) => {
         // vars common to all types
+        let source = workDetail._source
         let { 
             '@id': id,
             type,
@@ -119,13 +109,11 @@ class Modal extends Component {
         //set access to restricted if needed
         const access = _access == null || !_access.toLowerCase().includes('restricted') ? null : 'restricted'
 
-        // set undefined to null for pre-render check
+        //if truthy, unpack, also nlm id is found in the notes section
         let parsedNotes = null, nlmIDs = null
         if(note) { ({ parsedNotes, nlmIDs } = unpackNotes(note)) }
-        
-        log('NOTES!', parsedNotes)
 
-        // {t('modal.note')}:
+        // using react fragment here, look into what it does...
         const notes = !parsedNotes || !parsedNotes.length ? null : (
             <div className="meta-grouping"> 
                 { parsedNotes.map(s => 
@@ -147,8 +135,9 @@ class Modal extends Component {
             </button>
         )
 
+        // META DETAILS, like type and IDs
         const metaDetail = (
-            <p className="meta-detail">
+            <div className="meta-detail">
                 <p className="meta-item">
                     <span>{t('modal.detail')} {id}, </span>
                     <span> {type}</span>
@@ -158,10 +147,10 @@ class Modal extends Component {
                     <span>NLM ID: {nlmIDs.substring(7).trim()}</span>
                 </p>
                 }
-            </p>
+            </div>
         ) 
 
-        
+        // Render modal depending on type
         switch(type) {
             case 'Person':
                 //vars specific to PERSON
@@ -170,6 +159,12 @@ class Modal extends Component {
                     personName,
                     personGender
                 } = source
+
+                const buildPersonalDetails = (gender, lifeEvents, workEvents) => {
+                    return [gender, lifeEvents, workEvents].map(d => {
+                        if(d) { return <p className="meta-item">{ d }</p> }
+                    })
+                }
 
                 // EVENTS
                 const events = personEvent == null ? null : unpackPersonEvent(personEvent)
@@ -182,7 +177,7 @@ class Modal extends Component {
                 let gender = personGender == null ? null : `Gender: ${bdrGender[personGender]}`
 
                 let personalDetails = gender || lifeEvents || workEvents ?
-                    this.buildPersonalDetails(gender, lifeEvents, workEvents) : null
+                    buildPersonalDetails(gender, lifeEvents, workEvents) : null
                 
                 return (
                     <div className="detail-data">
@@ -231,7 +226,7 @@ class Modal extends Component {
                         
                         {metaDetail}
                         
-                        {img == null ? null : img}
+                        {img}
                         {attribution}
                         
                         { catalogInfo }
@@ -246,7 +241,7 @@ class Modal extends Component {
     }
 
     render() {
-        log('modal is being rendered...')
+        log('modal is being rendered...more than once? need memoized selector!')
         const showHideClassName = this.props.show ? 'modal display-block' : 'modal display-none';
         //let data
 
@@ -266,15 +261,7 @@ class Modal extends Component {
         return (
             <div className={showHideClassName}>
                 <section className='modal-main'>
-
-                    { this.parseModalDetails(
-                        this.props.modalDetails,
-                        this.props.workDetail._source, 
-                        this.props.hideModal,
-                        this.props.image,
-                        //this.props.manifest,
-                        this.props.t)
-                    }
+                    { this.parseModalDetails(this.props) }
                 </section>
             </div>
         )
@@ -286,10 +273,9 @@ const mapStateToProps = (state) => ({
     modalDetails: state.detailData.isFetching || state.detailData.modalID === 0 ? {} : state.detailModal,
     workDetail: state.detailData.isFetching || state.detailModal.modalID === 0 ? {} : state.detailData.item.hits.hits[0],
     resources: state.esResources.isFetching ? [] : state.esResources,
-    image: state.detailModal.image, // === null ? 'Not Found' : state.detailModal.image,
+    firstImage: state.detailModal.image == null ? null : state.detailModal.image,
     manifestURL: state.detailModal.manifest,
     numberVolumes: state.detailData.isFetching || state.detailModal.modalID === 0 ? null : state.detailData.item.hits.hits[0]._source.workNumberOfVolumes,
-    //firstImage: state.IIIFData.isFetching || state.detailModal.modalID === 0 ? null : state.IIIFData.firstImage
 })
 
 const withN = withNamespaces()(Modal)

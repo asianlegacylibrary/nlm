@@ -10,10 +10,6 @@
     "loading-image": "Loading image...",
     "btn-close": "Close"
   },
-  "languageCodes": {
-    "en": "English",
-    "mn": "Монгол хэл"
-  },
   "languageCodeLookup": {
     "English": "en",
     "Mongolian": "mn"
@@ -43,12 +39,22 @@
   },
   "modal": {
     "detail": "Detail for record",
+    "nlm-id": "NLM ID",
     "names": "Name(s)",
     "note": "Note",
     "scans": "Scans",
     "scans-restricted": "Scans Restricted",
     "image-restricted": "RESTRICTED ACCESS TO IMAGE FILE",
-    "image-not-found": "PREVIEW IMAGE NOT CURRENTLY AVAILABLE."
+    "image-not-found": "PREVIEW IMAGE NOT CURRENTLY AVAILABLE.",
+    "meta-print-type": "Print type",
+    "meta-published-by": "Published by",
+    "meta-work-extent": "Work extent",
+    "meta-language": "Language",
+    "author-gender": "Gender",
+    "author-birth-year": "Born in",
+    "author-birth-between": "Born between",
+    "author-death-year": "Died in",
+    "author-death-between": "Died between"
   },
   "browse": {
     "Title": "Title",

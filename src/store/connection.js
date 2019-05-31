@@ -1,7 +1,7 @@
 import elasticsearch from 'elasticsearch'
 import { log } from './actions'
 
-const port = 9200;
+const port = 9200
 //const host = process.env.NODE_ENV === 'production' ? '157.230.172.69' : 'localhost';
 const host = '157.230.172.69' // : 'localhost';
 
@@ -52,7 +52,7 @@ async function checkConnection() {
     //     log('stats', res.indices)
     //  });
     
-	return isConnected;
+	return isConnected
 }
 
-export { client, checkConnection, isConnected, log };
+export { client, checkConnection, isConnected }

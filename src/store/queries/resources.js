@@ -1,5 +1,5 @@
-import { client, log } from '../connection'
-import { searchParams, v1Indices } from '../actions'
+import { client } from '../connection'
+import { searchParams, v1Indices, log } from '../actions'
 
 export const searchResources = (ids) => {
 

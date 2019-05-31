@@ -1,5 +1,5 @@
-import React from 'react';
-import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom';
+import React from 'react'
+import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom'
 //import { LanguageArray } from './actions'
 
 import Page from './components/Page'
@@ -43,6 +43,6 @@ const Routes = () => {
         </Router>
     )
 
-};
+}
 
-export default Routes;
+export default Routes

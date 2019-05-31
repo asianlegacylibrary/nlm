@@ -45,17 +45,17 @@ store.dispatch(fetchAuthors())
 store.dispatch(fetchTopics())
 
 const App = () => {
-    document.body.classList.add('landing');
+    document.body.classList.add('landing')
     return (
         <Provider store={store}>
             <ConnectedRouter history={history}>
                 <Routes />
             </ConnectedRouter>
         </Provider>
-    );
-};
+    )
+}
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'))
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

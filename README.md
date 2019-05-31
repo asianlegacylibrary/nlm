@@ -15,20 +15,13 @@
 - [Create-React-App](#create-react-app)
 
 ## To-Do's
-- THURSDAY ************************
-    - translation to mongolian for site, send to christina to send to NLM
-
-    - update modal to incorporate more ES data
-        - child components for each of TITLES / AUTHORS / SUBJECTS
-        - each will have more detailed data for modal
-
 - FRIDAY **************************
+    - deploy staging to production
+
+    - PYTHON - injectPrefLabel moved to pre-processing in PYTHON
+
+    - TIME PERMITTING -----------------------------------------
     - type checking, re-factor to use either prop-types or flow
-    - PYTHON
-        - injectPrefLabel could be moved to pre-processing in PYTHON
-    - CSS for lang menu, page menu
-    
-    - code comments
     - refactor out component / container structure for use of hooks!
     - add 'reselect' and refactor to memoized selectors
         - possibly re-think state shape, esp. for ES data

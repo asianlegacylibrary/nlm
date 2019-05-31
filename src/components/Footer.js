@@ -4,7 +4,7 @@ import { onlyIP, buildYear } from '../store/actions'
 
 import '../assets/css/footer.css'
 
-const Footer = (props) => {
+const Footer = ({t}) => {
     return (
         <footer id="footer">
             <div className="icon">
@@ -26,7 +26,7 @@ const Footer = (props) => {
                         href="mailto:info@asianclassics.org"
                         target="_blank"
                         rel="noopener noreferrer">
-                            {props.t('footer.contact')}
+                            {t('footer.contact')}
                     </a>
                 </li>
                 <li>
@@ -34,7 +34,7 @@ const Footer = (props) => {
                         href="http://nationallibrary.mn/mn/"
                         target="_blank"
                         rel="noopener noreferrer">
-                            {props.t('footer.library-site')}
+                            {t('footer.library-site')}
                     </a>
                 </li>
                 <li>
@@ -42,16 +42,15 @@ const Footer = (props) => {
                         href="http://178.128.7.239/wp-login.php" 
                         target="_blank" 
                         rel="noopener noreferrer">
-                            {props.t('footer.login')}
+                            {t('footer.login')}
                     </a>
                 </li>
             </ul>
             <p className="copyright">
-                &copy; {`${buildYear} ${props.t('title')}. ${props.t('footer.rights')}.`}
+                &copy; {`${buildYear} ${t('title')}. ${t('footer.rights')}.`}
             </p>
         </footer>
     )
 }
 
 export default withNamespaces()(Footer)
-

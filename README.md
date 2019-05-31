@@ -15,28 +15,29 @@
 - [Create-React-App](#create-react-app)
 
 ## To-Do's
-- TUESDAY **********************
-    - favicon!
-    - CSS!
-    
-- WEDNESDAY ********************
-    - fix broken firstImage
+- THURSDAY ************************
     - translation to mongolian for site, send to christina to send to NLM
-    - ability to collapse, expand each item in archives
-    - currently MODAL will not render until esSubjects and esAuthors received
+
     - update modal to incorporate more ES data
         - child components for each of TITLES / AUTHORS / SUBJECTS
         - each will have more detailed data for modal
 
-    - add 'reselect' and refactor to memoized selectors
-        - possibly re-think state shape, esp. for ES data
-
-- THURSDAY ************************
-    - how to speed up secondary searches (topics and authors in works)?
+- FRIDAY **************************
     - type checking, re-factor to use either prop-types or flow
     - PYTHON
         - injectPrefLabel could be moved to pre-processing in PYTHON
-    - final CSS
+    - CSS for lang menu, page menu
+    
+    - code comments
+    - refactor out component / container structure for use of hooks!
+    - add 'reselect' and refactor to memoized selectors
+        - possibly re-think state shape, esp. for ES data
+
+- NEXT PHASE **********************
+    - ability to collapse, expand each item in archives
+    - how to speed up secondary searches (topics and authors in works)?
+    - modal to have URL, so that you can send person straight to an item
+    - search bar to filter collection
 
 ## Data and APIs
 Info on the Elasticsearch

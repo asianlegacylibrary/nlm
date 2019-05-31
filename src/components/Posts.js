@@ -24,7 +24,6 @@ const Posts = ({ posts }) => {
         }
 
         if(parseInt(post.acf.columns) === 2) {
-            console.log('2 columns!')
             return (
                 <section key={i} id={i} className={`wrapper special style${j}`}>
                     <div className="inner">
@@ -53,7 +52,7 @@ const Posts = ({ posts }) => {
                         </section>
                     </div>
                 </section>
-                )
+            )
         }
     })  
 }

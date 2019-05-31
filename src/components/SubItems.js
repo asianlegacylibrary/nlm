@@ -1,17 +1,14 @@
 import React from 'react'
-import { IIIFsuffix } from '../store/actions'
 import '../assets/css/items.css'
 
-const SubItems = ({related, handleShowModal}) => {
+const SubItems = ({related, setImage, handleShowModal}) => {
     if(related == null) {
         return null
     }
 
     const relatedItems = related.hits.hits.map((d, i) => {
-        const { _resources, _firstImageURL, _manifestURL } = d._source
-        let imageURL = _firstImageURL === "Not Found" 
-                ? null 
-                : `${_firstImageURL}/${IIIFsuffix}`
+        const { _resources, _firstImageURL, _manifestURL, 'adm:access': _access } = d._source
+        let imageURL = setImage(_firstImageURL, _access)
         return (
             <div 
                 key={i} 

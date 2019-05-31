@@ -5,6 +5,7 @@ export * from './googleSheetsActions'
 export * from './WPPagesActions'
 export * from './WPPostsActions'
 export * from './utilityActions'
+export * from './ontology'
 
 export const buildYear = '2018'
 export const defaultLanguage = 'en'
@@ -19,6 +20,15 @@ export const browseOptionsObj = [
   {browse: 'Author', stateType: 'esAuthors'},
   {browse: 'Subject', stateType: 'esSubjects'}
 ]
+
+export const bdrGender = {
+  "bdr:GenderMale": "Male",
+  "bdr:GenderFemale": "Female"
+}
+
+export const bdrObjectType = {
+  "bdr:ObjectTypeBlockprint": "Blockprint"
+}
 
 export const collections = [
   {key: '1', name: 'Collection 1'},

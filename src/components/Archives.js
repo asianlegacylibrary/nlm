@@ -6,12 +6,12 @@ import Items from './Items'
 
 import '../assets/css/archives.css'
 
-const Archives = ({browse}) => {
+const Archives = ({t, browse}) => {
     return (
             <div className="content">
                 <Sidebar />
                 <div className="grid">
-                    <h1 className="archives-title">{`${browse}s`}</h1>
+                    <h1 className="archives-title">{`${t(`browse.${browse}`)}s`}</h1>
                     <Items />
                 </div>
             </div>

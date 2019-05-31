@@ -4,4 +4,3 @@ export * from './resources'
 export * from './searchByID'
 export * from './searchByTerm'
 export * from './textOnlyTerm'
-

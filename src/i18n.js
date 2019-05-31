@@ -1,7 +1,7 @@
-import i18n from 'i18next';
-import Backend from 'i18next-xhr-backend';
-import LanguageDetector from 'i18next-browser-languagedetector';
-import { reactI18nextModule } from 'react-i18next';
+import i18n from 'i18next'
+import Backend from 'i18next-xhr-backend'
+import LanguageDetector from 'i18next-browser-languagedetector'
+import { reactI18nextModule } from 'react-i18next'
 
 
 // NOTE THAT 'en' is attempting to be loaded because of LanguageDetector (probably)
@@ -36,7 +36,6 @@ i18n
     react: {
       wait: true
     }
-  });
+  })
 
-
-export default i18n;
+export default i18n

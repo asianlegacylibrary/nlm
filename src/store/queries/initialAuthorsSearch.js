@@ -7,8 +7,6 @@ export const initialAuthorSearch = (ids) => {
 
         // aggregations.uniqueAuthors.buckets.map()
         
-
-
         aggregations: {
             uniqueAuthors: {
                 terms: {

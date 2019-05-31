@@ -43,8 +43,15 @@
     color: #7c759a;
   }
   
-  
-  
+  /* ADDING AN ICON TO THE LANGUAGE MENU, it needs something, not sure what */
+  .lang-active::before, .lang::before {
+    font-family: FontAwesome;
+    content: '\f1ab';
+  }
+  .lang-active::before {
+    color: #ccc;
+  }
+
   .language-list > ul, .nav-list > ul {
     margin: 0;
   }

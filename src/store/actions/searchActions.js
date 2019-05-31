@@ -1,8 +1,8 @@
 import { log, searchParams } from './index'
 import * as types from './types'
-//import { collection_v1 } from '../collections/nlm01'
-//import { collection_v2 } from '../collections/nlm02'
-import { testCollection } from '../collections/testCollection'
+import { collection_v1 } from '../collections/nlm01'
+import { collection_v2 } from '../collections/nlm02'
+//import { testCollection } from '../collections/testCollection'
 
 import {
     initialTopicsSearch,
@@ -12,9 +12,9 @@ import {
     searchIDSbyTerm
 } from '../queries'
 
-//collection_v1.push(...collection_v2)
+collection_v1.push(...collection_v2)
 
-const collection_v1 = testCollection
+//const collection_v1 = testCollection
 
 /* ******************************************
 DATA

@@ -1,207 +1,78 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withNamespaces } from 'react-i18next'
-import { log } from '../store/actions'
+import { log, 
+    unpackPersonEvent, unpackPersonName, unpackNotes, unpackOntology,
+    bdrGender, bdrObjectType } from '../store/actions'
 import '../assets/css/modal.css'
 
 class Modal extends Component {
 
-    unpackNames = (arr, type) => {
-    
-        if(Array.isArray(arr['rdfs:label'])) {
-            
-            const a = arr['rdfs:label'].map((l, i) => {
-    
-                return (
-                    <p key={i} className="modal-text">
-                        <span className="meta-italics">({l['@language']}): </span>
-                        <span className="meta-title">{l['@value']}</span>
-                    </p>
-                )}
+    buildImg = (t, access, firstImage) => {
+        let img = null
+        if(access === 'restricted') {
+            img = (
+                <div>{t('modal.image-restricted')}</div>
             )
-    
-            return (
-                <div key={type} className="modal-text">
-                    <span className="meta-detail">{type.split("Person")[1]}: </span>
-                    {a}
-                </div>
+        } //else if(firstImage === 'No Image') { img = null } 
+          else if(firstImage === 'Not Found') {
+            img = (
+                <div>{t('modal.image-not-found')}</div>
             )
-    
+        } else if(firstImage == null) {
+            img = (
+                <div className="blinky">{t('technical.loading-image')}</div>
+            )
         } else {
-            return (
-                <p key={type} className="modal-text">
-                    <span className="meta-detail">{type.split("Person")[1]}: </span>
-                    <span className="meta-italics">({arr['rdfs:label']['@language']}): </span>
-                    <span className="meta-title">{arr['rdfs:label']['@value']}</span>
-                </p>
+            img = (
+                <img src={firstImage} width="100%" alt="scan" />
             )
         }
+        return img
     }
 
-    unpack = (arr) => {
-        if(arr === null) {
-            return null
-        } else if(Array.isArray(arr)) {
-            return arr.map((a, i) => {
-                if(typeof a === 'object') {
-                    return this.unpack(a)
-                } else if(a.substring(0,3) === 'bdr') {
-                    return (
-                        <div key={i} className="card-sub-item">
-                            <div onClick={() => this.showModal(a.split(":")[1])}>{a}</div>
-                        </div> 
-                    )
-                } else {
-                    return ( <div key={i} className="card-sub-item">{a}</div>)
-                }
+    buildWorkMetadata = (source) => {
+        let {
+            workExtentStatement,
+            workLangScript,
+            workNumberOfVolumes,
+            workObjectType,
+            workPublisherName
+        } = source
+
+        let objectType = workObjectType ? unpackOntology(workObjectType) : null
+        let pubName = workPublisherName ? unpackOntology(workPublisherName) : null
+        //let pubLoc = workPublisherLocation ? <span>{` at ${workPublisherLocation}`}</span> : null
+        return (
+            <ul className="meta-detail-list">
+                {!objectType ? null : <li className="meta-item all-caps">Object type: <span className="no-trans">{bdrObjectType[objectType]}</span></li>}
                 
-            })
-        } else if (typeof arr === 'object') {
-            // re-factor to allow for retreival of '@value' from any key
-            if(arr.hasOwnProperty('type')) { 
-                return this.unpackNames(arr, arr.type) 
-            } else {
-                return (
-                    <p key={arr['@value']} className="modal-text">
-                        <span className="meta-title">{arr['@value']}</span>
-                    </p>
-                )
+                {!pubName ? null : <li className="meta-item all-caps">Published by: <span className="no-trans">{pubName}</span></li>}
+                {!workExtentStatement ? null : 
+                    <li className="meta-item all-caps">Work extent: <span className="no-trans">{workExtentStatement}, in {workNumberOfVolumes} volume(s)</span></li>
+                }
+                {!workLangScript ? null : <li className="meta-item all-caps">Language: <span className="no-trans">{workLangScript}</span></li>}
+            </ul>
+        )
+    }
+
+    buildPersonalDetails = (gender, lifeEvents, workEvents) => {
+        // let g = !gender ? null : <p className="meta-item">{`Gender: ${gender}`}</p>
+        // let l = !lifeEvents ? null : <p className="meta-item">{ lifeEvents }</p>
+        // let w = !workEvents ? null : <p className="meta-item">{ workEvents }</p>
+        return [gender, lifeEvents, workEvents].map(d => {
+            if(d) { 
+                return <p className="meta-item">{ d }</p>
             }
-            
-        } else if (typeof arr === 'string') {
-            if(arr.substring(0,3) === 'bdr') {
-                return ( <div onClick={() => this.showModal(arr.split(":")[1])}>{arr}</div> )
-            } else {
-                return arr
-            }
-            
-        }
-        
+        })
     }
 
     buildAttribution = (t) => {
-        // SOMETHING ALONG THESE LINES, decide which field holds attribution
-        //let a = biblio !== null ? biblio : null
-        //let a = scan !== null ? scan : null
-
-        // if(Array.isArray(a)) { a = a[0] }
-        // if(a.hasOwnProperty('@value')) { a = a['@value'] }
-        // return a
-
         return (
             <p className="meta-detail">
                 <span>{t('archives.attribution')}</span>
             </p>
         )
-    }
-
-    parseType = (modalDetails, source, hideModal, firstImage, t) => {
-        let { 
-            //'skos:prefLabel': label,
-            '@id': id,
-            type,
-            'workCatalogInfo': catalogInfo,
-            // ATTRIBUTION TEXT
-            //'workBiblioNote': biblio,
-            //'workScanInfo': scan
-            personName,
-            note,
-            'adm:access': access
-        } = source
-
-        log('firstImage', firstImage)
-
-        const metaDetail = (
-            <p className="meta-detail">
-                <span>{t('modal.detail')} {id}, </span>
-                <span> {type}</span>
-            </p>
-        )
-
-        // ultimately use this block to fetch proper attribution from data
-        // workBiblioNote or workScanInfo
-        const attribution = this.buildAttribution(t)
-
-        const closeBtn = (
-            <button className="modal-btn" onClick={hideModal}>
-                <i className="fa fa-2x fa-times"></i> 
-                {t('technical.btn-close')}
-            </button>
-        )
-
-        // set undefined to null for pre-render check
-        note !== undefined ? note = note.noteText : note = null
-    
-        log('modal type', type)
-        switch(type) {
-            case 'Person':  
-                return (
-                    <div className="detail-data">
-                        {metaDetail}
-                        <div className="modal-title">{modalDetails.label}</div>
-                        <div className="">
-                            <span className="lead-item">{t('modal.names')}: </span>
-                            <span className="meta-catalog">{ this.unpack(personName) }</span>
-                        </div>
-                        {closeBtn}
-                    </div>
-                )
-            case 'Topic':
-                return (
-                    <div className="detail-data">
-                        {metaDetail}
-                        <div className="modal-title">{modalDetails.label}</div>
-                        {note === null ? null : (
-                            <div className="meta-catalog">{t('modal.note')}: { note !== null ? this.unpack(note) : null }</div>
-                        )}
-                        {closeBtn}
-                    </div>
-                )
-            case 'Work':
-                
-                let scanBtn = this.buildScansBtn(access, t)
-                let img = null
-                if(access === 'bdr:AccessRestrictedByTbrc') {
-                    img = (
-                        <div>{t('modal.image-restricted')}</div>
-                    )
-                } else if(firstImage === 'No Image') {
-                    img = null
-                } else if(firstImage === 'Not Found') {
-                    img = (
-                        <div>{t('modal.image-not-found')}</div>
-                    )
-                } else if(firstImage == null) {
-                    img = (
-                        <div className="blinky">{t('technical.loading-image')}</div>
-                    )
-                } else {
-                    img = (
-                        <img src={firstImage} width="100%" alt="scan" />
-                    )
-                }
-
-                //log('img ===', img.props.src, firstImage)
-                
-                return (
-                    <div className="detail-data">
-                        <div className="modal-title">{modalDetails.label}</div>
-                        
-                        {metaDetail}
-                         
-                        {/* make sure to null the blinky Loading Image if no image :) */}
-                        {img}
-
-                        {attribution}
-                        
-                        <div className="meta-catalog">{ this.unpack(catalogInfo) }</div>
-                        
-                        {closeBtn}{scanBtn}
-                    </div>
-                )
-            default:
-                return null
-        }
     }
 
     buildScansBtn(access, t) {
@@ -214,7 +85,7 @@ class Modal extends Component {
             if(this.props.manifestURL.length === 0) {
                 //window.localStorage.setItem("manifestURL", "")
                 btn = null
-            } else if(access === 'bdr:AccessRestrictedByTbrc') {
+            } else if(access === 'restricted') {
                 btn = (
                     <button disabled={true}>
                         <i className="fa fa-2x fa-eye-slash"></i> {t('modal.scans-restricted')}
@@ -235,7 +106,145 @@ class Modal extends Component {
         }
         return btn
     }
-    
+
+    parseModalDetails = (modalDetails, source, hideModal, firstImage, t) => {
+        // vars common to all types
+        let { 
+            '@id': id,
+            type,
+            note,
+            'adm:access': _access
+        } = source
+
+        //set access to restricted if needed
+        const access = _access == null || !_access.toLowerCase().includes('restricted') ? null : 'restricted'
+
+        // set undefined to null for pre-render check
+        let parsedNotes = null, nlmIDs = null
+        if(note) { ({ parsedNotes, nlmIDs } = unpackNotes(note)) }
+        
+        log('NOTES!', parsedNotes)
+
+        // {t('modal.note')}:
+        const notes = !parsedNotes || !parsedNotes.length ? null : (
+            <div className="meta-grouping"> 
+                { parsedNotes.map(s => 
+                    <React.Fragment>
+                        <p className="meta-item with-fa-note">{s}</p>
+                    </React.Fragment>)
+                }
+            </div> 
+        )
+        // ultimately use this block to fetch proper attribution from data
+        // workBiblioNote or workScanInfo
+        const attribution = this.buildAttribution(t)
+
+        // CLOSE BUTTON
+        const closeBtn = (
+            <button className="modal-btn" onClick={hideModal}>
+                <i className="fa fa-2x fa-times"></i> 
+                {t('technical.btn-close')}
+            </button>
+        )
+
+        const metaDetail = (
+            <p className="meta-detail">
+                <p className="meta-item">
+                    <span>{t('modal.detail')} {id}, </span>
+                    <span> {type}</span>
+                </p>
+                { nlmIDs == null ? null : 
+                <p className="meta-item">
+                    <span>NLM ID: {nlmIDs.substring(7).trim()}</span>
+                </p>
+                }
+            </p>
+        ) 
+
+        
+        switch(type) {
+            case 'Person':
+                //vars specific to PERSON
+                let {
+                    personEvent,
+                    personName,
+                    personGender
+                } = source
+
+                // EVENTS
+                const events = personEvent == null ? null : unpackPersonEvent(personEvent)
+                let lifeEvents = null, workEvents = null
+                if(events) {
+                    lifeEvents = events[0].length > 0 ? events[0].join(', ') : null
+                    workEvents = events[1].length > 0 ? events[1].join(', ') : null
+                }
+                // GENDER
+                let gender = personGender == null ? null : `Gender: ${bdrGender[personGender]}`
+
+                let personalDetails = gender || lifeEvents || workEvents ?
+                    this.buildPersonalDetails(gender, lifeEvents, workEvents) : null
+                
+                return (
+                    <div className="detail-data">
+                        {metaDetail}
+                        <div className="modal-title">{modalDetails.label}</div>
+
+                        {!personalDetails ? null : <div className="meta-detail">{personalDetails}</div> }
+                        <div className="meta-grouping">
+                            { unpackPersonName(personName) }
+                        </div>
+                        { notes }
+                        {closeBtn}
+                    </div>
+                )
+            case 'Topic':
+                //vars specific to TOPIC, nothing noted as unique to TOPIC
+                return (
+                    <div className="detail-data">
+                        {metaDetail}
+                        <div className="modal-title">{modalDetails.label}</div>
+                        { notes }
+                        {closeBtn}
+                    </div>
+                )
+            case 'Work':
+                //vars specific to WORK
+                
+                let scanBtn = this.buildScansBtn(access, t)
+                let img = this.buildImg(t, access, firstImage)
+
+                let workMetadata = this.buildWorkMetadata(source)
+
+                let catalog = unpackOntology(source.workCatalogInfo)
+
+                const catalogInfo = !catalog ? null : (
+                    <div className="meta-catalog">
+                            <p className="modal-text">
+                                <span className="meta-title">{ catalog }</span>
+                            </p>
+                        </div>
+                )
+
+                return (
+                    <div className="detail-data">
+                        <div className="modal-title">{modalDetails.label}</div>
+                        
+                        {metaDetail}
+                        
+                        {img == null ? null : img}
+                        {attribution}
+                        
+                        { catalogInfo }
+                        { workMetadata }
+                        { notes }
+                        {closeBtn}{scanBtn}
+                    </div>
+                )
+            default:
+                return null
+        }
+    }
+
     render() {
         log('modal is being rendered...')
         const showHideClassName = this.props.show ? 'modal display-block' : 'modal display-none';
@@ -243,10 +252,7 @@ class Modal extends Component {
 
         if(Object.keys(this.props.workDetail).length === 0) {
             return (
-                <div 
-                className={showHideClassName}
-                //onClick={this.props.hideModal}
-                >
+                <div className={showHideClassName}>
                     <section className='modal-main'>
                         <div className="blinky">{this.props.t('technical.loading')} {this.props.doc_id}</div>
                         <button className="modal-btn" onClick={this.props.hideModal}>
@@ -254,27 +260,24 @@ class Modal extends Component {
                             {this.props.t('technical.btn-close')}
                         </button>
                     </section>
-                    
                 </div>
             )
-        } else {
-            return (
-                <div 
-                className={showHideClassName}
-                //onClick={this.props.hideModal}
-                >
-                    <section className='modal-main'>
-                        {this.parseType(
+        }
+        return (
+            <div className={showHideClassName}>
+                <section className='modal-main'>
+
+                    { this.parseModalDetails(
                         this.props.modalDetails,
                         this.props.workDetail._source, 
                         this.props.hideModal,
                         this.props.image,
                         //this.props.manifest,
-                        this.props.t)}
-                    </section>
-                </div>
-            )
-        }
+                        this.props.t)
+                    }
+                </section>
+            </div>
+        )
     }
 
 }

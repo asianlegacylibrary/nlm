@@ -1,5 +1,4 @@
 {
-    
   "title": "National Library of Mongolia",
   "sub-title": "Digital Archives",
   "pages": {
@@ -38,6 +37,10 @@
     "more": "More details...",
     "attribution": "Scanned at the National Library of Mongolia by Asian Classics Input Project."
   },
+  "sidebar": {
+    "browse": "Browse by",
+    "filter": "Limit results to current collection"
+  },
   "modal": {
     "detail": "Detail for record",
     "names": "Name(s)",
@@ -47,13 +50,17 @@
     "image-restricted": "RESTRICTED ACCESS TO IMAGE FILE",
     "image-not-found": "PREVIEW IMAGE NOT CURRENTLY AVAILABLE."
   },
+  "browse": {
+    "Title": "Title",
+    "Author": "Author",
+    "Subject": "Subject"
+  },
   "bdrc-ontology": {
     "work": "Work",
-    "person": "Person"
-  },
-  "description": {
-    "part1": "To get started, edit <1>src/App.js</1> and save to reload.",
-    "part2": "Switch languages..."
+    "person": "Person",
+    "topic": "Topic",
+    "geography": "Geography",
+    "item": "Item"
   },
   "footer": {
     "terms": "Terms of use",

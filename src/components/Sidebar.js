@@ -15,7 +15,7 @@ class Sidebar extends Component {
     render() {
         return (
             <div className="sidenav wrapper style1">
-                <div className="sidenav-title">Browse by:</div>
+                <div className="sidenav-title">{`${this.props.t('sidebar.browse')}:`}</div>
                 <form>
                     {browseOptionsObj.map(o => {
                         o.browse === 'Title' ? log(this.props[`number_${o.stateType}`]) : log('hi')
@@ -28,7 +28,7 @@ class Sidebar extends Component {
                                     checked={this.props.browse === o.browse}
                                     onChange={(e) => this.props.dispatch(setBrowse(e.target.value))}
                                 />
-                                <label htmlFor={o.browse}>{o.browse}</label>
+                                <label htmlFor={o.browse}>{this.props.t(`browse.${o.browse}`)}</label>
                                 <span className="meta-count">({this.props[`number_${o.stateType}`]})</span>
                             </div>
                         )
@@ -52,7 +52,7 @@ class Sidebar extends Component {
                             checked={this.props.collection}
                             onChange={() => this.handleCollectionFiltering(!this.props.collection)}
                         />
-                        <label htmlFor="filter-collection">Limit results to current collection</label>
+                        <label htmlFor="filter-collection">{this.props.t('sidebar.filter')}</label>
                     </div>
                 
                 </form>

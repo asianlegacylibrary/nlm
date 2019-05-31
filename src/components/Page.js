@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-import { Header } from './Header';
-import Footer from './Footer';
+import { Header } from './Header'
+import Footer from './Footer'
 import Posts from './Posts'
 import Stats from './Stats'
 import Archives from './Archives'
@@ -13,9 +13,6 @@ import { defaultLanguage,
   setPage,
   log
 } from '../store/actions/index'
-
-//import icon from '../assets/images/calligraphy_icon.ico'
-// import png from '../assets/images/endless-knot.png'
 
 import { withNamespaces } from 'react-i18next'
 
@@ -34,6 +31,7 @@ class Page extends Component {
 
     this.rgbLight = [239, 239, 239]
     this.rgbDark = [0, 0, 0]
+    
   }
 
   componentWillMount() { 
@@ -93,38 +91,26 @@ class Page extends Component {
         }
         return (
           <div key={page.slug}>
-          
-          <section 
-            id="banner" 
-            key={page.id}
-            style={{
-              backgroundImage: 
-                `linear-gradient(to bottom, 
-                  rgba(${this.rgbLight},0.1) 70%,
-                  rgba(${this.rgbLight},1.0) 100%), 
-                  url(${mediaURL})`
-            }}>
-            <header className="major">
-              {/* <span className="icon fa-book style7"></span> */}
-              {/* <span className="icon style7">
-                <img width="90px" alt="hi" src={icon} />
-              </span> */}
-              <h1>{page.acf.title}</h1>
-              <h3>{page.acf.subtitle}</h3>
-              {/* {this.props.t('description.part2')} */}
-             
-              <div className="inner-page">
-                <section className="spotlights-page">
-                  <p dangerouslySetInnerHTML={{__html: page.content.rendered}} />
-                </section>
-            </div>
-            </header>
-          </section>
-          {/* {selectedPage === 'home' ? null : 
-          <section className={`wrapper special style1`}>
-            spotlights orig location
-          </section>
-          } */}
+            <section 
+              id="banner" 
+              key={page.id}
+              style={{
+                backgroundImage: 
+                  `linear-gradient(to bottom, 
+                      rgba(${this.rgbLight},0.1) 70%,
+                      rgba(${this.rgbLight},1.0) 100%), 
+                    url(${mediaURL})`
+              }}>
+              <header className="major">
+                <h1>{page.acf.title}</h1>
+                <h3>{page.acf.subtitle}</h3>
+                <div className="inner-page">
+                  <section className="spotlights-page">
+                    <p dangerouslySetInnerHTML={{__html: page.content.rendered}} />
+                  </section>
+                </div>
+              </header>
+            </section>
           </div>
         )
     })
@@ -141,7 +127,6 @@ class Page extends Component {
       <div className="container">
         <Header />
         { this.renderPage(this.props.selectedPage, this.props.pages) }
-        { log("is it archives?", this.props.selectedPage, this.props.pages)}
         { this.props.selectedPage === 'home' ? 
           <div>
             <Stats stats={this.props.gs} t={this.props.t} />
@@ -156,8 +141,8 @@ class Page extends Component {
 }
 
 const mapStateToProps = (state) => {
-  //console.log('state in Page component', state)
-  //console.log('ownProps in Page component', ownProps)
+  //log('state in Page component', state)
+  //log('ownProps in Page component', ownProps)
   
   return {
     router: state.router,

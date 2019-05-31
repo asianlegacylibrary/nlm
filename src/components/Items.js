@@ -27,8 +27,10 @@ class Items extends Component {
         this.props.dispatch({ type: 'NULLIFY_IIIF'})
     }
 
-    setImageURL = (img) => {
-        if(img == null) {
+    setImageURL = (img, access) => {
+        if(access === 'bdr:AccessRestrictedSealed') {
+            return 'Restricted Access'
+        } else if(img == null) {
             return 'No Image'
         } else if(img === 'Not Found') {
             return 'Not Found'
@@ -49,8 +51,12 @@ class Items extends Component {
 
         const items = this.props[currentESdata.stateType].map((d, i) => {
             //let _id = null, _resources = null, _firstImageURL = null, _manifestURL = null
-            const { _resources, _firstImageURL, _manifestURL } = d._source
-            let imageURL = this.setImageURL(_firstImageURL)
+            const { 
+                _resources, 
+                _firstImageURL, 
+                _manifestURL, 
+                'adm:access': _access } = d._source
+            let imageURL = this.setImageURL(_firstImageURL, _access)
             return (
                 <div key={i} className="item">
                     <div 
@@ -61,6 +67,7 @@ class Items extends Component {
                         <SubItems 
                             key={d._id} 
                             related={d._related}
+                            setImage={this.setImageURL}
                             handleShowModal={this.handleShowModal}
                         /> : null }
                 </div>

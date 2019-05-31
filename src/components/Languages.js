@@ -13,7 +13,7 @@ import '../assets/css/navbar.css'
 const Languages = (props) => {
     let list = []
     //list = Object.entries(props.t('languageCodes')).map(([k, l]) => {
-        list = Object.entries(props.t('languageCodes')).map(([k, l]) => {
+        list = Object.entries(props.t('languages')).map(([k, l]) => {
             //const p = props.page === 'home' ? '' : `/${props.t('pages')[props.page]}`
             const p = props.page === 'home' ? '' : `/${props.page}`
             return (

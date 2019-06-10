@@ -50,8 +50,8 @@ environment = "production"
 bulk_chunk_size = 40
 how_many_levels = 2
 current_listing = conf_bdrc["test_works"]
-current_gs_key = conf_gs["key_mappings"]
-current_gs_sheet = conf_gs["read_NLM_2"]
+current_gs_key = conf_gs["key_collections"]
+current_gs_sheet = conf_gs["read_collection_1"]
 which_collection = 2
 index_altered_json = True  # while generating a list, alter document and index that document
 
@@ -93,6 +93,11 @@ if step_1:
     current_level = 0
     branches["level_0"] = len(current_listing)
     print(f"Branch 0 has {len(current_listing)} leaves...")
+
+    # link to a new workbook to write
+    write_workbook = get_workbook(gs_cred, conf_gs["key_collections"])
+    write_googlesheet_data(write_workbook, conf_gs, current_listing)
+
     for i in range(1, how_many_levels + 1):
         current_branch = generate_listing(conf_bdrc,
                                           current_listing,
@@ -106,10 +111,6 @@ if step_1:
         current_level = i
 
     print(f"Growth during recursion {branches}")
-
-    # link to a new workbook to write
-    write_workbook = get_workbook(gs_cred, conf_gs["key_collections"])
-    write_googlesheet_data(write_workbook, conf_gs, current_listing)
 
 
 # STEP 2, create the as-is index

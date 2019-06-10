@@ -14,6 +14,7 @@ export const languages = {
   mn: "Mongolian"
 }
 
+
 export const browseOptions = ['Title', 'Author', 'Subject']
 export const browseOptionsObj = [
   {browse: 'Title', stateType: 'esWorks'},
@@ -37,6 +38,7 @@ export const collections = [
 
 export const searchParams = {
   initialIndex: 'v1_bdrc_work',
+  initialIndexPrefix: 'v1_bdrc_',
   type: '_doc',
   size: 10
 }

@@ -29,7 +29,7 @@ export function fetchPosts() {
         return fetch(`${nodeWP}${endpointWP}posts?_embed`)
             .then(
                 response => response.json(),
-                error => console.log('An error ', error)    
+                error => console.error('An error ', error)    
             )
             .then(json => {
                 //reduce using empty array to group by language

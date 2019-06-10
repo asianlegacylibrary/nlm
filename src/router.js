@@ -12,7 +12,7 @@ const Routes = () => {
 
     //check to see if it's /:l or just l 
     // const route = Object.entries(languages).map(([l, k]) => {
-    //     console.log('creating routes', k, l)
+    //     log('creating routes', k, l)
     //     return <Route key={l} path={`/${k}/:page`} component={Page} />
     // })
 

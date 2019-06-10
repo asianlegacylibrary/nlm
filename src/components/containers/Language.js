@@ -8,10 +8,7 @@ import '../../assets/css/navbar.css'
 
 const Language = ({ active, children, dispatch, lang, i18n }) => {
 
-  const changeI18n = (lng) => {
-    console.log('in language connector with', lng)
-    i18n.changeLanguage(lng);
-  }
+  const changeI18n = (lng) => { i18n.changeLanguage(lng) }
   
   return (
     <li

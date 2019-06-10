@@ -1,12 +1,12 @@
 {
-  "title": "Монгол улсын үндэсний номын сан",
+  "title": "Монгол Улсын Үндэсний Номын Сан",
   "sub-title": "Дэд гарчиг",
   "pages": {
     "home": "Нүүр",
-    "archives": "Архивууд"
+    "archives": "Архив" 
   },
   "technical": {
-    "loading": "Татаж авах",
+    "loading": "Татаж авах...",
     "loading-image": "Зураг татах...",
     "btn-close": "Хаах"
   },
@@ -21,59 +21,58 @@
   "stats": {
     "Title": "Архивын статистик",
     "LastUpdate": "Сүүлд шинэчлэгдсэн",
-    "PagesDigitized": "Хуудаснууд Digitized",
-    "VolumesDigitized": "Эзлэхүүнүүд Digitized",
-    "VolumesCataloged": "Эзлэхүүнүүд Cataloged",
-    "TitlesCataloged": "Гарчиг Cataloged"
+    "PagesDigitized": "Цахимжуулсан хуудас",
+    "VolumesDigitized": "Цахимжуулсан боть ",
+    "VolumesCataloged": "Каталогжуулсан боть",
+    "TitlesCataloged": "Каталогжуулсан гарчиг"
   },
   "archives": {
     "author": "Зохиогч",
     "genre": "Төрөл зүйл",
-    "topic": "Агуулга",
+    "topic": "Сэдэв",
     "more": "Дэлгэрэнгүй үзэх...",
-    "attribution": "ACIP-ийн Монгол Улсын Үндэсний номын санд сканнердсан"
+    "attribution": "Монгол Улсын Үндэсний Номын Санд ACIP-ийн тусламжаар сканнердсан"
   },
   "sidebar": {
-    "browse": "MN Browse by",
-    "filter": "MN Limit results to current collection"
+    "browse": "Хандах",
+    "filter": "Хязгаартай хайлт"
   },
   "modal": {
     "detail": "Нарийвчлан үзэх",
     "nlm-id": "NLM ID",
-    "names": "Name(s)",
-    "note": "Note",
-    "scans": "Scans",
-    "scans-restricted": "Scans Restricted",
-    "image-restricted": "RESTRICTED ACCESS TO IMAGE FILE",
-    "image-not-found": "PREVIEW IMAGE NOT CURRENTLY AVAILABLE.",
-    "meta-print-type": "Print type",
-    "meta-published-by": "Published by",
-    "meta-work-extent": "Work extent",
-    "meta-language": "Language",
-    "author-gender": "Gender",
-    "author-birth-year": "Born in",
-    "author-birth-between": "Born between",
-    "author-death-year": "Died in",
-    "author-death-between": "Died between"
+    "scans": "Цахимаар үзэх",
+    "scans-restricted": "Цахим хувилбар хязгаарлагдсан",
+    "image-restricted": "Зураг хязгаарлагдсан",
+    "image-not-found": "Одоохондоо үзэх боломжгүй",
+    "meta-print-type": "Хэвлэлийн төрөл",
+    "meta-published-by": "Хэвлэсэн субьект",
+    "meta-work-extent": "Төлөв",
+    "meta-language": "Хэл",
+    "author-gender": "Хүйс",
+    "author-birth-year": "Төрсөн",
+    "author-birth-between": "Хооронд төрсөн",
+    "author-death-year": "Нас барсан",
+    "author-death-between": "Хооронд нас барсан"
   },
   "browse": {
-    "Title": "MN Title",
-    "Author": "MN Author",
-    "Subject": "MN Subject"
+    "Title": "Гарчиг",
+    "Author": "Зохиогч",
+    "Subject": "Агуулга"
   },
   "bdrc-ontology": {
     "work": "Aжил",
     "person": "Бие хүн",
-    "topic": "Агуулга",
-    "geography": "geography",
-    "item": "item"
+    "topic": "Сэдэв",
+    "geography": "Газар орон",
+    "item": "Нэгж"
   },
   "footer": {
-    "terms": "Ашиглах журам",
-    "privacy": "Нууцлах журам",
+    "terms": "Ашиглах нөхцөл",
+    "privacy": "Нууцлал",
     "contact": "Холбоо барих",
     "rights": "Бүх эрх хуулиар хамгаалагдсан",
     "login": "Нэвтрэх",
-    "library-site": "Үндэсний номын сангийн вэбсайт"
+    "library-site": "Үндэсний номын сангийн цахим хуудас"
   }
-}
+ }
+ 

@@ -18,7 +18,8 @@ class Sidebar extends Component {
                 <div className="sidenav-title">{`${this.props.t('sidebar.browse')}:`}</div>
                 <form>
                     {browseOptionsObj.map(o => {
-                        o.browse === 'Title' ? log(this.props[`number_${o.stateType}`]) : log('hi')
+                        //o.browse === 'Title' ? log(this.props[`number_${o.stateType}`]) : log('hi')
+                        let n = this.props[`number_${o.stateType}`] == null ? this.props.t('technical.loading') : this.props[`number_${o.stateType}`]
                         return (
                             <div key={o.browse} className="col-4 col-12-small">
                                 <input
@@ -29,7 +30,7 @@ class Sidebar extends Component {
                                     onChange={(e) => this.props.dispatch(setBrowse(e.target.value))}
                                 />
                                 <label htmlFor={o.browse}>{this.props.t(`browse.${o.browse}`)}</label>
-                                <span className="meta-count">({this.props[`number_${o.stateType}`]})</span>
+                                <span className="meta-count">({n})</span>
                             </div>
                         )
                     })}
@@ -77,9 +78,9 @@ const mapStateToProps = (state) => ({
     collapse: state.setCollapse,
     browse: state.setBrowse,
     collection: state.setCollection,
-    number_esWorks: state.esWorks.isFetching ? 'Loading...' : getNumberOfItems(state.esWorks.items, state.setCollection),
-    number_esAuthors: state.esAuthors.isFetching ? 'Loading...' : getNumberOfItems(state.esAuthors.items, state.setCollection),
-    number_esSubjects: state.esSubjects.isFetching ? 'Loading...' : getNumberOfItems(state.esSubjects.items, state.setCollection)
+    number_esWorks: state.esWorks.isFetching ? null : getNumberOfItems(state.esWorks.items, state.setCollection),
+    number_esAuthors: state.esAuthors.isFetching ? null : getNumberOfItems(state.esAuthors.items, state.setCollection),
+    number_esSubjects: state.esSubjects.isFetching ? null : getNumberOfItems(state.esSubjects.items, state.setCollection)
 })
 
 const withN = new withNamespaces()(Sidebar)

@@ -3,6 +3,9 @@ import { searchParams } from '../../store/actions'
 
 export const initialAuthorSearch = (ids) => {
 
+    // we're searching through the works for authors
+    const idx = searchParams.initialIndexPrefix + "work"
+
 	const body = {
 
         // aggregations.uniqueAuthors.buckets.map()
@@ -25,6 +28,6 @@ export const initialAuthorSearch = (ids) => {
 
 	}
 
-	return client.search({ index: searchParams.initialIndex, body })
+	return client.search({ index: idx, body })
 
 }

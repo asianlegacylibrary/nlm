@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withNamespaces } from 'react-i18next'
 import { log, 
     unpackPersonEvent, unpackPersonName, unpackNotes, unpackOntology,
-    bdrGender, bdrObjectType } from '../store/actions'
+    bdrGender, bdrObjectType, uniq } from '../store/actions'
 import '../assets/css/modal.css'
 
 class Modal extends Component {
@@ -31,7 +31,7 @@ class Modal extends Component {
         return img
     }
 
-    buildWorkMetadata = (source) => {
+    buildWorkMetadata = (source, t) => {
         let {
             workExtentStatement,
             workLangScript,
@@ -45,13 +45,13 @@ class Modal extends Component {
         //let pubLoc = workPublisherLocation ? <span>{` at ${workPublisherLocation}`}</span> : null
         return (
             <ul className="meta-detail-list">
-                {!objectType ? null : <li className="meta-item all-caps">Print type: <span className="no-trans">{bdrObjectType[objectType]}</span></li>}
+                {!objectType ? null : <li className="meta-item all-caps">{t('modal.meta-print-type')}: <span className="no-trans">{bdrObjectType[objectType]}</span></li>}
                 
-                {!pubName ? null : <li className="meta-item all-caps">Published by: <span className="no-trans">{pubName}</span></li>}
+                {!pubName ? null : <li className="meta-item all-caps">{t('modal.meta-published-by')}: <span className="no-trans">{pubName}</span></li>}
                 {!workExtentStatement ? null : 
-                    <li className="meta-item all-caps">Work extent: <span className="no-trans">{workExtentStatement}, in {workNumberOfVolumes} volume(s)</span></li>
+                    <li className="meta-item all-caps">{t('modal.meta-work-extent')}: <span className="no-trans">{workExtentStatement}, in {workNumberOfVolumes} volume(s)</span></li>
                 }
-                {!workLangScript ? null : <li className="meta-item all-caps">Language: <span className="no-trans">{workLangScript}</span></li>}
+                {!workLangScript ? null : <li className="meta-item all-caps">{t('modal.meta-language')}: <span className="no-trans">{workLangScript}</span></li>}
             </ul>
         )
     }
@@ -106,13 +106,16 @@ class Modal extends Component {
             'adm:access': _access
         } = source
 
+        // map returned bdrc type to localization
+        const typet = Object.keys(t('bdrc-ontology')).find(t => t === type.toLowerCase())
+
         //set access to restricted if needed
         const access = _access == null || !_access.toLowerCase().includes('restricted') ? null : 'restricted'
 
         //if truthy, unpack, also nlm id is found in the notes section
         let parsedNotes = null, nlmIDs = null
         if(note) { ({ parsedNotes, nlmIDs } = unpackNotes(note)) }
-
+        parsedNotes = !parsedNotes || !parsedNotes.length ? null : uniq(parsedNotes)
         // using react fragment here, look into what it does...
         const notes = !parsedNotes || !parsedNotes.length ? null : (
             <div className="meta-grouping"> 
@@ -140,7 +143,7 @@ class Modal extends Component {
             <div className="meta-detail">
                 <p className="meta-item">
                     <span>{t('modal.detail')} {id}, </span>
-                    <span> {type}</span>
+                    <span> {t(`bdrc-ontology.${typet}`)}</span>
                 </p>
                 { nlmIDs == null ? null : 
                 <p className="meta-item">
@@ -169,6 +172,7 @@ class Modal extends Component {
                 // EVENTS
                 const events = personEvent == null ? null : unpackPersonEvent(personEvent)
                 let lifeEvents = null, workEvents = null
+                log('what does event array look like?', events)
                 if(events) {
                     lifeEvents = events[0].length > 0 ? events[0].join(', ') : null
                     workEvents = events[1].length > 0 ? events[1].join(', ') : null
@@ -208,7 +212,7 @@ class Modal extends Component {
                 let scanBtn = this.buildScansBtn(access, t)
                 let img = this.buildImg(t, access, firstImage)
 
-                let workMetadata = this.buildWorkMetadata(source)
+                let workMetadata = this.buildWorkMetadata(source, t)
 
                 let catalog = unpackOntology(source.workCatalogInfo)
 
@@ -258,6 +262,7 @@ class Modal extends Component {
                 </div>
             )
         }
+        
         return (
             <div className={showHideClassName}>
                 <section className='modal-main'>

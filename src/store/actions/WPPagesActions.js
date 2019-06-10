@@ -31,11 +31,11 @@ export function fetchPages() {
         return fetch(`${nodeWP}${endpointWP}pages?_embed`)
             .then(
                 response => response.json(),
-                error => console.log('An error ', error)    
+                error => console.error('An error ', error)    
             )
             .then(json => {
                 //reduce using empty array to group by language
-                //console.log('json pages', json)
+                //log('json pages', json)
                 return json.reduce((r, a) => {
                     const x = Object.keys(languages).find(key => languages[key] === a.acf.language)
                     r[x] = r[x] || [];

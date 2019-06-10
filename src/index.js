@@ -30,7 +30,7 @@ import './i18n'
 const history = createBrowserHistory()
 const store = configureStore()
 
-//console.log('initial state index.js', store.getState()) 
+// log('initial state index.js', store.getState()) 
 // THIS COULD BE REPLACED WITH ONE 'INITIALIZE APP' type function
 // GET PAGES, POSTS, ES DATA
 

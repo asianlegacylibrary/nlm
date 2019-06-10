@@ -7,6 +7,7 @@ export const searchByID = (ids, size, code, allSource = false, collection = null
     let index
     let source = []
     let sort = "asc"
+    const idxp = searchParams.initialIndexPrefix
     
     const id_filter = {
         type: searchParams.type,
@@ -23,11 +24,11 @@ export const searchByID = (ids, size, code, allSource = false, collection = null
     }
 
     if(code === "P") {
-        index = "v1_bdrc_person"
+        index = idxp + "person"
         source = ["personName", "skos:prefLabel", "_*"]
 
     } else if(code === "T") {
-        index = ["v1_bdrc_person", "v1_bdrc_topic", "v1_bdrc_work"]
+        index = [idxp + "person", idxp + "topic", idxp + "work"]
         source = [
             "personName", "@id", "note.noteText", "skos:prefLabel", 
             "workCreator", "workIsAbout",
@@ -35,7 +36,7 @@ export const searchByID = (ids, size, code, allSource = false, collection = null
         ]
     }
     else if(code === "W") {
-        index = "v1_bdrc_work"
+        index = idxp + "work"
         sortValue = "skos:prefLabel.@value.keyword"
         source = [
             "@id", "note.noteText", "skos:prefLabel", 

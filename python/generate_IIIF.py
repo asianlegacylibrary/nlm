@@ -6,7 +6,7 @@ from config.config import conf_bdrc
 
 
 def get_manifest(doc):
-
+    document = None
     doc_number = doc['workHasItemImageAsset'].split(":")[1] if doc['workHasItemImageAsset'].split(":")[0] == "bdr" else doc['workHasItemImageAsset']
     try:
         document = json.load(urllib.request.urlopen(
@@ -19,7 +19,7 @@ def get_manifest(doc):
         logging.error(f"error during url request {URL_error}")
         pass
 
-    if 'workNumberOfVolumes' in doc:
+    if 'workNumberOfVolumes' in doc and document is not None:
         if doc['workNumberOfVolumes'] == 1:
             if 'itemHasVolume' in document:
                 manifest = f"{conf_bdrc['presentation_endpoint']}/v:{document['itemHasVolume']}/manifest"

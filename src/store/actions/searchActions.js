@@ -2,7 +2,7 @@ import { log, searchParams } from './index'
 import * as types from './types'
 import { collection_v1 } from '../collections/nlm01'
 import { collection_v2 } from '../collections/nlm02'
-//import { testCollection } from '../collections/testCollection'
+import { testCollection } from '../collections/testCollection40'
 
 import {
     initialTopicsSearch,
@@ -12,9 +12,16 @@ import {
     searchIDSbyTerm
 } from '../queries'
 
-collection_v1.push(...collection_v2)
+//collection_v1.push(...collection_v2)
+//const collection = process.env.NODE_ENV === 'production' ? 
+let collection = []
+if(process.env.NODE_ENV === 'production') {
+    collection = collection_v1
+    collection.push(...collection_v2)
+} else {
+    collection = testCollection
+}
 
-//const collection_v1 = testCollection
 
 /* ******************************************
 DATA
@@ -56,8 +63,8 @@ export function fetchData() {
     return async dispatch => {
         dispatch(requestESData(types.REQUEST_WORKS))
         try {
-            const data = await searchByID(collection_v1, collection_v1.length, "W")
-            log('buckets', collection_v1.length, data.aggregations.collections.buckets)
+            const data = await searchByID(collection, collection.length, "W")
+            log('buckets', collection.length, data.aggregations.collections.buckets)
             const modifiedData = injectPrefLabel(data)
             return dispatch(receiveESData(types.RECEIVE_WORKS, modifiedData))
         } catch (error) {
@@ -72,7 +79,7 @@ export function fetchAuthors() {
     return async dispatch => {
         dispatch(requestESData(types.REQUEST_AUTHORS))
         try {
-            const a = await initialAuthorSearch(collection_v1)
+            const a = await initialAuthorSearch(collection)
             log('#0, authors...')
             const authors = a.aggregations.uniqueAuthors.buckets.map(a => {
                 return a.key
@@ -94,7 +101,7 @@ export function fetchTopics() {
     return async dispatch => {
         dispatch(requestESData(types.REQUEST_SUBJECTS))
         try {
-            const t = await initialTopicsSearch(collection_v1)
+            const t = await initialTopicsSearch(collection)
             log('#0, topics...')
             const topics = t.aggregations.uniqueTopics.buckets.map(t => {
                 return t.key
@@ -179,7 +186,7 @@ const mutateDataWithRelatedDocs = async (data, searchField) => {
     // THIS IS AN ANTI-PATTERN, learn correct pattern
     await Promise.all(data.hits.hits.map(async (d, i) => {
         if('_id' in d) {
-            return await searchIDSbyTerm(d._id, searchField, collection_v1, searchParams.initialIndex).then(newData => {
+            return await searchIDSbyTerm(d._id, searchField, collection, searchParams.initialIndex).then(newData => {
                 //log('within the mutate with related', newData)
                 const modifiedData = injectPrefLabel(newData)
                 return d["_related"] = modifiedData
@@ -199,7 +206,7 @@ const injectPrefLabel = (data) => {
         if(p !== undefined) {
             if('skos:prefLabel' in p._source) {
                 if(Array.isArray(p._source["skos:prefLabel"])) {
-
+                    //log('skos is an array', p._id)
                     if (p._source["skos:prefLabel"].some(l => l["@language"] === 'en')) {
                         tid = p._source["skos:prefLabel"].find(t => "en" === t["@language"])
                         tid = tid["@value"]

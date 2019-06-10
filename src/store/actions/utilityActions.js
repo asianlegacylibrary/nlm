@@ -4,6 +4,28 @@ export const log = (...msgs) => {
 	}
 }
 
+// return a unique map
+export const uniqBy = (a, key) => {
+    return [
+        ...new Map(
+            a.map(x => [key(x), x])
+        ).values()
+    ]
+}
+
+// using hash tables and filter
+export const uniq = (a) => {
+    var prims = {"boolean":{}, "number":{}, "string":{}}, objs = [];
+
+    return a.filter(function(item) {
+        var type = typeof item;
+        if(type in prims)
+            return prims[type].hasOwnProperty(item) ? false : (prims[type][item] = true);
+        else
+            return objs.indexOf(item) >= 0 ? false : objs.push(item);
+    });
+}
+
 // ES6 sort
 export const sortNestedES6 = (nestedItem, prop, arr) => {
     return arr.sort((a, b) => {

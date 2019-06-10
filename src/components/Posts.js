@@ -6,10 +6,7 @@ import '../assets/css/posts.css'
 
 
 const Posts = ({ posts }) => {
-    //console.log(posts)
-    if(!posts) {
-        return <div></div>
-    }
+    if(!posts) { return null }
 
     //const c = sortNested('acf', 'order', posts)
     

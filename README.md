@@ -16,7 +16,6 @@
 
 ## To-Do's
 - FRIDAY **************************
-    - deploy staging to production
 
     - PYTHON - injectPrefLabel moved to pre-processing in PYTHON
 

@@ -31,6 +31,8 @@ export const bdrObjectType = {
   "bdr:ObjectTypeBlockprint": "Blockprint"
 }
 
+export const bdrPurlURL = `http://purl.bdrc.io/resource/`
+
 export const collections = [
   {key: '1', name: 'Collection 1'},
   {key: '2', name: 'Collection 2'}
@@ -48,7 +50,7 @@ export const v2Indices = ['v2_*']
 
 const IIIFImageAPI = {
   region: 'full',
-  size: 'max', //',184', //',92', 'max'
+  size: 'max', 
   rotation: '0',
   qualityAndFormat: 'default.jpg'
 }

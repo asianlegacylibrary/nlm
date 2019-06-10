@@ -49,6 +49,9 @@
     font-size: 1.6em;
     font-family: 'Noto Serif', serif;
 }
+.spacer {
+    padding: 0 0 0 1em;
+}
 .all-caps {
     text-transform: uppercase;
 }

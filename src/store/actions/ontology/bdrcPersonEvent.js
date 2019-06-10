@@ -1,4 +1,4 @@
-import { log } from '../../actions'
+import { log, bdrPurlURL } from '../../actions'
 
 export const unpackPersonEvent = (arr, lifeEvents = [], workEvents = []) => {
     let events = []
@@ -24,7 +24,7 @@ export const unpackPersonEvent = (arr, lifeEvents = [], workEvents = []) => {
             }
         } else if(arr.type === 'PersonOccupiesSeat') {
             if('eventWhere' in arr) {
-                workEvents.push(arr.eventWhere)
+                workEvents.push({ _id: arr.eventWhere.substring(4), _url: `${bdrPurlURL}${arr.eventWhere.substring(4)}.ttl`})
             }
             
         }

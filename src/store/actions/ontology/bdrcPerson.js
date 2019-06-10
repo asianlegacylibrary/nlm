@@ -49,12 +49,12 @@ export const unpackNames = (arr, type) => {
     
     if(Array.isArray(arr['rdfs:label'])) {
         
-        const a = arr['rdfs:label'].map((l, i) => {
+        const a = arr['rdfs:label'].sort().map((l, i) => {
             return (
-                <span>
+                <div>
                     <span className="meta-italics">({l['@language']}): </span>
                     <span className="meta-title">{l['@value']}</span>
-                </span>
+                </div>
             )}
         )
 

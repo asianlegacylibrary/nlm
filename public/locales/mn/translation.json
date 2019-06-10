@@ -48,11 +48,11 @@
     "meta-published-by": "Хэвлэсэн субьект",
     "meta-work-extent": "Төлөв",
     "meta-language": "Хэл",
-    "author-gender": "Хүйс",
     "author-birth-year": "Төрсөн",
     "author-birth-between": "Хооронд төрсөн",
     "author-death-year": "Нас барсан",
-    "author-death-between": "Хооронд нас барсан"
+    "author-death-between": "Хооронд нас барсан",
+    "geography-associated-places": "Associated places"
   },
   "browse": {
     "Title": "Гарчиг",
@@ -65,6 +65,11 @@
     "topic": "Сэдэв",
     "geography": "Газар орон",
     "item": "Нэгж"
+  },
+  "gender": {
+    "gender": "Хүйс",
+    "gender-Male": "Эрэгтэй",
+    "gender-Female": "Эмэгтэй"
   },
   "footer": {
     "terms": "Ашиглах нөхцөл",

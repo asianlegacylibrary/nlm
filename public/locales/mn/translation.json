@@ -7,6 +7,7 @@
   },
   "technical": {
     "loading": "Татаж авах...",
+    "loading-simple": "Татаж авах",
     "loading-image": "Зураг татах...",
     "btn-close": "Хаах"
   },
@@ -57,7 +58,10 @@
   "browse": {
     "Title": "Гарчиг",
     "Author": "Зохиогч",
-    "Subject": "Агуулга"
+    "Subject": "Агуулга",
+    "Title-plural": "Гарчиг",
+    "Author-plural": "Зохиогчид",
+    "Subject-plural": "Субьектууд"
   },
   "bdrc-ontology": {
     "work": "Aжил",

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withNamespaces } from 'react-i18next'
 
 import SubItems from './SubItems'
 import Modal from './Modal'
-import { fetchSpecificID, browseOptionsObj, IIIFsuffix } from '../store/actions'
+import { fetchSpecificID, browseOptionsObj, IIIFsuffix, log } from '../store/actions'
 
 //import { log } from '../store/connection'
 
@@ -45,7 +46,9 @@ class Items extends Component {
 
         if(!this.props[currentESdata.stateType].length) {
             return (
-                <div className="blinky">LOADING {`${this.props.browse}S`}</div>
+                <div className="blinky">
+                    {this.props.t('technical.loading-simple')} {this.props.t(`browse.${currentESdata.browse}-plural`)}
+                </div>
             )
         }
 
@@ -112,6 +115,6 @@ const mapStateToProps = (state) => ({
 })
 
 
-//const withN = new withNamespaces()(Archives)
-export default connect(mapStateToProps)(Items)
+const withN = new withNamespaces()(Items)
+export default connect(mapStateToProps)(withN)
 //export default Items

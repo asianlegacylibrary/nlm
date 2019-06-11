@@ -188,7 +188,7 @@ class Modal extends Component {
                 let lifeEvents = null, workEvents = null
                 log('what does event array look like?', events)
                 if(events) {
-                    lifeEvents = events[0].length > 0 ? events[0].join(', ') : null
+                    lifeEvents = events[0].length > 0 ? uniq(events[0]).join(', ') : null
                     workEvents = events[1].length > 0 ? buildWorkEvents(events[1]) : null
                 }
 

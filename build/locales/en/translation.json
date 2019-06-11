@@ -50,11 +50,11 @@
     "meta-published-by": "Published by",
     "meta-work-extent": "Work extent",
     "meta-language": "Language",
-    "author-gender": "Gender",
     "author-birth-year": "Born in",
     "author-birth-between": "Born between",
     "author-death-year": "Died in",
-    "author-death-between": "Died between"
+    "author-death-between": "Died between",
+    "geography-associated-places": "Associated place(s)"
   },
   "browse": {
     "Title": "Title",
@@ -67,6 +67,11 @@
     "topic": "Topic",
     "geography": "Geography",
     "item": "Item"
+  },
+  "gender": {
+    "gender": "Gender",
+    "gender-Male": "Male",
+    "gender-Female": "Female"
   },
   "footer": {
     "terms": "Terms of use",

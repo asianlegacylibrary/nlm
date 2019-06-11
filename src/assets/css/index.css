@@ -24,6 +24,14 @@ code {
     monospace;
 }
 
+/* #banner {
+  min-height: 100vh;
+}
+
+#banner header {
+  padding: 10em;
+} */
+
 .wrapper > .inner-page {
   margin: 0 auto;
   padding-bottom: 0.01em;
@@ -106,7 +114,9 @@ breakpoints: 1680, 1280, 980, 736, 480
 }
 
 @media screen and (max-width: 736px) {
-
+  #banner header {
+    padding: 3em;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -114,6 +124,10 @@ breakpoints: 1680, 1280, 980, 736, 480
   button {
     padding-left: 10px;
     padding-right: 10px;
+  }
+
+  #banner header {
+    padding: 0;
   }
   
   

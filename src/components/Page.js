@@ -89,17 +89,16 @@ class Page extends Component {
         if(page._embedded["wp:featuredmedia"]) {
           mediaURL = page._embedded["wp:featuredmedia"][0].source_url
         }
+        // `linear-gradient(to bottom, 
+        //     rgba(${this.rgbLight},0.1) 70%,
+        //     rgba(${this.rgbLight},1.0) 100%), 
         return (
           <div key={page.slug}>
             <section 
               id="banner" 
               key={page.id}
               style={{
-                backgroundImage: 
-                  `linear-gradient(to bottom, 
-                      rgba(${this.rgbLight},0.1) 70%,
-                      rgba(${this.rgbLight},1.0) 100%), 
-                    url(${mediaURL})`
+                backgroundImage: `url(${mediaURL})`
               }}>
               <header className="major">
                 <h1>{page.acf.title}</h1>

@@ -45,7 +45,7 @@ class Sidebar extends Component {
                         />
                         <label htmlFor="collapse">Collapse All</label>
                     </div> */}
-                    <div className="col-4 col-12-small">
+                    {/* <div className="col-4 col-12-small">
                         <input
                             id="filter-collection"
                             type="checkbox"
@@ -54,7 +54,7 @@ class Sidebar extends Component {
                             onChange={() => this.handleCollectionFiltering(!this.props.collection)}
                         />
                         <label htmlFor="filter-collection">{this.props.t('sidebar.filter')}</label>
-                    </div>
+                    </div> */}
                 
                 </form>
                     

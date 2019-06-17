@@ -14,7 +14,7 @@ const Language = ({ active, children, dispatch, lang, i18n }) => {
     <li
       key={children}
       onClick={() => {
-        dispatch(setLanguage(lang))
+        dispatch(setLanguage(lang, i18n))
         changeI18n(lang)
         }}
       className={active ? "lang-active" : "lang"}

@@ -63,6 +63,14 @@ export const setLanguage = language => ({
   language
 })
 
+export const setLanguage2 = (language, i18n) => {
+  i18n.changeLanguage(language)
+  return {
+    type: SET_LANG,
+    language
+  }
+}
+
 export const setPage = page => ({
     type: SET_PAGE,
     page

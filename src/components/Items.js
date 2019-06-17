@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { withNamespaces } from 'react-i18next'
 
 import SubItems from './SubItems'
@@ -62,10 +63,13 @@ class Items extends Component {
             let imageURL = this.setImageURL(_firstImageURL, _access)
             return (
                 <div key={i} className="item">
-                    <div 
-                        className="item-title card-item-link"
-                        onClick={() => this.handleShowModal(d._id, d._tid, _resources, imageURL, _manifestURL)}
-                    >{d._tid}</div>
+                    
+                        <div 
+                            className="item-title card-item-link"
+                            onClick={() => this.handleShowModal(d._id, d._tid, _resources, imageURL, _manifestURL)}
+                        >{d._tid}
+                        </div>
+                    
                     { d._related ? 
                         <SubItems 
                             key={d._id} 
@@ -73,6 +77,7 @@ class Items extends Component {
                             setImage={this.setImageURL}
                             handleShowModal={this.handleShowModal}
                         /> : null }
+                        
                 </div>
             )
         })
@@ -81,12 +86,13 @@ class Items extends Component {
             <div>
                 {items}
                 {this.props.doc_id == null ? null : 
-                <Modal 
-                    key={this.props.doc_id}
-                    hideModal={this.handleHideModal}
-                    doc_id={this.props.doc_id}
-                    show={this.props.showModal}
-                /> }
+                    <Modal 
+                        key={this.props.doc_id}
+                        hideModal={this.handleHideModal}
+                        doc_id={this.props.doc_id}
+                        show={this.props.showModal}
+                    />
+                }
             </div>
         )
     }

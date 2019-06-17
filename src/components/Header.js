@@ -2,14 +2,19 @@ import React from 'react'
 
 import Languages from './Languages'
 import NavBar from './Nav'
+import Hero from './Hero'
 
 import '../assets/css/header.css'
 
-export const Header = () => {
+export default({ history }) => {
+    
     return (
+        <div className="wrapper">
         <header id="header">
 			<Languages />
-            <NavBar />
+            <NavBar history={history} />
 		</header>
+        <Hero />
+        </div>
     )
 }

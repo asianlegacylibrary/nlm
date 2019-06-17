@@ -120,8 +120,8 @@ class Modal extends Component {
         // using react fragment here, look into what it does...
         const notes = !parsedNotes || !parsedNotes.length ? null : (
             <div className="meta-grouping"> 
-                { parsedNotes.map(s => 
-                    <React.Fragment>
+                { parsedNotes.map((s, i) => 
+                    <React.Fragment key={i}>
                         <p className="meta-item with-fa-note">{s}</p>
                     </React.Fragment>)
                 }

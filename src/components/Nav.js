@@ -5,17 +5,17 @@ import NavItem from './containers/NavItem'
 import { withNamespaces } from 'react-i18next'
 import '../assets/css/navbar.css'
 
-const NavBar = (props) => {
+const NavBar = ({ navigation, lng, t, history }) => {
   
-  // THIS NAV BAR GETS RENDERED TOO MUCH, NEED TO REFACTOR
-  //log('creating navbar with props', props.navigation)
-    // matching page nav with translated 'pages' object // t('pages')[nav.match] // obj[key]
-    const slugs = props.navigation.map(nav => {
+  console.log('NAV', history.location.pathname)
+  if(navigation ==  null) { return null }
+  // THIS NAV BAR GETS RENDERED TOO MUCH, NEED TO REFACTOR, MEMOIZE!
+    const slugs = navigation.map(nav => {
       const p = nav.match === 'home' ? '' : `/${nav.match}`
         return (
-          <Link key={nav.slug} to={`/${props.lng}${p}`}>
+          <Link key={nav.slug} to={`/${lng}${p}`}>
             <NavItem key={nav.slug} selectedPage={nav.match}>
-              {props.t('pages')[nav.match]}
+              {t('pages')[nav.match]}
             </NavItem>
           </Link>
         )
@@ -30,7 +30,6 @@ const NavBar = (props) => {
 }
 
 const createNavigation = (pages) => {
-  
     return pages.map(c => {
         return {
           //match: c.slug.substring(0,4),
@@ -43,11 +42,14 @@ const createNavigation = (pages) => {
       
 }
 
-const mapStateToProps = (state) => ({
-    navigation: createNavigation(state.pages.items[state.selectedLanguage]),
+const mapStateToProps = (state) => {
+  return {
+    navigation: state.pages.isFetching ? null : createNavigation(state.pages.items[state.selectedLanguage]),
     lang: state.selectedLanguage,
     page: state.selectedPage
-})
+  }
+    
+}
 
 const withN = new withNamespaces()(NavBar)
 export default connect(mapStateToProps)(withN)

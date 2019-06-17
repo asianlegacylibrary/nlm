@@ -59,10 +59,10 @@ export const unpackNames = (arr, type) => {
         )
 
         return (
-            <p key={type} className="meta-item with-fa">
+            <div key={type} className="meta-item with-fa">
                 <span className="meta-detail">{type.substring(6)}:</span>
                 {a}
-            </p>
+            </div>
         )
 
     } else {

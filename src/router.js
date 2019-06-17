@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom'
 //import { LanguageArray } from './actions'
 
-import Page from './components/Page'
+import Page from './components/Hero'
 
 const Routes = () => {
 

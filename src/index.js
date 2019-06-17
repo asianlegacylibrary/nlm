@@ -17,6 +17,7 @@ import {
     getGS } from './store/actions'
 
 import Routes from './router'
+import { RouteSwitch } from './components/router/RouteSwitch'
 
 import configureStore from './store/configureStore'
 import { checkConnection } from './store/connection'
@@ -49,7 +50,7 @@ const App = () => {
     return (
         <Provider store={store}>
             <ConnectedRouter history={history}>
-                <Routes />
+                <RouteSwitch />
             </ConnectedRouter>
         </Provider>
     )

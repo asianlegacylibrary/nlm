@@ -33,6 +33,7 @@ export const sortNestedES6 = (nestedItem, prop, arr) => {
     })
 }
 
+
 // arr is the array of objects, prop is the property to sort by
 export const sortNested = (nestedObj, prop, arr) => {
     return arr.sort((a, b) => {

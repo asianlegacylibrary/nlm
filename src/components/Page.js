@@ -8,7 +8,7 @@ import Stats from './Stats'
 import Archives from './Archives'
 
 import { defaultLanguage, 
-  setLanguage,
+  setLanguage, setLanguage2,
   languages,
   setPage,
   log
@@ -58,9 +58,9 @@ class Page extends Component {
       dispatch(setPage('home'))
     }
     if(url.split('/')[1] in languages) { 
-      this.setLang(url.split('/')[1], selectedPage)
+      this.setLang(url.split('/')[1])
     } else {
-      this.setLang(defaultLanguage, selectedPage)
+      this.setLang(defaultLanguage)
       history.push(defaultLanguage)
     }  
   }

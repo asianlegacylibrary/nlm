@@ -2,7 +2,7 @@ import React from 'react'
 
 import Languages from './Languages'
 import NavBar from './Nav'
-import Hero from './Hero'
+import Page from './Page'
 
 import '../assets/css/header.css'
 
@@ -14,7 +14,7 @@ export default({ history }) => {
 			<Languages />
             <NavBar history={history} />
 		</header>
-        <Hero />
+        <Page />
         </div>
     )
 }

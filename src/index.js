@@ -17,7 +17,7 @@ import {
     getGS } from './store/actions'
 
 import Routes from './router'
-import { RouteSwitch } from './components/router/RouteSwitch'
+import RouteSwitch from './components/router/RouteSwitch'
 
 import configureStore from './store/configureStore'
 import { checkConnection } from './store/connection'
@@ -48,11 +48,13 @@ store.dispatch(fetchTopics())
 const App = () => {
     document.body.classList.add('landing')
     return (
-        <Provider store={store}>
-            <ConnectedRouter history={history}>
-                <RouteSwitch />
-            </ConnectedRouter>
-        </Provider>
+        <div className="container">
+            <Provider store={store}>
+                <ConnectedRouter history={history}>
+                    <RouteSwitch />
+                </ConnectedRouter>
+            </Provider>
+        </div>
     )
 }
 

@@ -14,6 +14,8 @@ export const languages = {
   mn: "Mongolian"
 }
 
+export const pages = [ 'home', 'archives' ]
+
 
 export const browseOptions = ['Title', 'Author', 'Subject']
 export const browseOptionsObj = [

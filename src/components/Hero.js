@@ -31,8 +31,8 @@ class Hero extends Component {
   }
 
   componentWillMount() {
-    this.hero = this.setHero(this.props.selectedPage, this.props.pages)
-    this.checkPage(this.props)
+    //this.hero = this.setHero(this.props.selectedPage, this.props.pages)
+    //this.checkPage(this.props)
   }
 
   componentWillUpdate(nextProps) {
@@ -60,22 +60,11 @@ class Hero extends Component {
     //this.props.history.push('/en')
   }
 
-  setHero(pages, selectedPage) {
-    console.log('setting the hero', pages)
-    
+  renderHero(selectedPage, pages) {
+    console.log('renderhero', selectedPage, pages)
     if (!pages.some(e => e.slug.split('-')[0] === selectedPage)) {
       log('page not there')
       this.resetPage()
-    } else {
-      this.hero = pages.filter(page => page.slug.split('-')[0] === selectedPage)
-    }
-    
-  }
-
-  renderHero(selectedPage, pages) {
-    if (!pages.some(e => e.slug.split('-')[0] === selectedPage)) {
-      log('page not there')
-      return this.resetPage()
     }
     return pages
       .filter(page => page.slug.split('-')[0] === selectedPage)
@@ -111,24 +100,22 @@ class Hero extends Component {
   }
 
   render() {
-    if(!this.props.selectedPage) {
+    if(!this.props.selectedPage || !this.props.pages) {
         return (
           <div className="blinky">{this.props.t('technical.loading')}</div>
         )
     }
-
-    this.renderHero(this.props.selectedPage, this.props.pages)
+    return (
+      this.renderHero(this.props.selectedPage, this.props.pages)
+    )
+  
     
+   
   }
 
 }
 
-// const setHero = (pages, selectedPage) => {
-//   console.log('set hero', selectedPage)
-//   return pages.filter(page => page.slug.split('-')[0] === selectedPage)
-// }
-
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     selectedLanguage: state.selectedLanguage || defaultLanguage,
     selectedPage: 
@@ -136,10 +123,9 @@ const mapStateToProps = (state, ownProps) => {
       [] : 
       state.pages.items[state.selectedLanguage].some(page => page.slug.split('-')[0] === state.selectedPage) ? 
       state.selectedPage : "home",
-    pages: state.pages.isFetching ? [] : state.pages.items[state.selectedLanguage],
-    
+    pages: state.pages.isFetching ? [] : state.pages.items[state.selectedLanguage]
   }
-};
+}
 
 const withN = new withNamespaces()(Hero)
 export default withRouter(connect(mapStateToProps)(withN))

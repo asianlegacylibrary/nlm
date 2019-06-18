@@ -9,7 +9,6 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 
 import Header from '../Header'
 import Footer from '../Footer'
-import Hero from '../Hero'
 import Archives from '../Archives'
 import Stats from '../Stats'
 import Posts from '../Posts'
@@ -17,7 +16,7 @@ import Posts from '../Posts'
 
 import { languages, log } from '../../store/actions'
 
-export class RouteSwitch extends Component {
+class RouteSwitch extends Component {
     
     // location.state.modal = true is set in Gallery.js
     // from gallery, we want to go to image in modal
@@ -27,22 +26,41 @@ export class RouteSwitch extends Component {
     // we save the previousLocation and pass it to Switch, 
     // so it will think the location
     // is still GALLERY even though its GALLERY:id
-    previousLocation = this.props.location
+
+    constructor(props) {
+      super(props)
+      this.previousLocation = this.props.location
+      this.l = Object.keys(languages).map(l => l).join('|')
+      this.pages = [
+        'home', 'archives'
+      ]
+    }
+    
     //l = languages.map(l => l.id).join('|')
 
-    l = Object.keys(languages).map(l => l).join('|')
+    
+
 
     componentWillMount() {
-        let { location } = this.props
-        log('will mount', this.l, location)
+      //let { location } = this.props
+      //this.languageCheckAndUpdate()
+      log('will mount', this.l, this.props)
+    }
+  
+    componentDidUpdate() {
+      window.onpopstate  = (e) => {
+        e.preventDefault()
+      }
     }
 
     componentWillUpdate() {
+
+     
       
       // this is where we could grab redirects pre render using nextProps
 
-        let { location } = this.props
-        log(location)
+      //let { location } = this.props
+        
       // previously: nextProps.history.action !== "POP" && (!location.state || !location.state.modal) 
       //if(!location.state) { this.previousLocation = this.props.location }
       
@@ -102,3 +120,5 @@ export class RouteSwitch extends Component {
 
     }
   }
+
+  export default RouteSwitch

@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withRouter, Redirect } from 'react-router'
 
 import { defaultLanguage, 
-  setLanguage,
+  pages,
+  setPage,
   log
 } from '../store/actions/index'
 
@@ -11,7 +13,7 @@ import { withNamespaces } from 'react-i18next'
 class Hero extends Component {
 
   constructor(props) {
-    super(props);
+    super(props)
 
     this.setNumber = {
       0: 'one',
@@ -23,25 +25,57 @@ class Hero extends Component {
 
     this.rgbLight = [239, 239, 239]
     this.rgbDark = [0, 0, 0]
+
+    this.hero = []
     
   }
 
-  setLang = (lng) => {
-    const { i18n, dispatch } = this.props;
-    i18n.changeLanguage(lng) // change locale
-    dispatch(setLanguage(lng)) // set redux language
+  componentWillMount() {
+    this.hero = this.setHero(this.props.selectedPage, this.props.pages)
+    this.checkPage(this.props)
+  }
+
+  componentWillUpdate(nextProps) {
+    this.checkPage(nextProps) 
+  }
+
+  checkPage(nextProps) {
+    // const { history, url, selectedPage, dispatch, t } = this.props;
+    log('check and update with next',   nextProps)
+    const { pathname } = nextProps.location
+
+
+    if(pathname.split('/')[2] !== undefined) {
+      if(pages.includes(pathname.split('/')[2])) {
+        console.log('page is archives')
+        this.props.dispatch(setPage('archives'))
+      }
+    }
 
   }
 
   resetPage = () => {
+    console.log('resetting page')
     this.props.dispatch({ type: 'SET_PAGE', page: 'home' });
-    this.setLang(defaultLanguage)
+    //this.props.history.push('/en')
+  }
+
+  setHero(pages, selectedPage) {
+    console.log('setting the hero', pages)
+    
+    if (!pages.some(e => e.slug.split('-')[0] === selectedPage)) {
+      log('page not there')
+      this.resetPage()
+    } else {
+      this.hero = pages.filter(page => page.slug.split('-')[0] === selectedPage)
+    }
+    
   }
 
   renderHero(selectedPage, pages) {
     if (!pages.some(e => e.slug.split('-')[0] === selectedPage)) {
-      log('page not there');
-      this.resetPage();
+      log('page not there')
+      return this.resetPage()
     }
     return pages
       .filter(page => page.slug.split('-')[0] === selectedPage)
@@ -77,26 +111,25 @@ class Hero extends Component {
   }
 
   render() {
-   
-    if(this.props.fetchingPages || this.props.fetchingPosts) {
+    if(!this.props.selectedPage) {
         return (
           <div className="blinky">{this.props.t('technical.loading')}</div>
         )
     }
-    return (
-      <div>
-        { this.renderHero(this.props.selectedPage, this.props.pages) }
-      </div>
-    )
+
+    this.renderHero(this.props.selectedPage, this.props.pages)
+    
   }
 
 }
 
-const mapStateToProps = (state) => {
+// const setHero = (pages, selectedPage) => {
+//   console.log('set hero', selectedPage)
+//   return pages.filter(page => page.slug.split('-')[0] === selectedPage)
+// }
+
+const mapStateToProps = (state, ownProps) => {
   return {
-    router: state.router,
-    url: state.router.location.pathname,
-    fetchingPages: state.pages.isFetching,
     selectedLanguage: state.selectedLanguage || defaultLanguage,
     selectedPage: 
       state.pages.isFetching ? 
@@ -109,4 +142,4 @@ const mapStateToProps = (state) => {
 };
 
 const withN = new withNamespaces()(Hero)
-export default connect(mapStateToProps)(withN)
+export default withRouter(connect(mapStateToProps)(withN))

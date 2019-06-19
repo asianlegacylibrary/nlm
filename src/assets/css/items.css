@@ -34,13 +34,17 @@
 }
 .item {
   margin-top: 0.6em;
+  color: #484459;
 }
 .item-title {
   font-weight: bold;
+  color: #484459;
+  text-decoration: none;
 }
 
 .subitems {
   margin-left: 20px;
+  color: #484459;
 }
 
 .subitems.card-item-link::before {

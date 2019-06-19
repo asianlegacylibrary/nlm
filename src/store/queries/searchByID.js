@@ -66,7 +66,7 @@ export const searchByID = (ids, size, code, allSource = false, collection = null
         body.sort = [ { [sortValue]: { "order" : sort } }]
     }
 
-	log('search by id body', code, body)
+	//log('search by id body', code, body)
 
 	return client.search({ index: index, body })
 

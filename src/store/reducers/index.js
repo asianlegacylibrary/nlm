@@ -102,10 +102,6 @@ function content(
         case types.DETAIL_MODAL:
             return Object.assign({}, state, {
                 modalID: action.modalID,
-                label: action.label,
-                resources: action.resources,
-                image: action.image,
-                manifest: action.manifest,
                 show: action.show
             })
         default:
@@ -235,7 +231,7 @@ const selectedLanguage = (state = defaultLanguage, action) => {
     }
 }
 
-function detailModal(state = { modalID: 0, image: null }, action) {
+function detailModal(state = { modalID: 0 }, action) {
     switch(action.type) {
         case types.DETAIL_MODAL:
             return Object.assign({}, state, content(state, action))

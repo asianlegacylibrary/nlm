@@ -9,6 +9,8 @@ import { reactI18nextModule } from 'react-i18next'
 // this is due to how I originally coded the component
 // refactor to use language codes :)
 
+const debug = process.env.NODE_ENV === 'production' ? true : false
+
 i18n
   // load translation using xhr -> see /public/locales
   // learn more: https://github.com/i18next/i18next-xhr-backend
@@ -23,7 +25,7 @@ i18n
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
     fallbackLng: 'en',
-    debug: true,
+    debug: false,
     load: 'languageOnly',
     returnObjects: true,
 

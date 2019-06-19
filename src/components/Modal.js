@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withNamespaces } from 'react-i18next'
-import { log, 
+import { log, IIIFsuffix, injectSinglePrefLabel,
     unpackPersonEvent, unpackPersonName, 
     unpackNotes, unpackOntology,
     bdrGender, bdrObjectType, uniq } from '../store/actions'
@@ -9,24 +9,33 @@ import '../assets/css/modal.css'
 
 class Modal extends Component {
 
-    buildImg = (t, access, firstImage) => {
+    handleHideModal = (e) => {
+        
+        this.props.dispatch({ type: 'DETAIL_MODAL', show: false})
+        this.props.dispatch({ type: 'NULLIFY_IIIF'})
+
+        this.props.history.goBack()
+
+        e.stopPropagation()
+    }
+
+    buildImg = (t, access, _img) => {
         let img = null
-        if(access === 'restricted') {
-            img = (
-                <div>{t('modal.image-restricted')}</div>
+        if(access === 'bdr:AccessRestrictedSealed') {
+            img = ( 
+                <div>{t('modal.image-restricted')}</div> 
             )
-        } //else if(firstImage === 'No Image') { img = null } 
-          else if(firstImage === 'Not Found') {
+        } else if(_img === 'Not Found') {
             img = (
                 <div>{t('modal.image-not-found')}</div>
             )
-        } else if(firstImage == null) {
+        } else if(_img == null) {
             img = (
                 <div className="blinky">{t('technical.loading-image')}</div>
             )
         } else {
             img = (
-                <img src={firstImage} width="100%" alt="scan" />
+                <img src={`${_img}/${IIIFsuffix}`} width="100%" alt="scan" />
             )
         }
         return img
@@ -65,14 +74,14 @@ class Modal extends Component {
         )
     }
 
-    buildScansBtn(access, t) {
+    buildScansBtn(access, t, manifestURL) {
         let btn = null
-        if(this.props.manifestURL == null) {
+        if(manifestURL == null) {
             return null
         }
-        if(this.props.manifestURL !== undefined) {
+        if(manifestURL !== undefined) {
             //window.localStorage.setItem("manifestURL", this.props.manifestURL)
-            if(this.props.manifestURL.length === 0) {
+            if(manifestURL.length === 0) {
                 //window.localStorage.setItem("manifestURL", "")
                 btn = null
             } else if(access === 'restricted') {
@@ -86,7 +95,7 @@ class Modal extends Component {
                     <a 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        href={process.env.PUBLIC_URL + '/uv.html?manifest=' + this.props.manifestURL}>
+                        href={process.env.PUBLIC_URL + '/uv.html?manifest=' + manifestURL}>
                         <button>
                             <i className="fa fa-2x fa-eye"></i> {t('modal.scans')}
                         </button>
@@ -97,16 +106,22 @@ class Modal extends Component {
         return btn
     }
 
-    parseModalDetails = ({ modalDetails, workDetail, hideModal, firstImage, t }) => {
+    parseModalDetails = ({ workDetail, label, t }) => {
         // vars common to all types
         let source = workDetail._source
         let { 
             '@id': id,
             type,
             note,
+            _firstImageURL, 
+            _manifestURL, 
             'adm:access': _access
         } = source
 
+        if(!label && source['skos:prefLabel']) {
+            label = injectSinglePrefLabel(source['skos:prefLabel'])
+        }
+        //log('modal', showing)
         // map returned bdrc type to localization
         const typet = Object.keys(t('bdrc-ontology')).find(t => t === type.toLowerCase())
 
@@ -133,7 +148,7 @@ class Modal extends Component {
 
         // CLOSE BUTTON
         const closeBtn = (
-            <button className="modal-btn" onClick={hideModal}>
+            <button className="modal-btn" onClick={this.handleHideModal}>
                 <i className="fa fa-2x fa-times"></i> 
                 {t('technical.btn-close')}
             </button>
@@ -165,34 +180,34 @@ class Modal extends Component {
                 } = source
 
                 const buildPersonalDetails = (gender, lifeEvents) => {
-                    return [gender, lifeEvents].map(d => {
-                        if(d) { return <p className="meta-item">{ d }</p> }
+                    return [gender, lifeEvents].map((d, i) => {
+                        if(d) { return <p key={i} className="meta-item">{ d }</p> }
                     })
                 }
 
                 const buildWorkEvents = (events) => {
-                    log('build work pre', events)
-                    const ev = events.map(e => {
+                    //log('build work pre', events)
+                    const ev = events.map((e, i) => {
                         return (
-                            <span className="spacer">
+                            <span key={i} className="spacer">
                                 <a href={e._url} target="_blank" rel="noopener noreferrer">{e._id}</a>
                             </span>
                         )
                     })
-                    log('build work events', ev)
+                    //log('build work events', ev)
                     return ev
                 }
 
                 // EVENTS
                 const events = personEvent == null ? null : unpackPersonEvent(personEvent)
                 let lifeEvents = null, workEvents = null
-                log('what does event array look like?', events)
+                //log('what does event array look like?', events)
                 if(events) {
                     lifeEvents = events[0].length > 0 ? uniq(events[0]).join(', ') : null
                     workEvents = events[1].length > 0 ? buildWorkEvents(events[1]) : null
                 }
 
-                log('workEvents', workEvents)
+                //log('workEvents', workEvents)
                 // GENDER
                 let gender = personGender == null ? null : `${t('gender.gender')}: ${t(`gender.gender-${bdrGender[personGender]}`)}`
 
@@ -203,7 +218,7 @@ class Modal extends Component {
                 return (
                     <div className="detail-data">
                         {metaDetail}
-                        <div className="modal-title">{modalDetails.label}</div>
+                        <div className="modal-title">{label}</div>
 
                         {!personalDetails ? null : <div className="meta-detail">{personalDetails}</div> }
                         {!workEvents ? null : <div className="meta-detail">{t('modal.geography-associated-places')}:{workEvents}</div>}
@@ -219,7 +234,7 @@ class Modal extends Component {
                 return (
                     <div className="detail-data">
                         {metaDetail}
-                        <div className="modal-title">{modalDetails.label}</div>
+                        <div className="modal-title">{label}</div>
                         { notes }
                         {closeBtn}
                     </div>
@@ -227,8 +242,8 @@ class Modal extends Component {
             case 'Work':
                 //vars specific to WORK
                 
-                let scanBtn = this.buildScansBtn(access, t)
-                let img = this.buildImg(t, access, firstImage)
+                let scanBtn = this.buildScansBtn(access, t, _manifestURL)
+                let img = this.buildImg(t, access, _firstImageURL)
 
                 let workMetadata = this.buildWorkMetadata(source, t)
 
@@ -244,7 +259,7 @@ class Modal extends Component {
 
                 return (
                     <div className="detail-data">
-                        <div className="modal-title">{modalDetails.label}</div>
+                        <div className="modal-title">{label}</div>
                         
                         {metaDetail}
                         
@@ -263,9 +278,9 @@ class Modal extends Component {
     }
 
     render() {
-        log('modal is being rendered...more than once? need memoized selector!')
-        const showHideClassName = this.props.show ? 'modal display-block' : 'modal display-none';
-        //let data
+        log('modal is being rendered...more than once? need memoized selector!', this.props)
+        let showHideClassName = this.props.show ? 'modal display-block' : 'modal display-none';
+        
 
         if(Object.keys(this.props.workDetail).length === 0) {
             return (
@@ -293,11 +308,8 @@ class Modal extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    modalDetails: state.detailData.isFetching || state.detailData.modalID === 0 ? {} : state.detailModal,
+    //modalDetails: state.detailData.isFetching || state.detailData.modalID === 0 ? {} : state.detailModal,
     workDetail: state.detailData.isFetching || state.detailModal.modalID === 0 ? {} : state.detailData.item.hits.hits[0],
-    resources: state.esResources.isFetching ? [] : state.esResources,
-    firstImage: state.detailModal.image == null ? null : state.detailModal.image,
-    manifestURL: state.detailModal.manifest,
     numberVolumes: state.detailData.isFetching || state.detailModal.modalID === 0 ? null : state.detailData.item.hits.hits[0]._source.workNumberOfVolumes,
 })
 

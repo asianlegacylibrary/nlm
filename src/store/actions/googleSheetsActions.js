@@ -39,7 +39,7 @@ export function getGS() {
         dispatch(requestGS())
         try {
             const data = await tableTopInit()
-            log('GS Data:', data)
+            //log('GS Data:', data)
             // add some data processing
             let gsData = {}
             data.map(d => {

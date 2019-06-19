@@ -1,24 +1,33 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import '../assets/css/items.css'
 
-const SubItems = ({related, setImage, handleShowModal}) => {
+const SubItems = ({related, handleShowModal, match}) => {
+    
     if(related == null) {
         return null
     }
 
+    const lang = match.params.lng
+
     const relatedItems = related.hits.hits.map((d, i) => {
-        const { _resources, _firstImageURL, _manifestURL, 'adm:access': _access } = d._source
-        let imageURL = setImage(_firstImageURL, _access)
+        
         return (
-            <div 
+            <Link 
                 key={i} 
+                to={{
+                    pathname: `/${lang}/archives/doc/${d._id}`,
+                    // this is the trick!
+                    state: { modal: true, label: d._tid }
+                }}
                 className="subitems card-item-link"
-                onClick={() =>  handleShowModal(d._id, d._tid, _resources, imageURL, _manifestURL)}
+                onClick={() =>  handleShowModal(d._id)}
             >
                 {d._tid}
-            </div>
+            </Link>
         )
     })
+    
     return (
         <div>
             {relatedItems}

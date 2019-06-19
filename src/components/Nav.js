@@ -7,7 +7,7 @@ import '../assets/css/navbar.css'
 
 const NavBar = ({ navigation, lng, t, history }) => {
   
-  console.log('NAV', history.location.pathname)
+  //console.log('NAV', history.location.pathname)
   if(navigation ==  null) { return null }
   // THIS NAV BAR GETS RENDERED TOO MUCH, NEED TO REFACTOR, MEMOIZE!
     const slugs = navigation.map(nav => {

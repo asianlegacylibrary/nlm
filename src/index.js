@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Route } from 'react-router-dom'
 
 import * as serviceWorker from './serviceWorker'
 
@@ -51,7 +52,7 @@ const App = () => {
         <div className="container">
             <Provider store={store}>
                 <ConnectedRouter history={history}>
-                    <RouteSwitch />
+                    <Route component={RouteSwitch} />
                 </ConnectedRouter>
             </Provider>
         </div>

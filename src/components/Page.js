@@ -151,7 +151,7 @@ const mapStateToProps = (state) => {
     gs: state.gsData.isFetching ? {} : state.gsData.gs,
     browse: state.setBrowse
   }
-};
+}
 
 const withN = new withNamespaces()(Page)
 export default connect(mapStateToProps)(withN);

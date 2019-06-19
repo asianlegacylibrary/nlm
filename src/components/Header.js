@@ -14,7 +14,7 @@ export default({ history }) => {
 			<Languages />
             <NavBar history={history} />
 		</header>
-        <Page />
+        <Page history={history} />
         </div>
     )
 }

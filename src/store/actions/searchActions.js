@@ -234,3 +234,25 @@ const injectPrefLabel = (data) => {
 
     return data
 }
+
+export const injectSinglePrefLabel = (skos) => {
+    //log('trying to inject preflabel now...')
+    let tid
+    if(Array.isArray(skos)) {
+        //log('skos is an array', p._id)
+        if (skos.some(l => l["@language"] === 'en')) {
+            tid = skos.find(t => "en" === t["@language"])
+            tid = tid["@value"]
+
+        } else if (skos.some(l => l["@language"] === 'bo-x-ewts')) {
+            tid = skos.find(t => "bo-x-ewts" === t["@language"])
+            tid = tid["@value"]
+
+        }
+    } else if(typeof skos === 'object') {
+        tid = skos["@value"]
+    } else {
+        tid = null
+    }
+    return tid
+}

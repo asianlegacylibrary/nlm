@@ -33,7 +33,7 @@ export const unpackPersonEvent = (arr, lifeEvents = [], workEvents = []) => {
     
     events.push(lifeEvents.sort())
     events.push(workEvents.sort())
-    log(events)
+    //log(events)
     return events    
 }
 

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { withNamespaces } from 'react-i18next'
 
 import SubItems from './SubItems'
-import Modal from './Modal'
+//import Modal from './Modal'
 import { fetchSpecificID, browseOptionsObj, IIIFsuffix, log } from '../store/actions'
 
 //import { log } from '../store/connection'
@@ -14,35 +14,17 @@ import '../assets/css/items.css'
 class Items extends Component {
 
     // fetch ID from ES and show modal
-    handleShowModal = (doc_id, label = '', resources = null, imageURL = null, manifestURL = null) => {
+    handleShowModal = (doc_id) => {
         this.props.dispatch(fetchSpecificID(doc_id))
         //this.props.dispatch(fetchResources(doc_id, resources))
         this.props.dispatch(
-            { type: 'DETAIL_MODAL', modalID: doc_id, label: label, resources: resources, image: imageURL, manifest: manifestURL, show: true }
+            { type: 'DETAIL_MODAL', modalID: doc_id, show: true }
         )
     }
 
-    // close modal and nullify the IIIF image so there's no flash
-    // of previous image on next modal
-    handleHideModal = () => {
-        this.props.dispatch({ type: 'DETAIL_MODAL', show: false})
-        this.props.dispatch({ type: 'NULLIFY_IIIF'})
-    }
-
-    setImageURL = (img, access) => {
-        if(access === 'bdr:AccessRestrictedSealed') {
-            return 'Restricted Access'
-        } else if(img == null) {
-            return 'No Image'
-        } else if(img === 'Not Found') {
-            return 'Not Found'
-        } else {
-            return `${img}/${IIIFsuffix}`
-        }
-    }
-
     render() {
-
+        let lang = this.props.match.params.lng
+        //let lang = this.props.i18n.language
         let currentESdata = browseOptionsObj.find(x => x.browse === this.props.browse)
 
         if(!this.props[currentESdata.stateType].length) {
@@ -55,26 +37,30 @@ class Items extends Component {
 
         const items = this.props[currentESdata.stateType].map((d, i) => {
             //let _id = null, _resources = null, _firstImageURL = null, _manifestURL = null
-            const { 
-                _resources, 
-                _firstImageURL, 
-                _manifestURL, 
-                'adm:access': _access } = d._source
-            let imageURL = this.setImageURL(_firstImageURL, _access)
+            // const { 
+            //     _resources, 
+            //     //_firstImageURL, 
+            //     _manifestURL, 
+            //     'adm:access': _access } = d._source
+            //let imageURL = this.setImageURL(_firstImageURL, _access)
             return (
                 <div key={i} className="item">
-                    
-                        <div 
-                            className="item-title card-item-link"
-                            onClick={() => this.handleShowModal(d._id, d._tid, _resources, imageURL, _manifestURL)}
-                        >{d._tid}
-                        </div>
+                    <Link 
+                        to={{
+                            pathname: `/${lang}/archives/doc/${d._id}`,
+                            // this is the trick!
+                            state: { modal: true, label: d._tid }
+                        }}
+                        className="item-title card-item-link"
+                        onClick={() => this.handleShowModal(d._id)}
+                    >{d._tid}
+                    </Link>
                     
                     { d._related ? 
                         <SubItems 
-                            key={d._id} 
+                            key={d._id}
+                            match={this.props.match}
                             related={d._related}
-                            setImage={this.setImageURL}
                             handleShowModal={this.handleShowModal}
                         /> : null }
                         
@@ -85,14 +71,14 @@ class Items extends Component {
         return (
             <div>
                 {items}
-                {this.props.doc_id == null ? null : 
+                {/* {this.props.doc_id == null ? null : 
                     <Modal 
                         key={this.props.doc_id}
-                        hideModal={this.handleHideModal}
+                        history={this.props.history}
                         doc_id={this.props.doc_id}
                         show={this.props.showModal}
                     />
-                }
+                } */}
             </div>
         )
     }

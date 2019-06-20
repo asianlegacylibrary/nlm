@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker'
 
 import { Provider } from 'react-redux'
 
-import { createBrowserHistory } from 'history'
+//import { createBrowserHistory } from 'history'
 //import { ConnectedRouter } from 'connected-react-router'
 
 import { 
@@ -51,8 +51,7 @@ const App = () => {
         <div className="container">
             <React.StrictMode>
                 <Provider store={store}>
-                    {/* history={history}> */}
-                    <Router>
+                    <Router> {/* history={history}> */}
                         <Route component={RouteSwitch} />
                     </Router>
                 </Provider>

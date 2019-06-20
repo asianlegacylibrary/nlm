@@ -33,7 +33,6 @@ i18n
       escapeValue: false, // not needed for react as it escapes by default
     },
 
-    
     // special options for react-i18next
     // learn more: https://react.i18next.com/components/i18next-instance
     react: {

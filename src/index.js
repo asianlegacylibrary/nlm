@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Route, BrowserRouter } from 'react-router-dom'
+import { Route, BrowserRouter as Router } from 'react-router-dom'
 
 import * as serviceWorker from './serviceWorker'
 
@@ -28,7 +28,7 @@ import './assets/css/index.css'
 // this is what gives the entire app access to t, i18n...
 import './store/localization/i18n'
 
-const history = createBrowserHistory()
+//const history = createBrowserHistory()
 const store = configureStore()
 
 // log('initial state index.js', store.getState()) 
@@ -51,9 +51,10 @@ const App = () => {
         <div className="container">
             <React.StrictMode>
                 <Provider store={store}>
-                    <BrowserRouter history={history}>
+                    {/* history={history}> */}
+                    <Router>
                         <Route component={RouteSwitch} />
-                    </BrowserRouter>
+                    </Router>
                 </Provider>
             </React.StrictMode>
         </div>

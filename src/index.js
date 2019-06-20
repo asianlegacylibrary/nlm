@@ -17,7 +17,6 @@ import {
     fetchTopics,
     getGS } from './store/actions'
 
-import Routes from './router'
 import RouteSwitch from './components/router/RouteSwitch'
 
 import configureStore from './store/configureStore'
@@ -27,7 +26,7 @@ import './assets/css/main.css'
 import './assets/css/index.css'
 
 // this is what gives the entire app access to t, i18n...
-import './i18n'
+import './store/localization/i18n'
 
 const history = createBrowserHistory()
 const store = configureStore()
@@ -50,11 +49,13 @@ const App = () => {
     document.body.classList.add('landing')
     return (
         <div className="container">
+            <React.StrictMode>
             <Provider store={store}>
                 <ConnectedRouter history={history}>
                     <Route component={RouteSwitch} />
                 </ConnectedRouter>
             </Provider>
+            </React.StrictMode>
         </div>
     )
 }

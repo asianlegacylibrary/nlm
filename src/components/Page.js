@@ -1,14 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { Header } from './Header'
-import Footer from './Footer'
-import Posts from './Posts'
-import Stats from './Stats'
-import Archives from './Archives'
-
 import { defaultLanguage, 
-  setLanguage, setLanguage2,
+  setLanguage,
   languages,
   setPage,
   log
@@ -34,7 +28,7 @@ class Page extends Component {
     
   }
 
-  componentWillMount() { 
+  componentDidMount() { 
     this.languageCheckAndUpdate()
   }
 

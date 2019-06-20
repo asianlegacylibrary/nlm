@@ -1,13 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Route } from 'react-router-dom'
+import { Route, BrowserRouter } from 'react-router-dom'
 
 import * as serviceWorker from './serviceWorker'
 
 import { Provider } from 'react-redux'
 
 import { createBrowserHistory } from 'history'
-import { ConnectedRouter } from 'connected-react-router'
+//import { ConnectedRouter } from 'connected-react-router'
 
 import { 
     fetchPages, 
@@ -50,11 +50,11 @@ const App = () => {
     return (
         <div className="container">
             <React.StrictMode>
-            <Provider store={store}>
-                <ConnectedRouter history={history}>
-                    <Route component={RouteSwitch} />
-                </ConnectedRouter>
-            </Provider>
+                <Provider store={store}>
+                    <BrowserRouter history={history}>
+                        <Route component={RouteSwitch} />
+                    </BrowserRouter>
+                </Provider>
             </React.StrictMode>
         </div>
     )

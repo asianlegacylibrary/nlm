@@ -5,7 +5,7 @@ import { withNamespaces } from 'react-i18next'
 
 import SubItems from './SubItems'
 //import Modal from './Modal'
-import { fetchSpecificID, browseOptionsObj, IIIFsuffix, log } from '../store/actions'
+import { fetchSpecificID, browseOptionsObj } from '../store/actions'
 
 //import { log } from '../store/connection'
 

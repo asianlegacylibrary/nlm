@@ -1,13 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Route } from 'react-router-dom'
+import { Route, BrowserRouter as Router } from 'react-router-dom'
 
 import * as serviceWorker from './serviceWorker'
 
 import { Provider } from 'react-redux'
 
 import { createBrowserHistory } from 'history'
-import { ConnectedRouter } from 'connected-react-router'
+//import { ConnectedRouter } from 'connected-react-router'
 
 import { 
     fetchPages, 
@@ -17,7 +17,6 @@ import {
     fetchTopics,
     getGS } from './store/actions'
 
-import Routes from './router'
 import RouteSwitch from './components/router/RouteSwitch'
 
 import configureStore from './store/configureStore'
@@ -27,9 +26,9 @@ import './assets/css/main.css'
 import './assets/css/index.css'
 
 // this is what gives the entire app access to t, i18n...
-import './i18n'
+import './store/localization/i18n'
 
-const history = createBrowserHistory()
+//const history = createBrowserHistory()
 const store = configureStore()
 
 // log('initial state index.js', store.getState()) 
@@ -50,11 +49,14 @@ const App = () => {
     document.body.classList.add('landing')
     return (
         <div className="container">
-            <Provider store={store}>
-                <ConnectedRouter history={history}>
-                    <Route component={RouteSwitch} />
-                </ConnectedRouter>
-            </Provider>
+            <React.StrictMode>
+                <Provider store={store}>
+                    {/* history={history}> */}
+                    <Router>
+                        <Route component={RouteSwitch} />
+                    </Router>
+                </Provider>
+            </React.StrictMode>
         </div>
     )
 }

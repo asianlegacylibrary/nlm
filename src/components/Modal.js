@@ -14,6 +14,7 @@ class Modal extends Component {
         this.props.dispatch({ type: 'DETAIL_MODAL', show: false})
         this.props.dispatch({ type: 'NULLIFY_IIIF'})
 
+        console.log(document.referrer, this.props.history)
         this.props.history.goBack()
 
         e.stopPropagation()

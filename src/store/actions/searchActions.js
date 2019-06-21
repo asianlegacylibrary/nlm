@@ -48,16 +48,6 @@ function receiveESData(type, json) {
     }
 }
 
-// const filterCollection = (collection = false) => {
-//     let filteredCollection
-//     if(!collection) {
-//         filteredCollection = collection_v1.concat(collection_v2)
-//     } else {
-//         filteredCollection = collection_v2
-//     }
-//     return filteredCollection
-// }
-
 export function fetchData() {
     //const fc = filterCollection(collection)
     return async dispatch => {
@@ -137,20 +127,6 @@ function receiveID(json) {
     }
 }
 
-// function requestResources() {
-//     return {
-//         type: types.REQUEST_RESOURCES
-//     }
-// }
-
-// function receiveResources(json) {
-//     return {
-//         type: types.RECEIVE_RESOURCES,
-//         data: json.hits,
-//         receivedAt: Date.now()
-//     }
-// }
-
 export const fetchResources = (id, resources) => {
     return dispatch => {
         //log('fetch resources', id, resources)
@@ -167,7 +143,8 @@ export const fetchResources = (id, resources) => {
 
 export function fetchSpecificID(doc_id) {
     return dispatch => {  
-        //log('fetchSpecificID!', doc_id)
+        
+        log('fetchSpecificID!', doc_id)
         dispatch(requestID())
         try {
             searchByID([doc_id], 1, doc_id.charAt(4), true).then((dataDetail) => {

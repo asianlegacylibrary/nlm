@@ -18,7 +18,7 @@ const SubItems = ({related, handleShowModal, match}) => {
                 to={{
                     pathname: `/${lang}/archives/doc/${d._id}`,
                     // this is the trick!
-                    state: { modal: true, label: d._tid }
+                    state: { label: d._tid }
                 }}
                 className="subitems card-item-link"
                 onClick={() =>  handleShowModal(d._id)}

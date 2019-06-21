@@ -1,15 +1,15 @@
 {
-  "main.css": "/static/css/main.dcd7cadd.chunk.css",
-  "main.js": "/static/js/main.8f221c56.chunk.js",
-  "main.js.map": "/static/js/main.8f221c56.chunk.js.map",
-  "static/js/1.0637d13c.chunk.js": "/static/js/1.0637d13c.chunk.js",
-  "static/js/1.0637d13c.chunk.js.map": "/static/js/1.0637d13c.chunk.js.map",
+  "main.css": "/static/css/main.9f9c080f.chunk.css",
+  "main.js": "/static/js/main.eef4cc56.chunk.js",
+  "main.js.map": "/static/js/main.eef4cc56.chunk.js.map",
+  "static/js/1.81ac78a1.chunk.js": "/static/js/1.81ac78a1.chunk.js",
+  "static/js/1.81ac78a1.chunk.js.map": "/static/js/1.81ac78a1.chunk.js.map",
   "runtime~main.js": "/static/js/runtime~main.229c360f.js",
   "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
   "static/media/main.css": "/static/media/checker-pattern.9631b446.svg",
   "static/media/UB-woodblock-closeup.jpg": "/static/media/UB-woodblock-closeup.67ac4b0f.jpg",
-  "static/css/main.dcd7cadd.chunk.css.map": "/static/css/main.dcd7cadd.chunk.css.map",
+  "static/css/main.9f9c080f.chunk.css.map": "/static/css/main.9f9c080f.chunk.css.map",
   "index.html": "/index.html",
-  "precache-manifest.ef231701a31bc50c0d34eebc8a35e588.js": "/precache-manifest.ef231701a31bc50c0d34eebc8a35e588.js",
+  "precache-manifest.9ec26005578e6ff85f245354cd1b4b45.js": "/precache-manifest.9ec26005578e6ff85f245354cd1b4b45.js",
   "service-worker.js": "/service-worker.js"
 }

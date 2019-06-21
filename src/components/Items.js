@@ -13,15 +13,14 @@ class Items extends Component {
     // fetch ID from ES and show modal
     handleShowModal = (doc_id) => {
         this.props.dispatch(fetchSpecificID(doc_id))
-        //this.props.dispatch(fetchResources(doc_id, resources))
         this.props.dispatch(
             { type: 'DETAIL_MODAL', modalID: doc_id, show: true }
         )
     }
 
     render() {
+        
         let lang = this.props.match.params.lng
-        //let lang = this.props.i18n.language
         let currentESdata = browseOptionsObj.find(x => x.browse === this.props.browse)
 
         if(!this.props[currentESdata.stateType].length) {
@@ -40,7 +39,7 @@ class Items extends Component {
                         to={{
                             pathname: `/${lang}/archives/doc/${d._id}`,
                             // this is the trick!
-                            state: { modal: true, label: d._tid }
+                            state: { label: d._tid }
                         }}
                         className="item-title card-item-link"
                         onClick={() => this.handleShowModal(d._id)}

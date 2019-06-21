@@ -15,28 +15,21 @@ import { languages, defaultLanguage, log,
 
 class RouteSwitch extends Component {
     
-    constructor(props) {
-        super(props)
-        this.previousLocation = this.props.location
-        this.l = Object.keys(languages).map(l => l).join('|')
-        this.pages = [ 'home', 'archives' ]
-        //this.isModal = false
-    }
-
+    previousLocation = this.props.location
+    l = Object.keys(languages).map(l => l).join('|')
+    
     componentDidMount() {
         this.languageCheckAndUpdate()
     }
-    
+
     componentDidUpdate(prevProps) {
-      
-        window.onpopstate  = (e) => {
-            e.preventDefault()
+        let { location } = this.props
+
+        if(prevProps.history.action !== "POP") {
+            this.previousLocation = location
         }
-     
-        if(!this.props.location.state) { this.previousLocation = prevProps.location }
-
     }
-
+    
     languageCheckAndUpdate() {
         log('RS check lang and page', this.props)
 
@@ -71,7 +64,7 @@ class RouteSwitch extends Component {
   }
 
     render() {
-
+        let initialRender = this.props.location === this.previousLocation
         return (
             <div>
                 {/* pass location prop to switch and it will ignore 
@@ -104,7 +97,7 @@ class RouteSwitch extends Component {
                     } />
 
                     <Route render={() => <Redirect selectedPage="home" to="/en" /> } />
-
+                    
                 </Switch>
 
                 <Footer />
@@ -112,8 +105,11 @@ class RouteSwitch extends Component {
                 <Route exact path={`/:lng(${this.l})/archives/doc/:id`} render={({match, history}) => {
                     
                     let label = this.props.location.state ? this.props.location.state.label : null
-                    this.props.dispatch(fetchSpecificID(match.params.id))
-                    this.props.dispatch({ type: 'DETAIL_MODAL', modalID: match.params.id, show: true })
+                    
+                    if(initialRender) {
+                        this.props.dispatch(fetchSpecificID(match.params.id))
+                        this.props.dispatch({ type: 'DETAIL_MODAL', modalID: match.params.id, show: true })
+                    }
                     
                     return <Modal 
                         key={match.params.id}

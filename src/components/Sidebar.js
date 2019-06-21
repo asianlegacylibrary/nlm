@@ -2,21 +2,18 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withNamespaces } from 'react-i18next'
 
-import { setBrowse, setCollection, log, browseOptionsObj } from '../store/actions'
+import { setBrowse, browseOptionsObj } from '../store/actions'
 
 import '../assets/css/sidebar.css'
 
 class Sidebar extends Component {
 
-    handleCollectionFiltering = (updatedCollection) => {
-        this.props.dispatch(setCollection(updatedCollection))
-    }
-    
     render() {
         return (
             <div className="sidenav wrapper style1">
                 <div className="sidenav-title">{`${this.props.t('sidebar.browse')}:`}</div>
                 <form>
+
                     {browseOptionsObj.map(o => {
                         //o.browse === 'Title' ? log(this.props[`number_${o.stateType}`]) : log('hi')
                         let n = this.props[`number_${o.stateType}`] == null ? this.props.t('technical.loading') : this.props[`number_${o.stateType}`]
@@ -35,27 +32,6 @@ class Sidebar extends Component {
                         )
                     })}
 
-                    {/* <div className="col-4 col-12-small">
-                        <input
-                            id="collapse"
-                            type="checkbox"
-                            value="Collapse All"
-                            checked={this.props.collapse}
-                            onChange={() => this.props.dispatch(setCollapse(!this.props.collapse))}
-                        />
-                        <label htmlFor="collapse">Collapse All</label>
-                    </div> */}
-                    {/* <div className="col-4 col-12-small">
-                        <input
-                            id="filter-collection"
-                            type="checkbox"
-                            value="Collapse All"
-                            checked={this.props.collection}
-                            onChange={() => this.handleCollectionFiltering(!this.props.collection)}
-                        />
-                        <label htmlFor="filter-collection">{this.props.t('sidebar.filter')}</label>
-                    </div> */}
-                
                 </form>
                     
             </div>
@@ -75,9 +51,7 @@ const getNumberOfItems = (data, filter) => {
 }
 
 const mapStateToProps = (state) => ({
-    collapse: state.setCollapse,
     browse: state.setBrowse,
-    collection: state.setCollection,
     number_esWorks: state.esWorks.isFetching ? null : getNumberOfItems(state.esWorks.items, state.setCollection),
     number_esAuthors: state.esAuthors.isFetching ? null : getNumberOfItems(state.esAuthors.items, state.setCollection),
     number_esSubjects: state.esSubjects.isFetching ? null : getNumberOfItems(state.esSubjects.items, state.setCollection)

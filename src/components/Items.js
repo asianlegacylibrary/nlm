@@ -4,10 +4,7 @@ import { Link } from 'react-router-dom'
 import { withNamespaces } from 'react-i18next'
 
 import SubItems from './SubItems'
-//import Modal from './Modal'
 import { fetchSpecificID, browseOptionsObj } from '../store/actions'
-
-//import { log } from '../store/connection'
 
 import '../assets/css/items.css'
 
@@ -36,13 +33,7 @@ class Items extends Component {
         }
 
         const items = this.props[currentESdata.stateType].map((d, i) => {
-            //let _id = null, _resources = null, _firstImageURL = null, _manifestURL = null
-            // const { 
-            //     _resources, 
-            //     //_firstImageURL, 
-            //     _manifestURL, 
-            //     'adm:access': _access } = d._source
-            //let imageURL = this.setImageURL(_firstImageURL, _access)
+            
             return (
                 <div key={i} className="item">
                     <Link 
@@ -68,19 +59,8 @@ class Items extends Component {
             )
         })
     
-        return (
-            <div>
-                {items}
-                {/* {this.props.doc_id == null ? null : 
-                    <Modal 
-                        key={this.props.doc_id}
-                        history={this.props.history}
-                        doc_id={this.props.doc_id}
-                        show={this.props.showModal}
-                    />
-                } */}
-            </div>
-        )
+        return ( <div>{items}</div> )
+        
     }
 
     

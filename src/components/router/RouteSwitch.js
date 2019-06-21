@@ -22,6 +22,11 @@ class RouteSwitch extends Component {
         ]
         this.isModal = false
     }
+
+    componentDidMount() {
+        let { location } = this.props
+        console.log('RS mount, set page here based on URL?', location)
+    }
     
     componentDidUpdate(prevProps) {
       
@@ -77,7 +82,7 @@ class RouteSwitch extends Component {
                         </div>
                     } />
 
-                    <Route render={() => <Redirect to="/en" /> } />
+                    <Route render={() => <Redirect selectedPage="home" to="/en" /> } />
 
                 </Switch>
 

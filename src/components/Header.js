@@ -10,11 +10,11 @@ export default({ history }) => {
     
     return (
         <div className="wrapper">
-        <header id="header">
-			<Languages />
-            <NavBar history={history} />
-		</header>
-        <Page history={history} />
+            <header id="header">
+                <Languages />
+                <NavBar history={history} />
+            </header>
+            <Page history={history} />
         </div>
     )
 }

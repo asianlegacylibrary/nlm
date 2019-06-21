@@ -39,25 +39,33 @@ class Page extends Component {
     }
   }
 
-  languageCheckAndUpdate() {
-    const { history, url, selectedPage, dispatch, t } = this.props;
-    if(url.split('/')[2] !== undefined) {
-      if(Object.keys(t('pages')).includes(url.split('/')[2])) {
-        dispatch(setPage('archives'))
-      } else {
-        dispatch(setPage('home'))
-        history.push(`/${url.split('/')[1]}`)
-      }
-    } else {
-      dispatch(setPage('home'))
+    languageCheckAndUpdate() {
+        log('check lang and page', this.props)
+
+        const { history, dispatch, t } = this.props
+        const url = history.location.pathname
+
+        if(url.split('/')[2] !== undefined) {
+            if(Object.keys(t('pages')).includes(url.split('/')[2])) {
+                dispatch(setPage('archives'))
+            } else {
+                dispatch(setPage('home'))
+                history.push(`/${url.split('/')[1]}`)
+            }
+        } else {
+            dispatch(setPage('home'))
+            history.push(defaultLanguage)
+        }
+    
+        if(url.split('/')[1] in languages) { 
+            this.setLang(url.split('/')[1])
+        } else {
+            this.setLang(defaultLanguage)
+            dispatch(setPage('home'))
+            history.push(defaultLanguage)
+            
+        }  
     }
-    if(url.split('/')[1] in languages) { 
-      this.setLang(url.split('/')[1])
-    } else {
-      this.setLang(defaultLanguage)
-      history.push(defaultLanguage)
-    }  
-  }
 
   setLang = (lng) => {
     const { i18n, dispatch } = this.props;
@@ -111,7 +119,7 @@ class Page extends Component {
 
   render() {
    
-    if(this.props.fetchingPages || this.props.fetchingPosts) {
+    if(this.props.fetchingWP) {
         return (
           <div className="blinky">{this.props.t('technical.loading')}</div>
         )
@@ -127,20 +135,30 @@ class Page extends Component {
 
 }
 
-const mapStateToProps = (state) => {
+const getSelectedPage = (items, lang, ownProps) => {
+    
+    console.log(items, lang, ownProps, this.props)
+    
+    if(items[lang].some(page => page.slug.split('-')[0] === this.props.selectedPage)) {
+        console.log(this.props.selectedPage)
+        return this.props.selectedPage
+    }
+    //items[lang].some(page => page.slug.split('-')[0] === state.selectedPage) ? 
+    //state.selectedPage : "home"
+    return "home"
+}
+
+const mapStateToProps = (state, ownProps) => {
   //log('state in Page component', state)
   //log('ownProps in Page component', ownProps)
   
   return {
-    router: state.router,
-    url: state.router.location.pathname,
-    fetchingPages: state.pages.isFetching,
+    // router: state.router,
+    // url: state.router.location.pathname,
+    fetchingWP: (state.pages.isFetching || state.posts.isFetching),
     selectedLanguage: state.selectedLanguage || defaultLanguage,
-    selectedPage: 
-      state.pages.isFetching ? 
-      [] : 
-      state.pages.items[state.selectedLanguage].some(page => page.slug.split('-')[0] === state.selectedPage) ? 
-      state.selectedPage : "home",
+    selectedPage: state.pages.isFetching 
+        ? [] : getSelectedPage(state.pages.items, state.selectedLanguage, ownProps),
     pages: state.pages.isFetching ? [] : state.pages.items[state.selectedLanguage],
     gs: state.gsData.isFetching ? {} : state.gsData.gs,
     browse: state.setBrowse

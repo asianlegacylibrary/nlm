@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import i18n from 'i18next'
 import { withNamespaces } from 'react-i18next'
 import { log, IIIFsuffix, injectSinglePrefLabel,
     unpackPersonEvent, unpackPersonName, 
@@ -9,13 +10,18 @@ import '../assets/css/modal.css'
 
 class Modal extends Component {
 
-    handleHideModal = (e) => {
+    handleHideModal = (initialRender, e) => {
         
         this.props.dispatch({ type: 'DETAIL_MODAL', show: false})
         this.props.dispatch({ type: 'NULLIFY_IIIF'})
 
-        console.log(document.referrer, this.props.history)
-        this.props.history.goBack()
+        
+        if(initialRender) {
+            this.props.history.push(`/${i18n.language}/archives`)
+        } else {
+            this.props.history.goBack()
+        }
+        
 
         e.stopPropagation()
     }
@@ -149,9 +155,9 @@ class Modal extends Component {
 
         // CLOSE BUTTON
         const closeBtn = (
-            <button className="modal-btn" onClick={this.handleHideModal}>
+            <button className="modal-btn" onClick={(e) => this.handleHideModal(this.props.initialRender, e)}>
                 <i className="fa fa-2x fa-times"></i> 
-                {t('technical.btn-close')}
+                { this.props.initialRender ? t('technical.btn-view') : t('technical.btn-close') }
             </button>
         )
 
@@ -290,7 +296,7 @@ class Modal extends Component {
                         <div className="blinky">{this.props.t('technical.loading')} {this.props.doc_id}</div>
                         <button className="modal-btn" onClick={this.props.hideModal}>
                             <i className="fa fa-2x fa-times"></i> 
-                            {this.props.t('technical.btn-close')}
+                            { this.props.initialRender ? this.props.t('technical.btn-view') : this.props.t('technical.btn-close') }
                         </button>
                     </section>
                 </div>
@@ -312,6 +318,7 @@ const mapStateToProps = (state) => ({
     //modalDetails: state.detailData.isFetching || state.detailData.modalID === 0 ? {} : state.detailModal,
     workDetail: state.detailData.isFetching || state.detailModal.modalID === 0 ? {} : state.detailData.item.hits.hits[0],
     numberVolumes: state.detailData.isFetching || state.detailModal.modalID === 0 ? null : state.detailData.item.hits.hits[0]._source.workNumberOfVolumes,
+    initialRender: !!state.detailModal.initialRender ? state.detailModal.initialRender : false
 })
 
 const withN = withNamespaces()(Modal)

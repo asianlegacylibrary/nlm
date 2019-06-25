@@ -14,7 +14,7 @@ class Items extends Component {
     handleShowModal = (doc_id) => {
         this.props.dispatch(fetchSpecificID(doc_id))
         this.props.dispatch(
-            { type: 'DETAIL_MODAL', modalID: doc_id, show: true }
+            { type: 'DETAIL_MODAL', modalID: doc_id, show: true, initialRender: false }
         )
     }
 

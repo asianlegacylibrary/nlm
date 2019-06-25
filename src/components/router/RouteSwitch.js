@@ -108,7 +108,7 @@ class RouteSwitch extends Component {
                     
                     if(initialRender) {
                         this.props.dispatch(fetchSpecificID(match.params.id))
-                        this.props.dispatch({ type: 'DETAIL_MODAL', modalID: match.params.id, show: true })
+                        this.props.dispatch({ type: 'DETAIL_MODAL', modalID: match.params.id, show: true, initialRender: true })
                     }
                     
                     return <Modal 

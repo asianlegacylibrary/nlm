@@ -9,7 +9,8 @@
     "loading": "Loading...",
     "loading-simple": "Loading",
     "loading-image": "Loading image...",
-    "btn-close": "Close"
+    "btn-close": "Close",
+    "btn-view": "View Archives"
   },
   "languageCodeLookup": {
     "English": "en",

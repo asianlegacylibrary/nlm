@@ -20,37 +20,21 @@ const client = new elasticsearch.Client({
 })
 
 async function checkConnection() {
-	log('process.env.NODE_ENV ', host);
 	while(!isConnected) {
 		log('Connnnnecting....')
 		while(healthStatus === 'red') {
-			log('awaiting green light')
+			//log('awaiting green light')
 			try {
 				const health = await client.cluster.health({});
 				log('health: ', health)
 				healthStatus = health.status
-				isConnected = true
+                isConnected = true
 			} catch (err) {
 				console.error('Connection is failing...', err)
-				isConnected = false
+                isConnected = false
 			}
 		}
     }
-    
-    // HAVE A LOOK INTO THIS FOR FILTERING OBJECTS
-    // Object.filter = (obj, predicate) => 
-    // Object.assign(...Object.keys(obj)
-    //                 .filter( key => predicate(obj[key]) )
-    //                 .map( key => ({ [key]: obj[key] }) ) );
-
-    // STATS MODULE to retreive indices
-    // client.indices.stats({
-    //     index: "_all",
-    //     level: "indices"
-    //  }, function(err, res) {
-    //     // res contains JSON data about indices stats
-    //     log('stats', res.indices)
-    //  });
     
 	return isConnected
 }

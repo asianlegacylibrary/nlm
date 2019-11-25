@@ -5,17 +5,16 @@ import NavItem from './containers/NavItem'
 import { withNamespaces } from 'react-i18next'
 import '../assets/css/navbar.css'
 
-const NavBar = (props) => {
+const NavBar = ({ navigation, match, t}) => {
   
-  // THIS NAV BAR GETS RENDERED TOO MUCH, NEED TO REFACTOR
-  //log('creating navbar with props', props.navigation)
-    // matching page nav with translated 'pages' object // t('pages')[nav.match] // obj[key]
-    const slugs = props.navigation.map(nav => {
+  if(navigation ==  null) { return null }
+  // THIS NAV BAR GETS RENDERED TOO MUCH, NEED TO REFACTOR, MEMOIZE!
+    const slugs = navigation.map(nav => {
       const p = nav.match === 'home' ? '' : `/${nav.match}`
         return (
-          <Link key={nav.slug} to={`/${props.lng}${p}`}>
+          <Link key={nav.slug} to={`/${match.params.lng}${p}`}>
             <NavItem key={nav.slug} selectedPage={nav.match}>
-              {props.t('pages')[nav.match]}
+              {t('pages')[nav.match]}
             </NavItem>
           </Link>
         )
@@ -29,24 +28,21 @@ const NavBar = (props) => {
 
 }
 
+// $$$ MEMOIZE
 const createNavigation = (pages) => {
-  
     return pages.map(c => {
         return {
           //match: c.slug.substring(0,4),
           match: c.slug.split('-')[0],
-          title: c.slug.substring(0,4) ==='home' ? 'Home' : c.title.rendered,
           slug: c.slug,
-          order: c.menu_order
+          //title: c.slug.substring(0,4) ==='home' ? 'Home' : c.title.rendered,
+          //order: c.menu_order
         }
       })
-      
 }
 
 const mapStateToProps = (state) => ({
-    navigation: createNavigation(state.pages.items[state.selectedLanguage]),
-    lang: state.selectedLanguage,
-    page: state.selectedPage
+    navigation: state.pages.isFetching ? null : createNavigation(state.pages.items[state.selectedLanguage])  
 })
 
 const withN = new withNamespaces()(NavBar)

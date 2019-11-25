@@ -5,7 +5,7 @@ export * from './bdrcPerson'
 export * from './bdrcPersonEvent'
 
 export const unpackOntology = (arr, stringArray = []) => {
-    log('unpacking ontology', arr)
+    //log('unpacking ontology', arr)
     if(arr == null) {
         return null
     } else if(Array.isArray(arr)) {

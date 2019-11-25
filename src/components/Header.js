@@ -1,15 +1,20 @@
 import React from 'react'
 
 import Languages from './Languages'
-import NavBar from './Nav'
+import Nav from './Nav'
+import Page from './Page'
 
 import '../assets/css/header.css'
 
-export const Header = () => {
+export default({ history, match }) => {
+    
     return (
-        <header id="header">
-			<Languages />
-            <NavBar />
-		</header>
+        <div className="wrapper">
+            <header id="header">
+                <Languages />
+                <Nav history={history} match={match} />
+            </header>
+            <Page history={history} />
+        </div>
     )
 }

@@ -1,22 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
+import { Provider } from 'react-redux'
+import { Route, BrowserRouter as Router } from 'react-router-dom'
 import * as serviceWorker from './serviceWorker'
 
-import { Provider } from 'react-redux'
-
-import { createBrowserHistory } from 'history'
-import { ConnectedRouter } from 'connected-react-router'
-
 import { 
-    fetchPages, 
-    fetchPosts, 
-    fetchData, 
-    fetchAuthors,
-    fetchTopics,
+    fetchPages, fetchPosts, 
+    fetchData, fetchAuthors, fetchTopics,
     getGS } from './store/actions'
 
-import Routes from './router'
+import RouteSwitch from './components/router/RouteSwitch'
 
 import configureStore from './store/configureStore'
 import { checkConnection } from './store/connection'
@@ -25,33 +18,43 @@ import './assets/css/main.css'
 import './assets/css/index.css'
 
 // this is what gives the entire app access to t, i18n...
-import './i18n'
+import './store/localization/i18n'
 
-const history = createBrowserHistory()
 const store = configureStore()
 
 // log('initial state index.js', store.getState()) 
 // THIS COULD BE REPLACED WITH ONE 'INITIALIZE APP' type function
 // GET PAGES, POSTS, ES DATA
 
+// Wordpress data
 store.dispatch(fetchPages())
 store.dispatch(fetchPosts())
-//store.dispatch(fetchData())
 
+// Google sheet data from NLM cataloguing
 store.dispatch(getGS())
-checkConnection()
-store.dispatch(fetchData())
-store.dispatch(fetchAuthors())
-store.dispatch(fetchTopics())
+
+// check connection and get ES data
+if(checkConnection()) {
+    store.dispatch(fetchData())
+    store.dispatch(fetchAuthors())
+    store.dispatch(fetchTopics())
+} else {
+    console.log("Can't make connection to ES...")
+}
+
 
 const App = () => {
     document.body.classList.add('landing')
     return (
-        <Provider store={store}>
-            <ConnectedRouter history={history}>
-                <Routes />
-            </ConnectedRouter>
-        </Provider>
+        <div className="container">
+            <React.StrictMode>
+                <Provider store={store}>
+                    <Router> {/* history={history}> */}
+                        <Route component={RouteSwitch} />
+                    </Router>
+                </Provider>
+            </React.StrictMode>
+        </div>
     )
 }
 

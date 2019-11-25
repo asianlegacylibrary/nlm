@@ -7,30 +7,26 @@ import { defaultLanguage, setLanguage } from '../../store/actions'
 import '../../assets/css/navbar.css'
 
 const Language = ({ active, children, dispatch, lang, i18n }) => {
-
-  const changeI18n = (lng) => { i18n.changeLanguage(lng) }
+    
+    const changeI18n = (lng) => { i18n.changeLanguage(lng) }
   
-  return (
-    <li
-      key={children}
-      onClick={() => {
-        dispatch(setLanguage(lang, i18n))
-        changeI18n(lang)
-        }}
-      className={active ? "lang-active" : "lang"}
-      style={active ? 
-        { color: 'red', } :
-        { color: 'black', } 
-        }
-    >
-    <button
-      key={children}
-      disabled={active ? true : false}
-      className="btn-lang">
-      {children}
-    </button>
-    </li>
-  )
+    return (
+        <li
+            key={ children }
+            onClick={() => {
+                dispatch(setLanguage(lang, i18n))
+                changeI18n(lang)
+            }}
+            className={ active ? "lang-active" : "lang" }
+        >
+            <button
+                key={ children }
+                disabled={ active ? true : false }
+                className="btn-lang">
+                    { children }
+            </button>
+        </li>
+    )
 }
 
 const mapStateToProps = (state, ownProps) => ({

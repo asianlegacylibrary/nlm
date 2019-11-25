@@ -48,23 +48,13 @@ function receiveESData(type, json) {
     }
 }
 
-// const filterCollection = (collection = false) => {
-//     let filteredCollection
-//     if(!collection) {
-//         filteredCollection = collection_v1.concat(collection_v2)
-//     } else {
-//         filteredCollection = collection_v2
-//     }
-//     return filteredCollection
-// }
-
 export function fetchData() {
     //const fc = filterCollection(collection)
     return async dispatch => {
         dispatch(requestESData(types.REQUEST_WORKS))
         try {
             const data = await searchByID(collection, collection.length, "W")
-            log('buckets', collection.length, data.aggregations.collections.buckets)
+            //log('buckets', collection.length, data.aggregations.collections.buckets)
             const modifiedData = injectPrefLabel(data)
             return dispatch(receiveESData(types.RECEIVE_WORKS, modifiedData))
         } catch (error) {
@@ -80,15 +70,15 @@ export function fetchAuthors() {
         dispatch(requestESData(types.REQUEST_AUTHORS))
         try {
             const a = await initialAuthorSearch(collection)
-            log('#0, authors...')
+            //log('#0, authors...')
             const authors = a.aggregations.uniqueAuthors.buckets.map(a => {
                 return a.key
             })
-            log('#1, authors keys', authors.length)
+            //log('#1, authors keys', authors.length)
             const data = await searchByID(authors, authors.length, "P")
-            log('#2, authors in works')
+            //log('#2, authors in works')
             await mutateDataWithRelatedDocs(data, 'workCreator.keyword')
-            log('#3, authors add related docs')
+            //log('#3, authors add related docs')
             const modifiedData = injectPrefLabel(data)
             return dispatch(receiveESData(types.RECEIVE_AUTHORS, modifiedData))
         } catch(error) {
@@ -102,15 +92,15 @@ export function fetchTopics() {
         dispatch(requestESData(types.REQUEST_SUBJECTS))
         try {
             const t = await initialTopicsSearch(collection)
-            log('#0, topics...')
+            //log('#0, topics...')
             const topics = t.aggregations.uniqueTopics.buckets.map(t => {
                 return t.key
             })
-            log('#1, topics keys', topics.length)
+            //log('#1, topics keys', topics.length)
             const data = await searchByID(topics, topics.length, "T")
-            log('#2, topics in works')
+            //log('#2, topics in works')
             await mutateDataWithRelatedDocs(data, 'workIsAbout.keyword')
-            log('#3, topic add related docs')
+            //log('#3, topic add related docs')
             
             const modifiedData = injectPrefLabel(data)
             
@@ -137,23 +127,9 @@ function receiveID(json) {
     }
 }
 
-// function requestResources() {
-//     return {
-//         type: types.REQUEST_RESOURCES
-//     }
-// }
-
-// function receiveResources(json) {
-//     return {
-//         type: types.RECEIVE_RESOURCES,
-//         data: json.hits,
-//         receivedAt: Date.now()
-//     }
-// }
-
 export const fetchResources = (id, resources) => {
     return dispatch => {
-        log('fetch resources', id, resources)
+        //log('fetch resources', id, resources)
         dispatch(requestESData(types.REQUEST_RESOURCES))
         try {
             searchResources(resources).then((data) => {
@@ -167,6 +143,7 @@ export const fetchResources = (id, resources) => {
 
 export function fetchSpecificID(doc_id) {
     return dispatch => {  
+        
         log('fetchSpecificID!', doc_id)
         dispatch(requestID())
         try {
@@ -233,4 +210,26 @@ const injectPrefLabel = (data) => {
     data.hits.hits.sort((a, b) => a._tid.localeCompare(b._tid))
 
     return data
+}
+
+export const injectSinglePrefLabel = (skos) => {
+    //log('trying to inject preflabel now...')
+    let tid
+    if(Array.isArray(skos)) {
+        //log('skos is an array', p._id)
+        if (skos.some(l => l["@language"] === 'en')) {
+            tid = skos.find(t => "en" === t["@language"])
+            tid = tid["@value"]
+
+        } else if (skos.some(l => l["@language"] === 'bo-x-ewts')) {
+            tid = skos.find(t => "bo-x-ewts" === t["@language"])
+            tid = tid["@value"]
+
+        }
+    } else if(typeof skos === 'object') {
+        tid = skos["@value"]
+    } else {
+        tid = null
+    }
+    return tid
 }

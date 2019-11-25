@@ -1,20 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
-import { Header } from './Header'
-import Footer from './Footer'
-import Posts from './Posts'
-import Stats from './Stats'
-import Archives from './Archives'
-
-import { defaultLanguage, 
-  setLanguage, setLanguage2,
-  languages,
-  setPage,
-  log
-} from '../store/actions/index'
-
 import { withNamespaces } from 'react-i18next'
+import { defaultLanguage, setLanguage, log } from '../store/actions/index'
 
 class Page extends Component {
 
@@ -34,47 +21,10 @@ class Page extends Component {
     
   }
 
-  componentWillMount() { 
-    this.languageCheckAndUpdate()
-  }
-
-  componentDidUpdate() {
-    window.onpopstate  = (e) => {
-      e.preventDefault()
-      this.languageCheckAndUpdate()
-    }
-  }
-
-  languageCheckAndUpdate() {
-    const { history, url, selectedPage, dispatch, t } = this.props;
-    if(url.split('/')[2] !== undefined) {
-      if(Object.keys(t('pages')).includes(url.split('/')[2])) {
-        dispatch(setPage('archives'))
-      } else {
-        dispatch(setPage('home'))
-        history.push(`/${url.split('/')[1]}`)
-      }
-    } else {
-      dispatch(setPage('home'))
-    }
-    if(url.split('/')[1] in languages) { 
-      this.setLang(url.split('/')[1])
-    } else {
-      this.setLang(defaultLanguage)
-      history.push(defaultLanguage)
-    }  
-  }
-
-  setLang = (lng) => {
-    const { i18n, dispatch } = this.props;
-    i18n.changeLanguage(lng) // change locale
-    dispatch(setLanguage(lng)) // set redux language
-
-  }
-
   resetPage = () => {
     this.props.dispatch({ type: 'SET_PAGE', page: 'home' });
-    this.setLang(defaultLanguage)
+    this.props.i18n.changeLanguage(defaultLanguage) // change locale
+    this.props.dispatch(setLanguage(defaultLanguage)) // set redux language
   }
 
   renderPage(selectedPage, pages) {
@@ -117,47 +67,33 @@ class Page extends Component {
 
   render() {
    
-    if(this.props.fetchingPages || this.props.fetchingPosts) {
+    if(this.props.fetchingWP) {
         return (
           <div className="blinky">{this.props.t('technical.loading')}</div>
         )
     }
     return (
       <div className="container">
-        <Header />
+        
         { this.renderPage(this.props.selectedPage, this.props.pages) }
-        { this.props.selectedPage === 'home' ? 
-          <div>
-            <Stats stats={this.props.gs} t={this.props.t} />
-            <Posts />
-          </div> : null }
-        { this.props.selectedPage === 'archives' ? <Archives browse={this.props.browse} /> : null }
-        <Footer />
+        
       </div>
     )
   }
 
 }
 
-const mapStateToProps = (state) => {
-  //log('state in Page component', state)
-  //log('ownProps in Page component', ownProps)
-  
-  return {
-    router: state.router,
-    url: state.router.location.pathname,
-    fetchingPages: state.pages.isFetching,
+const mapStateToProps = (state) => ({
+    fetchingWP: (state.pages.isFetching || state.posts.isFetching),
     selectedLanguage: state.selectedLanguage || defaultLanguage,
     selectedPage: 
-      state.pages.isFetching ? 
-      [] : 
-      state.pages.items[state.selectedLanguage].some(page => page.slug.split('-')[0] === state.selectedPage) ? 
-      state.selectedPage : "home",
-    pages: state.pages.isFetching ? [] : state.pages.items[state.selectedLanguage],
-    gs: state.gsData.isFetching ? {} : state.gsData.gs,
-    browse: state.setBrowse
-  }
-};
+      state.pages.isFetching 
+      ? [] 
+      : state.pages.items[state.selectedLanguage].some(page => page.slug.split('-')[0] === state.selectedPage) 
+      ? state.selectedPage 
+      : "home",
+    pages: state.pages.isFetching ? [] : state.pages.items[state.selectedLanguage]
+})
 
 const withN = new withNamespaces()(Page)
 export default connect(mapStateToProps)(withN);

@@ -51,7 +51,7 @@ export const unpackNames = (arr, type) => {
         
         const a = arr['rdfs:label'].sort().map((l, i) => {
             return (
-                <div>
+                <div key={i}>
                     <span className="meta-italics">({l['@language']}): </span>
                     <span className="meta-title">{l['@value']}</span>
                 </div>
@@ -59,10 +59,10 @@ export const unpackNames = (arr, type) => {
         )
 
         return (
-            <p key={type} className="meta-item with-fa">
+            <div key={type} className="meta-item with-fa">
                 <span className="meta-detail">{type.substring(6)}:</span>
                 {a}
-            </p>
+            </div>
         )
 
     } else {

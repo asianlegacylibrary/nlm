@@ -34,7 +34,8 @@
     "copy-uv-to-public": "rm -rf public/uv && cp -R node_modules/universalviewer/uv public/uv",
     "deploy-surge": "yarn build && mv build/index.html build/200.html && surge build nlm.asianclassics.org",
     "deploy-surge-staging": "yarn build && mv build/index.html build/200.html && surge build nlm.staging.asianclassics.org",
-    "deploy-do": "yarn build && scp -pr build/. root@nlm:/var/www/html"
+    "deploy-do": "yarn build && scp -pr build/. root@nlm:/var/www/html",
+    "build:client": "yarn build && scp -pr build/* root@acip-search:/var/www/html/nlm.asianclassics.org"
   },
   "eslintConfig": {
     "extends": "react-app"

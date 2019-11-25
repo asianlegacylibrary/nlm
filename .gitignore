@@ -22,6 +22,7 @@ python/mapping/log.txt
 python/transfer/__pycache__
 python/transfer/log.txt
 
+# production, keeping build in repo for webhook to DO
 /build
 
 # misc

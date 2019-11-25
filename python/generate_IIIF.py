@@ -7,7 +7,9 @@ from config.config import conf_bdrc
 
 def get_manifest(doc):
     document = None
-    doc_number = doc['workHasItemImageAsset'].split(":")[1] if doc['workHasItemImageAsset'].split(":")[0] == "bdr" else doc['workHasItemImageAsset']
+    doc_number = doc['workHasItemImageAsset'].split(":")[1] \
+        if doc['workHasItemImageAsset'].split(":")[0] == "bdr" \
+        else doc['workHasItemImageAsset']
     try:
         document = json.load(urllib.request.urlopen(
             conf_bdrc["endpoint"] + doc_number + conf_bdrc["file_type"])

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.19.0",
     "connected-react-router": "^6.1.0",
     "cross-fetch": "^2.2.2",
     "elasticsearch": "^15.2.0",
@@ -19,11 +20,11 @@
     "react-redux": "6.0.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "2.0.5",
+    "react-scripts": "^3.2.0",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "tabletop": "^1.5.2",
+    "tabletop": "^1.6.2",
     "universalviewer": "^3.0.16"
   },
   "scripts": {

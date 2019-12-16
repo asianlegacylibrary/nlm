@@ -1,3 +1,7 @@
+import './assets/sass/main.scss'
+import './assets/sass/_entrypoint.scss'
+import './assets/sass/nlm/index.scss'
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
@@ -8,9 +12,6 @@ import * as serviceWorker from './serviceWorker'
 import RouteSwitch from './components/router/RouteSwitch'
 import configureStore from './store/configureStore'
 
-import './assets/css/main.css'
-import './assets/css/index.css'
-
 // this is what gives the entire app access to t, i18n...
 import './store/localization/i18n'
 
@@ -18,24 +19,16 @@ const store = configureStore()
 
 InitializeStore(store)
 
-// log('initial state index.js', store.getState())
-// THIS COULD BE REPLACED WITH ONE 'INITIALIZE APP' type function
-// GET PAGES, POSTS, ES DATA
-
 const App = () => {
     document.body.classList.add('landing')
     return (
-        <div className="container">
-            <React.StrictMode>
-                <Provider store={store}>
-                    <Router>
-                        {' '}
-                        {/* history={history}> */}
-                        <Route component={RouteSwitch} />
-                    </Router>
-                </Provider>
-            </React.StrictMode>
-        </div>
+        <React.StrictMode>
+            <Provider store={store}>
+                <Router>
+                    <Route component={RouteSwitch} />
+                </Router>
+            </Provider>
+        </React.StrictMode>
     )
 }
 

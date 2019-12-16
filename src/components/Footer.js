@@ -1,16 +1,16 @@
+import '../assets/sass/nlm/footer.scss'
 import React from 'react'
 import { withNamespaces } from 'react-i18next'
 import { onlyIP, buildYear } from '../store/actions'
 
-import '../assets/css/footer.css'
-
-const Footer = ({t}) => {
+const Footer = ({ t }) => {
     return (
         <footer id="footer">
             <div className="icon">
-              <img 
-                src={`http://${onlyIP}/wp-content/uploads/2018/10/nlm-logo-no-text.png`} 
-                alt="mongolia-logo" />
+                <img
+                    src={`http://${onlyIP}/wp-content/uploads/2018/10/nlm-logo-no-text.png`}
+                    alt="mongolia-logo"
+                />
             </div>
             {/* <ul className="alt-icons">
                 <li><a href="#1" className="icon fa-twitter"><span className="label">Twitter</span></a></li>
@@ -22,27 +22,30 @@ const Footer = ({t}) => {
             </ul> */}
             <ul className="menu">
                 <li>
-                    <a 
+                    <a
                         href="mailto:info@asianclassics.org"
                         target="_blank"
-                        rel="noopener noreferrer">
-                            {t('footer.contact')}
+                        rel="noopener noreferrer"
+                    >
+                        {t('footer.contact')}
                     </a>
                 </li>
                 <li>
-                    <a 
+                    <a
                         href="http://nationallibrary.mn/mn/"
                         target="_blank"
-                        rel="noopener noreferrer">
-                            {t('footer.library-site')}
+                        rel="noopener noreferrer"
+                    >
+                        {t('footer.library-site')}
                     </a>
                 </li>
                 <li>
-                    <a 
-                        href="http://178.128.7.239/wp-login.php" 
-                        target="_blank" 
-                        rel="noopener noreferrer">
-                            {t('footer.login')}
+                    <a
+                        href="http://178.128.7.239/wp-login.php"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {t('footer.login')}
                     </a>
                 </li>
             </ul>

@@ -1,9 +1,9 @@
-import { fetchPages, fetchPosts, fetchData, getGS } from './actions'
+import { fetchWPType, fetchData, getGS } from './actions'
 
 export default function initialize(store) {
     // Wordpress data
-    store.dispatch(fetchPages())
-    store.dispatch(fetchPosts())
+    store.dispatch(fetchWPType('pages'))
+    store.dispatch(fetchWPType('posts'))
 
     // Google sheet data from NLM cataloguing
     store.dispatch(getGS())

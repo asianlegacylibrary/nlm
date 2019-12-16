@@ -1,15 +1,8 @@
-import {
-    SET_LANG,
-    SET_PAGE,
-    SET_COLLAPSE,
-    SET_BROWSE,
-    SET_COLLECTION,
-} from './types'
+import * as types from '../types'
 
-export * from './searchActions'
-export * from './googleSheetsActions'
-export * from './WPPagesActions'
-export * from './WPPostsActions'
+export * from './actionsES'
+export * from './actionsGS'
+export * from './actionsWP'
 export * from './utilityActions'
 export * from './ontology'
 
@@ -65,34 +58,59 @@ const IIIFImageAPI = {
 export const IIIFsuffix = `/${IIIFImageAPI.region}/${IIIFImageAPI.size}/${IIIFImageAPI.rotation}/${IIIFImageAPI.qualityAndFormat}`
 
 export const setLanguage = language => ({
-    type: SET_LANG,
+    type: types.SET_LANG,
     language,
 })
 
 export const setLanguage2 = (language, i18n) => {
     i18n.changeLanguage(language)
     return {
-        type: SET_LANG,
+        type: types.SET_LANG,
         language,
     }
 }
 
 export const setPage = page => ({
-    type: SET_PAGE,
+    type: types.SET_PAGE,
     page,
 })
 
 export const setCollapse = collapse => ({
-    type: SET_COLLAPSE,
+    type: types.SET_COLLAPSE,
     collapse,
 })
 
 export const setCollection = collection => ({
-    type: SET_COLLECTION,
+    type: types.SET_COLLECTION,
     collection,
 })
 
 export const setBrowse = browse => ({
-    type: SET_BROWSE,
+    type: types.SET_BROWSE,
     browse,
 })
+
+export function receiveID(json) {
+    return {
+        type: types.RECEIVE_ID,
+        data: json, //.filter(child => child.acf.language === lang), //.data.children.map(child => child.data),
+        imageAsset: json.hits.hits[0]._source.workHasItemImageAsset,
+        volume: json.hits.hits[0]._source.workHasItem,
+        receivedAt: Date.now(),
+    }
+}
+
+export function receiveESData(type, json) {
+    return {
+        type: type,
+        data: json, //.filter(child => child.acf.language === lang), //.data.children.map(child => child.data),
+        receivedAt: Date.now(),
+    }
+}
+export function receiveAssociatedRecords(json) {
+    return {
+        type: types.RECEIVE_ASSOCIATED_RECORDS,
+        resources: json,
+        //receivedAt: Date.now(),
+    }
+}

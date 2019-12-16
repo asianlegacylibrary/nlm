@@ -1,6 +1,6 @@
 #banner {
     background-size: cover;
-    margin-top: 40px;
+    margin-top: 0;
     font-family: 'Noto Serif', serif;
     color: #fff;
 }
@@ -12,8 +12,7 @@
     padding: 5em 0 2em 0;
 }
 #header {
-    position: fixed;
+    position: relative !important;
     background: #ebebeb;
     padding: 0.5em;
 }
-

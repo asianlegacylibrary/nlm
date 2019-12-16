@@ -1,14 +1,12 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import { createLogger } from 'redux-logger';
-import rootReducer from './reducers'
+import { createLogger } from 'redux-logger'
+import reducers from './reducers'
 import { log } from '../store/actions'
 
 import { createBrowserHistory } from 'history'
 
 export default function configureStore(preloadedState) {
-
-    
     const history = createBrowserHistory()
 
     const middlewares = [thunkMiddleware]
@@ -25,10 +23,10 @@ export default function configureStore(preloadedState) {
     const composedEnhancers = compose(...enhancers)
 
     const store = createStore(
-        rootReducer(history), 
-        preloadedState, 
+        reducers(history),
+        preloadedState,
         composedEnhancers
     )
 
-  return store
+    return store
 }

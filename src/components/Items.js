@@ -1,3 +1,4 @@
+import '../assets/sass/nlm/items.scss'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -6,14 +7,12 @@ import { withNamespaces } from 'react-i18next'
 import SubItems from './SubItems'
 import { fetchSpecificID, browseOptionsObj } from '../store/actions'
 
-import '../assets/css/items.css'
-
 class Items extends Component {
     // fetch ID from ES and show modal
     handleShowModal = doc_id => {
         this.props.dispatch(fetchSpecificID(doc_id))
         this.props.dispatch({
-            type: 'DETAIL_MODAL',
+            type: 'SET_MODAL',
             modalID: doc_id,
             show: true,
             initialRender: false,
@@ -76,20 +75,23 @@ const getCurrentData = (data, filter) => {
 }
 
 const mapStateToProps = state => ({
-    esWorks: state.esWorks.isFetching
+    esWorks: state.ES.works.isFetching
         ? []
-        : getCurrentData(state.esWorks.items.hits.hits, state.setCollection),
-    esAuthors: state.esAuthors.isFetching
+        : getCurrentData(state.ES.works.items.hits.hits, state.setCollection),
+    esAuthors: state.ES.authors.isFetching
         ? []
-        : getCurrentData(state.esAuthors.items.hits.hits, state.setCollection),
-    esSubjects: state.esSubjects.isFetching
+        : getCurrentData(state.ES.authors.items.hits.hits, state.setCollection),
+    esSubjects: state.ES.subjects.isFetching
         ? []
-        : getCurrentData(state.esSubjects.items.hits.hits, state.setCollection),
+        : getCurrentData(
+              state.ES.subjects.items.hits.hits,
+              state.setCollection
+          ),
     browse: state.setBrowse,
     collapse: state.setCollapse,
     collection: state.setCollection,
-    doc_id: state.detailModal.modalID,
-    showModal: state.detailModal.show,
+    doc_id: state.modal.modalID,
+    showModal: state.modal.show,
 })
 
 const withN = new withNamespaces()(Items)

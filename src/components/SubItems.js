@@ -1,6 +1,6 @@
+import '../assets/sass/nlm/items.scss'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import '../assets/css/items.css'
 
 const SubItems = ({ related, handleShowModal, match }) => {
     if (related == null) {

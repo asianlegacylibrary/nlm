@@ -1,17 +1,10 @@
 import Tabletop from 'tabletop'
-import * as types from './types'
-import { log } from './index'
+import * as types from '../types'
 
 const d = `https://docs.google.com/spreadsheets/d/`
 const gsKey = `1hPqe-Y2TWwMTAxIEXYvc8du_GMFUJQNPvZbJou7veAY`
 //const testKey = `1P6Dk9SN0af7GDitw7-tRXGc5N22AEXoaOpDIKzVdlK0`
 const spreadSheet = `${d}${gsKey}/edit?usp=sharing`
-
-function requestGS() {
-    return {
-        type: types.REQUEST_GS,
-    }
-}
 
 function receiveGS(gs) {
     return {
@@ -36,7 +29,7 @@ const tableTopInit = async () => {
 
 export function getGS() {
     return async dispatch => {
-        dispatch(requestGS())
+        dispatch({ type: types.REQUEST_GS })
         try {
             const data = await tableTopInit()
 

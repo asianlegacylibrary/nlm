@@ -1,45 +1,38 @@
+import '../../assets/sass/nlm/navbar.scss'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { setPage } from '../../store/actions'
 import { connect } from 'react-redux'
-import '../../assets/css/navbar.css'
 
 const NavItem = ({ active, children, onClick }) => (
     <li
-      key={children}
-       onClick={active ? null : onClick}
-       className={active ? "nav-active" : "nav"}
-       style={active ? 
-        { color: 'red', } :
-        { color: 'black', } 
-        }
+        key={children}
+        onClick={active ? null : onClick}
+        className={active ? 'nav-active' : 'nav'}
+        style={active ? { color: 'red' } : { color: 'black' }}
     >
-    <button
-      key={children}
-      disabled={active ? true : false}
-      className="btn-nav">
-      {children}
-    </button>
+        <button
+            key={children}
+            disabled={active ? true : false}
+            className="btn-nav"
+        >
+            {children}
+        </button>
     </li>
 )
 
 NavItem.propTypes = {
-  active: PropTypes.bool.isRequired,
-  children: PropTypes.node.isRequired,
-  onClick: PropTypes.func.isRequired
+    active: PropTypes.bool.isRequired,
+    children: PropTypes.node.isRequired,
+    onClick: PropTypes.func.isRequired,
 }
 
-
-
 const mapStateToProps = (state, ownProps) => ({
-  active: ownProps.selectedPage === state.selectedPage
+    active: ownProps.selectedPage === state.selectedPage,
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onClick: () => dispatch(setPage(ownProps.selectedPage)) 
-  });
+    onClick: () => dispatch(setPage(ownProps.selectedPage)),
+})
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NavItem)
+export default connect(mapStateToProps, mapDispatchToProps)(NavItem)

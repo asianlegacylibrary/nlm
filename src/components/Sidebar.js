@@ -1,10 +1,9 @@
+import '../assets/sass/nlm/sidebar.scss'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withNamespaces } from 'react-i18next'
 
 import { setBrowse, browseOptionsObj } from '../store/actions'
-
-import '../assets/css/sidebar.css'
 
 class Sidebar extends Component {
     render() {
@@ -13,7 +12,7 @@ class Sidebar extends Component {
                 <div className="sidenav-title">{`${this.props.t(
                     'sidebar.browse'
                 )}:`}</div>
-                <form>
+                <form className="sidenav-form">
                     {browseOptionsObj.map(o => {
                         //o.browse === 'Title' ? log(this.props[`number_${o.stateType}`]) : log('hi')
                         let n =
@@ -60,15 +59,15 @@ const getNumberOfItems = (data, filter) => {
 const mapStateToProps = state => {
     return {
         browse: state.setBrowse,
-        number_esWorks: state.esWorks.isFetching
+        number_esWorks: state.ES.works.isFetching
             ? null
-            : getNumberOfItems(state.esWorks.items, state.setCollection),
-        number_esAuthors: state.esAuthors.isFetching
+            : getNumberOfItems(state.ES.works.items, state.setCollection),
+        number_esAuthors: state.ES.authors.isFetching
             ? null
-            : getNumberOfItems(state.esAuthors.items, state.setCollection),
-        number_esSubjects: state.esSubjects.isFetching
+            : getNumberOfItems(state.ES.authors.items, state.setCollection),
+        number_esSubjects: state.ES.subjects.isFetching
             ? null
-            : getNumberOfItems(state.esSubjects.items, state.setCollection),
+            : getNumberOfItems(state.ES.subjects.items, state.setCollection),
     }
 }
 

@@ -1,3 +1,4 @@
+import '../assets/sass/nlm/modal.scss'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import i18n from 'i18next'
@@ -14,12 +15,10 @@ import {
     bdrObjectType,
     uniq,
 } from '../store/actions'
-import '../assets/css/modal.css'
 
 class Modal extends Component {
     handleHideModal = (initialRender, e) => {
-        this.props.dispatch({ type: 'DETAIL_MODAL', show: false })
-        this.props.dispatch({ type: 'NULLIFY_IIIF' })
+        this.props.dispatch({ type: 'SET_MODAL', show: false })
 
         if (initialRender) {
             this.props.history.push(`/${i18n.language}/archives`)
@@ -400,16 +399,21 @@ class Modal extends Component {
 const mapStateToProps = state => ({
     //modalDetails: state.detailData.isFetching || state.detailData.modalID === 0 ? {} : state.detailModal,
     workDetail:
-        state.detailData.isFetching || state.detailModal.modalID === 0
+        state.details.isFetching || state.modal.modalID === 0
             ? {}
-            : state.detailData.item.hits.hits[0],
+            : state.details.item.hits.hits[0],
     numberVolumes:
-        state.detailData.isFetching || state.detailModal.modalID === 0
+        state.details.isFetching || state.modal.modalID === 0
             ? null
-            : state.detailData.item.hits.hits[0]._source.workNumberOfVolumes,
-    initialRender: !!state.detailModal.initialRender
-        ? state.detailModal.initialRender
+            : state.details.item.hits.hits[0]._source.workNumberOfVolumes,
+    initialRender: !!state.modal.initialRender
+        ? state.modal.initialRender
         : false,
+    // resources:
+    //     state.detailData.resources === 'undefined' ||
+    //     state.detailData.resources.isFetching
+    //         ? null
+    //         : state.detailData.resources.items,
 })
 
 const withN = withNamespaces()(Modal)

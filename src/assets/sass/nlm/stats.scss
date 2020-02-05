@@ -1,20 +1,33 @@
-@import url("https://fonts.googleapis.com/css?family=Merriweather");
+@import '~materialize-css/sass/components/color-variables';
+@import '~materialize-css/sass/components/variables';
+@import './vars';
 
-.list-stats { 
+.list-stats {
     font-size: 1.2em;
     list-style: none;
     border-left: 1px solid #999;
     margin-bottom: 3em;
+    margin-left: 3em;
+    li {
+        p {
+            padding: 8px 0 4px 8px;
+            color: $c-dark;
+            margin: 0 0 1.2em 0;
+            em {
+                font-weight: normal;
+                font-style: normal;
+                font-family: 'Merriweather';
+                color: $c-dark;
+            }
+        }
+    }
 }
-.list-stats li { }
-.list-stats li p { 
-    padding:8px 0 4px 8px; 
-    color: #ddd;
-    margin: 0 0 1.2em 0;
+.stats-row {
+    background-color: rgba($color: $c-purple-light, $alpha: 0.3);
 }
-.list-stats li p em {
-    font-weight: normal;
-    font-style:normal;  
-    font-family: 'Merriweather';
-    color: #efefef;
-  }
+
+@media #{$medium-and-down} {
+    .list-stats {
+        margin-left: 1em;
+    }
+}

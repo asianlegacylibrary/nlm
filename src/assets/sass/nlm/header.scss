@@ -1,18 +1,15 @@
-#banner {
-    background-size: cover;
-    margin-top: 0;
-    font-family: 'Noto Serif', serif;
-    color: #fff;
-}
-#banner h3 {
-    color: #fff;
-}
-
-#banner header {
-    padding: 5em 0 2em 0;
-}
-#header {
-    position: relative !important;
+header {
+    //position: relative !important;
+    //display: flex;
+    //flex-direction: column;
+    //flex-flow: row wrap;
     background: #ebebeb;
-    padding: 0.5em;
+    padding-left: 0.5em;
+}
+.topbar {
+    //flex: 0 1 100%;
+}
+.long-row {
+    grid-row-start: span 1000;
+    //grid-row-end: 3;
 }

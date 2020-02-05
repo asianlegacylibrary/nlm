@@ -1,8 +1,9 @@
-import * as types from '../types'
+import { constants } from '../_constants'
+let { actions } = constants
 
 export default (state = {}, action) => {
     switch (action.type) {
-        case types.REQUEST_PAGES:
+        case actions.REQUEST_PAGES:
             return {
                 ...state,
                 pages: {
@@ -10,17 +11,17 @@ export default (state = {}, action) => {
                     isFetching: true,
                 },
             }
-        case types.RECEIVE_PAGES:
+        case actions.RECEIVE_PAGES:
             return {
                 ...state,
                 pages: {
                     ...state.pages,
                     isFetching: false,
-                    items: action.pages,
-                    lastUpdated: action.receivedAt,
+                    items: action.payload,
+                    lastUpdated: Date.now(),
                 },
             }
-        case types.REQUEST_POSTS:
+        case actions.REQUEST_POSTS:
             return {
                 ...state,
                 posts: {
@@ -28,14 +29,14 @@ export default (state = {}, action) => {
                     isFetching: true,
                 },
             }
-        case types.RECEIVE_POSTS:
+        case actions.RECEIVE_POSTS:
             return {
                 ...state,
                 posts: {
                     ...state.posts,
                     isFetching: false,
-                    items: action.posts,
-                    lastUpdated: action.receivedAt,
+                    items: action.payload,
+                    lastUpdated: Date.now(),
                 },
             }
         default:

@@ -1,8 +1,19 @@
-import * as types from '../types'
+import { constants } from '../_constants'
+import { initialState } from '../initialState'
+let { actions } = constants
 
-export default (state = {}, action) => {
+export default (state = initialState.ES, action) => {
     switch (action.type) {
-        case types.REQUEST_WORKS:
+        case actions.REQUEST_RESULTS:
+            return {
+                ...state,
+                results: {
+                    ...state.results,
+                    isFetching: true,
+                    currentSearch: false,
+                },
+            }
+        case actions.REQUEST_WORKS:
             return {
                 ...state,
                 works: {
@@ -10,52 +21,37 @@ export default (state = {}, action) => {
                     isFetching: true,
                 },
             }
-        case types.REQUEST_AUTHORS:
+
+        case actions.RECEIVE_RESULTS:
             return {
                 ...state,
-                authors: {
-                    ...state.authors,
-                    isFetching: true,
+                results: {
+                    ...state.results,
+                    isFetching: false,
+                    currentSearch: true,
+                    error: false,
+                    errorStatus: null,
+                    items: action.payload,
+                    aggregations: Object.keys(action.secondaryPayload)
+                        .sort()
+                        .reduce(
+                            (r, k) => ((r[k] = action.secondaryPayload[k]), r),
+                            {}
+                        ),
+                    lastUpdated: Date.now(),
                 },
             }
-        case types.REQUEST_SUBJECTS:
-            return {
-                ...state,
-                subjects: {
-                    ...state.subjects,
-                    isFetching: true,
-                },
-            }
-        case types.RECEIVE_WORKS:
+        case actions.RECEIVE_WORKS:
             return {
                 ...state,
                 works: {
                     ...state.works,
                     isFetching: false,
-                    items: action.data,
-                    lastUpdated: action.receivedAt,
+                    items: action.payload,
+                    lastUpdated: Date.now(),
                 },
             }
-        case types.RECEIVE_AUTHORS:
-            return {
-                ...state,
-                authors: {
-                    ...state.authors,
-                    isFetching: false,
-                    items: action.data,
-                    lastUpdated: action.receivedAt,
-                },
-            }
-        case types.RECEIVE_SUBJECTS:
-            return {
-                ...state,
-                subjects: {
-                    ...state.subjects,
-                    isFetching: false,
-                    items: action.data,
-                    lastUpdated: action.receivedAt,
-                },
-            }
+
         default:
             return state
     }

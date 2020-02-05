@@ -1,4 +1,5 @@
-import './assets/sass/main.scss'
+import 'materialize-css/dist/css/materialize.min.css' // add for full on materialize
+//import './assets/sass/main.scss'
 import './assets/sass/_entrypoint.scss'
 import './assets/sass/nlm/index.scss'
 

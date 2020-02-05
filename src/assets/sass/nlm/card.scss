@@ -1,0 +1,105 @@
+@import './vars';
+.card {
+    //width: 90%;
+    transition: border 300ms;
+    margin: 1.2em 1.2em 1.2em 0;
+    box-shadow: none;
+    border: 1px solid rgba($color: $c-purple-light, $alpha: 0.2);
+    user-select: text;
+    &:hover {
+        border: 1px $c-gold solid;
+    }
+}
+
+.card .card-content,
+.card .card-action {
+    padding: 18px;
+    a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):not(.disabled) {
+        color: $c-gold-dark;
+    }
+    a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):not(.disabled):hover {
+        color: $c-gold;
+    }
+}
+.card-type {
+    padding: 0.4em;
+    text-transform: uppercase;
+    color: $c-purple;
+    font-weight: bold;
+    margin: 1em 1em 1em 0;
+}
+
+.meta-items {
+    margin: 1em 0;
+}
+.meta-item {
+    margin: 0;
+    font-size: 0.8em;
+}
+.meta-collection {
+    //background-color controlled in component based on content
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-right: 0.5em;
+    line-height: 1.4em;
+    padding: 0.3em 0.16em 0.3em 0.3em;
+    color: white;
+}
+.col-gold {
+    background-color: rgba($color: $c-green-dark, $alpha: 0.9);
+}
+.col-blue {
+    background-color: rgba($color: $c-blue, $alpha: 0.8);
+}
+.col-green {
+    background-color: rgba($color: $c-red, $alpha: 0.5);
+}
+.favorites-active,
+.text-active {
+    -webkit-text-stroke-width: 1px;
+    // -webkit-text-stroke-color: $c-gold-dark;
+    color: $c-red;
+}
+.full-text-selection {
+    color: $c-gold-dark;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    &:hover {
+        color: $c-blue-darker;
+    }
+}
+
+.result-label {
+    font-size: 1.4em;
+    text-transform: uppercase;
+    padding: 0.4em 0;
+}
+.result-id {
+    font-style: italic;
+    padding-left: 2em;
+}
+
+/* MEDIA QUERIES
+breakpoints: 1680, 1280, 980, 736, 480
+*/
+@media screen and (max-width: 1680px) {
+}
+
+@media screen and (max-width: 1280px) {
+}
+
+@media screen and (max-width: 980px) {
+    .card {
+        //width: 90%;
+    }
+}
+
+@media screen and (max-width: 736px) {
+    .card {
+        margin: 1.2em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+}

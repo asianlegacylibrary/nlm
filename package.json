@@ -1,51 +1,58 @@
 {
-  "name": "mongolia",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "axios": "^0.19.0",
-    "connected-react-router": "^6.1.0",
-    "cross-fetch": "^2.2.2",
-    "elasticsearch": "^15.2.0",
-    "history": "^4.7.2",
-    "i18next": "^13.0.0",
-    "i18next-browser-languagedetector": "^2.2.4",
-    "i18next-xhr-backend": "^1.5.1",
-    "node-sass": "^4.13.0",
-    "prop-types": "^15.6.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-i18next": "^8.4.0",
-    "react-load-script": "^0.0.6",
-    "react-loader": "^2.4.5",
-    "react-redux": "6.0.0",
-    "react-router": "^4.3.1",
-    "react-router-dom": "^5.0.1",
-    "react-scripts": "^3.2.0",
-    "redux": "^4.0.1",
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0",
-    "tabletop": "^1.6.2",
-    "universalviewer": "^3.0.16"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "copy-uv-to-public": "rm -rf public/uv && cp -R node_modules/universalviewer/uv public/uv",
-    "deploy-surge": "yarn build && mv build/index.html build/200.html && surge build nlm.asianclassics.org",
-    "deploy-surge-staging": "yarn build && mv build/index.html build/200.html && surge build nlm.staging.asianclassics.org",
-    "deploy-do": "yarn build && scp -pr build/. root@nlm:/var/www/html",
-    "build:client": "yarn build && scp -pr build/* root@acip-search:/var/www/html/nlm.asianclassics.org"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+    "name": "mongolia",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "axios": "^0.19.0",
+        "connected-react-router": "^6.1.0",
+        "cross-fetch": "^2.2.2",
+        "elasticsearch": "^15.2.0",
+        "eslint-config-prettier": "^6.9.0",
+        "eslint-plugin-prettier": "^3.1.2",
+        "history": "^4.7.2",
+        "i18next": "^13.0.0",
+        "i18next-browser-languagedetector": "^2.2.4",
+        "i18next-xhr-backend": "^1.5.1",
+        "materialize-css": "^1.0.0",
+        "node-sass": "^4.13.0",
+        "prop-types": "^15.6.2",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "react-i18next": "^8.4.0",
+        "react-load-script": "^0.0.6",
+        "react-loader": "^2.4.5",
+        "react-redux": "7.1.3",
+        "react-router": "^4.3.1",
+        "react-router-dom": "^5.0.1",
+        "react-scripts": "^3.2.0",
+        "redux": "^4.0.1",
+        "redux-logger": "^3.0.6",
+        "redux-thunk": "^2.3.0",
+        "tabletop": "^1.6.2",
+        "universalviewer": "^3.0.16"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
+        "copy-uv-to-public": "rm -rf public/uv && cp -R node_modules/universalviewer/uv public/uv",
+        "deploy-surge": "yarn build && mv build/index.html build/200.html && surge build nlm.asianclassics.org",
+        "deploy-surge-staging": "yarn build && mv build/index.html build/200.html && surge build nlm.testing.asianclassics.org",
+        "deploy-do": "yarn build && scp -pr build/. root@nlm:/var/www/html",
+        "build:client": "yarn build && scp -pr build/* root@acip-search:/var/www/html/nlm.asianclassics.org",
+        "update:package": "source python/venv/bin/activate && pip install -e git+https://github.com/joelcrawford/generate_acip_schema.git@master#egg=generate_acip_schema"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": [
+        ">0.2%",
+        "not dead",
+        "not ie <= 11",
+        "not op_mini all"
+    ],
+    "devDependencies": {
+        "prettier": "^1.19.1"
+    }
 }

@@ -1,17 +1,19 @@
-import * as types from '../types'
-export default (state = {}, action) => {
+import { constants } from '../_constants'
+let { actions } = constants
+
+export default (state = { items: {} }, action) => {
     switch (action.type) {
-        case types.REQUEST_GS:
+        case actions.REQUEST_GS:
             return {
                 ...state,
                 isFetching: true,
             }
-        case types.RECEIVE_GS:
+        case actions.RECEIVE_GS:
             return {
                 ...state,
                 isFetching: false,
-                items: action.gs,
-                lastUpdated: action.receivedAt,
+                items: action.payload,
+                lastUpdated: Date.now(),
             }
         default:
             return state

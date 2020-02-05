@@ -1,3 +1,5 @@
+@import './vars';
+
 .language-list {
     list-style: none;
     margin-right: auto;
@@ -16,16 +18,28 @@
 .nav-active {
     float: right;
 }
+.nav,
+.lang {
+    padding: 0 1.4em;
+}
+.nav-active,
+.lang-active {
+    padding: 0 1.4em;
+    button {
+        font-weight: bold;
+        border-bottom: 2px solid $c-purple-light;
+    }
+}
 .btn-nav,
 .btn-lang {
-    /* background-color: rgba(72, 68, 89, 0.2); */
+    background-color: transparent;
     color: #222;
     text-decoration: none;
     border: none;
-    padding: 0 1em;
     height: 2em;
     line-height: 2em;
     outline: none;
+    cursor: pointer;
 }
 .btn-nav a,
 .btn-lang a {
@@ -33,6 +47,7 @@
     color: #222;
     outline: none;
 }
+button:disabled,
 .btn-nav:hover,
 .btn-nav a:hover,
 .btn-nav:active,
@@ -47,9 +62,9 @@
 .btn-lang a:active .btn-lang:focus,
 .btn-lang a:focus .lang-active.btn-nav,
 .lang-active.btn-nav a {
-    /* background-color: rgba(72, 68, 89, 0.5); */
+    background-color: transparent;
     outline: none;
-    color: #7c759a;
+    color: $c-purple-light;
 }
 
 /* ADDING AN ICON TO THE LANGUAGE MENU, it needs something, not sure what */
@@ -57,12 +72,47 @@
 .lang::before {
     font-family: FontAwesome;
     content: '\f1ab';
+    color: $c-purple-light;
 }
-.lang-active::before {
+.lang::before {
     color: #ccc;
 }
 
 .language-list > ul,
 .nav-list > ul {
     margin: 0;
+}
+.topbar {
+    display: block;
+    min-width: 100%;
+}
+.col-light {
+    background-color: $c-light;
+}
+
+.nav-sub {
+    //background-color: rgba($color: $c-purple-dark, $alpha: 0.7);
+    background: map-get($gradients, nlm);
+    img {
+        height: 100%;
+        padding: 1em;
+        max-height: 100px;
+    }
+}
+.dropdown-btn {
+    &.btn {
+        margin: 0;
+        background-color: transparent;
+        color: $c-dark;
+        &:hover,
+        &:focus {
+            background-color: transparent;
+            box-shadow: none;
+            color: $c-purple-light;
+        }
+    }
+}
+.search-form-icon {
+    font-size: 4em;
+    color: $c-light;
 }

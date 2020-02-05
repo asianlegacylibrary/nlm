@@ -3,12 +3,17 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import NavItem from './containers/NavItem'
+import NavDropdown from './NavDropdown'
 import { withNamespaces } from 'react-i18next'
+import { useWindowSize } from '../store/hooks/useWindowSize'
 
-const NavBar = ({ navigation, match, t }) => {
+const Nav = ({ navigation, match, t }) => {
+    let { width } = useWindowSize()
+
     if (navigation == null) {
         return null
     }
+
     // THIS NAV BAR GETS RENDERED TOO MUCH, NEED TO REFACTOR, MEMOIZE!
     const slugs = navigation.map(nav => {
         const p = nav.match === 'home' ? '' : `/${nav.match}`
@@ -20,15 +25,17 @@ const NavBar = ({ navigation, match, t }) => {
             </Link>
         )
     })
-
-    return <ul className="nav-list">{slugs}</ul>
+    if (width < 700 || navigation.length > 2) {
+        return <NavDropdown pages={slugs} />
+    } else {
+        return <ul className="nav-list">{slugs}</ul>
+    }
 }
 
 // $$$ MEMOIZE
 const createNavigation = pages => {
     return pages.map(c => {
         return {
-            //match: c.slug.substring(0,4),
             match: c.slug.split('-')[0],
             slug: c.slug,
             //title: c.slug.substring(0,4) ==='home' ? 'Home' : c.title.rendered,
@@ -43,5 +50,5 @@ const mapStateToProps = state => ({
         : createNavigation(state.WP.pages.items[state.selectedLanguage]),
 })
 
-const withN = new withNamespaces()(NavBar)
+const withN = new withNamespaces()(Nav)
 export default connect(mapStateToProps)(withN)

@@ -1,57 +1,66 @@
 import '../assets/sass/nlm/footer.scss'
 import React from 'react'
 import { withNamespaces } from 'react-i18next'
-import { onlyIP, buildYear } from '../store/actions'
+import { constants } from '../store/_constants'
+import logo from '../assets/images/logo_all.png'
+import nlm_full from '../assets/images/nlm_logo_full_transparent.png'
+
+let { buildYear, links } = constants
 
 const Footer = ({ t }) => {
     return (
-        <footer id="footer">
-            <div className="icon">
-                <img
-                    src={`http://${onlyIP}/wp-content/uploads/2018/10/nlm-logo-no-text.png`}
-                    alt="mongolia-logo"
-                />
+        <footer className="page-footer">
+            <div className="container">
+                <div className="row">
+                    <div className="col l6 s12">
+                        <div className="icon">
+                            <img
+                                src={nlm_full}
+                                height="140px"
+                                alt="mongolia-logo"
+                            />
+                        </div>
+                    </div>
+                    <div className="col l4 offset-l2 s12">
+                        <h5 className="white-text">Links</h5>
+                        <ul>
+                            <li>
+                                <a
+                                    href={links.acipEmail}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {t('footer.contact')}
+                                </a>
+                            </li>
+
+                            <li>
+                                <a
+                                    href={links.nlmSite}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {t('footer.library-site')}
+                                </a>
+                            </li>
+
+                            <li>
+                                <a
+                                    href={links.wpAdmin}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {t('footer.login')}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            {/* <ul className="alt-icons">
-                <li><a href="#1" className="icon fa-twitter"><span className="label">Twitter</span></a></li>
-                <li><a href="#1" className="icon fa-facebook"><span className="label">Facebook</span></a></li>
-                <li><a href="#1" className="icon fa-linkedin"><span className="label">LinkedIn</span></a></li>
-                <li><a href="#1" className="icon fa-github"><span className="label">GitHub</span></a></li>
-                <li><a href="#1" className="icon fa-phone"><span className="label">Phone</span></a></li>
-                <li><a href="#1" className="icon fa-envelope"><span className="label">Email</span></a></li>
-            </ul> */}
-            <ul className="menu">
-                <li>
-                    <a
-                        href="mailto:info@asianclassics.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {t('footer.contact')}
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href="http://nationallibrary.mn/mn/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {t('footer.library-site')}
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href="http://178.128.7.239/wp-login.php"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {t('footer.login')}
-                    </a>
-                </li>
-            </ul>
-            <p className="copyright">
+
+            <div className="footer-copyright">
                 &copy; {`${buildYear} ${t('title')}. ${t('footer.rights')}.`}
-            </p>
+            </div>
         </footer>
     )
 }

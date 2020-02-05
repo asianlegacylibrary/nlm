@@ -1,14 +1,18 @@
 import '../assets/sass/nlm/stats.scss'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { withNamespaces } from 'react-i18next'
 import img from '../assets/images/UB-woodblock-closeup.jpg'
 
 class Stats extends Component {
+    handleClick = () => {
+        this.props.dispatch({ type: 'SET_PAGE', page: 'archives' })
+    }
     render() {
         let statList
-        const { stats, t } = this.props
-
+        const { stats, t, match } = this.props
+        let lang = match.params.lng
         if (
             Object.entries(stats).length === 0 &&
             stats.constructor === Object
@@ -51,21 +55,27 @@ class Stats extends Component {
         }
 
         return (
-            <section className="wrapper special style3">
-                <div className="inner">
-                    <section className="spotlights">
-                        <section>
-                            <h2>{t('stats.Title')}</h2>
-                            {statList}
-                        </section>
-                        <section>
-                            <span className="image">
-                                <img src={img} alt="" />
-                            </span>
-                        </section>
-                    </section>
+            <div className="row flex no-margin stats-row">
+                <div className="col s12 m6">
+                    <h2>{t('stats.Title')}</h2>
+                    {statList}
                 </div>
-            </section>
+                <div className="col s12 m6 valign-wrapper">
+                    <span className="image down-push-s">
+                        <Link
+                            to={{ pathname: `/${lang}/archives` }}
+                            className="item-link"
+                            onClick={this.handleClick}
+                        >
+                            <img className="img-link" src={img} alt="" />
+                            <div className="content">
+                                Search the archives
+                                {/* <div className="img-text">HI</div> */}
+                            </div>
+                        </Link>
+                    </span>
+                </div>
+            </div>
         )
     }
 }

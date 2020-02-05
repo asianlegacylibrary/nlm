@@ -3,16 +3,18 @@ import React from 'react'
 
 import Languages from './Languages'
 import Nav from './Nav'
-import Page from './Page'
 
 export default ({ history, match }) => {
     return (
         <React.Fragment>
-            <header id="header">
-                <Languages />
-                <Nav history={history} match={match} />
+            <header>
+                <div className="section header">
+                    <div className="row no-margin">
+                        <Languages />
+                        <Nav history={history} match={match} />
+                    </div>
+                </div>
             </header>
-            <Page history={history} />
         </React.Fragment>
     )
 }

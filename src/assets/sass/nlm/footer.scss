@@ -1,4 +1,42 @@
+@import './vars';
+
 #footer {
     border-top: 1px solid #efefef;
     background: #444; /*url("../images/bg.jpg")*/
+}
+.page-footer {
+    background-color: $c-dark;
+    .icon,
+    .menu {
+        //text-align: center;
+        padding-bottom: 4em;
+        a {
+            color: $c-light;
+            opacity: 0.7;
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        li {
+            display: inline;
+        }
+    }
+    .white-text {
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+    a {
+        color: $c-light;
+        opacity: 0.7;
+        &:hover {
+            opacity: 1;
+        }
+    }
+    .footer-copyright {
+        padding-left: 2em;
+        font-size: 0.8em;
+        opacity: 0.7;
+        background-color: $c-darker;
+    }
 }

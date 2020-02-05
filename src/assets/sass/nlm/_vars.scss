@@ -1,0 +1,36 @@
+$c-purple: #484459;
+$c-blue: #48668b;
+$c-purple-light: #7c759a;
+$c-purple-dark: #3b2a42;
+
+$c-light: #efefef;
+$c-white: #fff;
+$c-dark: #303030; // jet
+$c-darker: #232323; // raisin black
+$c-gold: #e2ca51; // sun ray #f0d437;
+$c-gold-dark: #d3bd4c; // old gold // #8f7900;
+$c-green-dark: #8db959;
+$c-blue-darker: #525761;
+$c-red: #995543; // coconut
+$c-highlight: #fffb00;
+
+$gradient: linear-gradient(
+    to bottom,
+    rgba($c-light, 0.1) 70%,
+    rgba($c-dark, 1) 100%
+);
+
+// learn!
+$gradients: () !default;
+$gradients: map-merge(
+    (
+        chill: linear-gradient(135deg, #09e485 0%, #0291e3 100%),
+        warm: linear-gradient(135deg, #f2cd48 0%, #fd803f 100%),
+        hot: linear-gradient(135deg, #f9445a 0%, #fd803f 100%),
+        cold: linear-gradient(135deg, #8019c6 0%, #2f93cc 100%),
+        nlm: linear-gradient(155deg, $c-purple-light 0%, $c-purple-dark 80%),
+    ),
+    $gradients
+);
+
+$test-border: 1px solid $c-gold-dark;

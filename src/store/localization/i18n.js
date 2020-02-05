@@ -3,8 +3,8 @@ import Backend from 'i18next-xhr-backend'
 //import LanguageDetector from 'i18next-browser-languagedetector'
 import { detectorOptions } from './detector'
 import { reactI18nextModule } from 'react-i18next'
-import { languages } from '../actions'
-
+import { constants } from '../_constants'
+let { languages } = constants
 
 // NOTE THAT 'en' is attempting to be loaded because of LanguageDetector (probably)
 // and in our case we're loading 'English'
@@ -13,27 +13,26 @@ import { languages } from '../actions'
 
 const debug = process.env.NODE_ENV === 'production' ? false : true
 
-i18n
-  .use(Backend)
-  //.use(LanguageDetector)
-  .use(reactI18nextModule)
+i18n.use(Backend)
+    //.use(LanguageDetector)
+    .use(reactI18nextModule)
 
-  .init({
-    fallbackLng: 'en',
-    debug: debug,
-    preload: Object.keys(languages).map(l => l),
+    .init({
+        fallbackLng: 'en',
+        debug: debug,
+        preload: Object.keys(languages).map(l => l),
 
-    returnObjects: true,
+        returnObjects: true,
 
-    detection: detectorOptions,
+        detection: detectorOptions,
 
-    interpolation: {
-      escapeValue: false,
-    },
+        interpolation: {
+            escapeValue: false,
+        },
 
-    react: {
-      wait: true
-    }
-  })
+        react: {
+            wait: true,
+        },
+    })
 
 export default i18n

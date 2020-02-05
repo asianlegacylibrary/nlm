@@ -1,7 +1,9 @@
-import * as types from '../types'
+import { constants } from '../_constants'
+let { actions } = constants
+
 export default (state = true, action) => {
     switch (action.type) {
-        case types.SET_COLLAPSE:
+        case actions.SET_COLLAPSE:
             return action.collapse
         default:
             return state

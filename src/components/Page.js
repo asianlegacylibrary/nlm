@@ -1,7 +1,10 @@
+import '../assets/sass/nlm/page.scss'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withNamespaces } from 'react-i18next'
-import { defaultLanguage, setLanguage, log } from '../store/actions/index'
+import { setLanguage } from '../store/actions'
+import { constants } from '../store/_constants'
+let { defaultLanguage } = constants
 
 class Page extends Component {
     constructor(props) {
@@ -27,31 +30,29 @@ class Page extends Component {
 
     renderPage(selectedPage, pages) {
         if (!pages.some(e => e.slug.split('-')[0] === selectedPage)) {
-            log('page not there')
+            console.log('page not there')
             this.resetPage()
         }
 
         return pages
             .filter(page => page.slug.split('-')[0] === selectedPage)
             .map((page, i) => {
-                let mediaURL = null
-                if (page._embedded['wp:featuredmedia']) {
-                    mediaURL = page._embedded['wp:featuredmedia'][0].source_url
-                }
-                // `linear-gradient(to bottom,
-                //     rgba(${this.rgbLight},0.1) 70%,
-                //     rgba(${this.rgbLight},1.0) 100%),
+                // let mediaURL = null
+                // if (page._embedded['wp:featuredmedia']) {
+                //     mediaURL = page._embedded['wp:featuredmedia'][0].source_url
+                // }
+
                 return (
-                    // <div key={page.slug}>
                     <section
                         id="banner"
                         key={page.id}
-                        style={{
-                            backgroundImage: `url(${mediaURL})`,
-                        }}
+                        // style={{
+                        //     backgroundImage: `url(${mediaURL})`,
+                        // }}
                     >
                         <header className="major">
                             <h1>{page.acf.title}</h1>
+                            <div className="divider" />
                             <h3>{page.acf.subtitle}</h3>
                             <div className="inner-page">
                                 <section className="spotlights-page">

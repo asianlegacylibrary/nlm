@@ -1,7 +1,11 @@
-import * as types from '../types'
-export default (state = 'Title', action) => {
+import { constants } from '../_constants'
+import { initialState } from '../initialState'
+
+let { actions } = constants
+
+export default (state = initialState.menu, action) => {
     switch (action.type) {
-        case types.SET_BROWSE:
+        case actions.SET_BROWSE:
             return action.browse
         default:
             return state

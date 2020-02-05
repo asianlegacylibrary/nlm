@@ -1,11 +1,12 @@
-import * as types from '../types'
-import { defaultLanguage } from '../actions/index'
+import { constants } from '../_constants'
+let { defaultLanguage, routerActions, actions } = constants
+
 // should use defaultLanguage code here
 export default (state = defaultLanguage, action) => {
     switch (action.type) {
-        case types.SET_LANG:
+        case actions.SET_LANG:
             return action.language
-        case types.LOCATION_CHANGE:
+        case routerActions.LOCATION_CHANGE:
             if (action.payload.location.pathname.split('/')[1].length === 0) {
                 return state
             }

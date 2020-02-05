@@ -2,7 +2,7 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import reducers from './reducers'
-import { log } from '../store/actions'
+import { log } from '../tools/utilities'
 
 import { createBrowserHistory } from 'history'
 

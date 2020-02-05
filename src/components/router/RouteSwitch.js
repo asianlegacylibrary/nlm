@@ -5,19 +5,16 @@ import { withNamespaces } from 'react-i18next'
 
 import Header from '../Header'
 import Footer from '../Footer'
-import Archives from '../Archives'
+import SearchContainer from '../SearchContainer'
 import Stats from '../Stats'
 import Posts from '../Posts'
+import Page from '../Page'
 import Modal from '../Modal'
 
-import {
-    languages,
-    defaultLanguage,
-    log,
-    fetchSpecificID,
-    setPage,
-    setLanguage,
-} from '../../store/actions'
+import { setPage, setLanguage, fetchIDAction } from '../../store/actions'
+import { constants } from '../../store/_constants'
+import SearchForm from '../SearchForm'
+let { languages, defaultLanguage } = constants
 
 class RouteSwitch extends Component {
     previousLocation = this.props.location
@@ -67,8 +64,10 @@ class RouteSwitch extends Component {
 
     render() {
         let initialRender = this.props.location === this.previousLocation
+
         return (
-            <div className="wrapper">
+            <React.Fragment>
+                {/* <div className="wrapper"> */}
                 {/* pass location prop to switch and it will ignore 
                 router location to continue showing gallery in background */}
 
@@ -84,23 +83,67 @@ class RouteSwitch extends Component {
                     <Route
                         exact
                         path={`/:lng(${this.l})`}
-                        render={() => (
-                            <div className="container">
-                                <Stats />
-                                <Posts />
-                            </div>
+                        render={({ history, match }) => (
+                            <React.Fragment>
+                                <Page history={history} />
+
+                                <Stats match={match} />
+                                <div className="container">
+                                    <Posts />
+                                </div>
+                            </React.Fragment>
                         )}
                     />
 
                     {/* if we add other pages, would be something like this...
                     <Route path={`/:lng(${this.l})/:page`} component={Page} /> */}
+                    <Route
+                        path={`/:lng(${this.l})/archives/doc/:id`}
+                        render={({ match, history }) => {
+                            let label = this.props.location.state
+                                ? this.props.location.state.label
+                                : null
 
+                            if (initialRender) {
+                                this.props.dispatch(
+                                    fetchIDAction(match.params.id)
+                                )
+                            }
+
+                            this.props.dispatch({
+                                type: 'SET_MODAL',
+                                payload: true,
+                            })
+
+                            return (
+                                <React.Fragment>
+                                    {/* <NavSub /> */}
+                                    {/* <div className="container archives"> */}
+                                    {/* <Sidebar /> */}
+                                    <Modal
+                                        show={true}
+                                        match={match}
+                                        history={history}
+                                        label={label}
+                                        initialRender={initialRender}
+                                    />
+                                    {/* </div> */}
+                                </React.Fragment>
+                            )
+                        }}
+                    />
                     <Route
                         path={`/:lng(${this.l})/archives`}
                         render={({ match, history }) => (
-                            <div className="container archives">
-                                <Archives match={match} history={history} />
-                            </div>
+                            <React.Fragment>
+                                <div className="main">
+                                    <SearchForm />
+                                    <SearchContainer
+                                        match={match}
+                                        history={history}
+                                    />
+                                </div>
+                            </React.Fragment>
                         )}
                     />
 
@@ -110,8 +153,8 @@ class RouteSwitch extends Component {
                 </Switch>
 
                 <Footer />
-
-                <Route
+                {/* </div> */}
+                {/* <Route
                     exact
                     path={`/:lng(${this.l})/archives/doc/:id`}
                     render={({ match, history }) => {
@@ -120,29 +163,27 @@ class RouteSwitch extends Component {
                             : null
 
                         if (initialRender) {
-                            this.props.dispatch(
-                                fetchSpecificID(match.params.id)
-                            )
-                            this.props.dispatch({
-                                type: 'SET_MODAL',
-                                modalID: match.params.id,
-                                show: true,
-                                initialRender: true,
-                            })
+                            this.props.dispatch(fetchIDAction(match.params.id))
+                            // this.props.dispatch({
+                            //     type: 'SET_MODAL',
+                            //     modalID: match.params.id,
+                            //     show: true,
+                            //     initialRender: true,
+                            // })
                         }
 
                         return (
                             <Modal
-                                key={match.params.id}
-                                history={history}
-                                doc_id={match.params.id}
+                                match={match}
                                 show={true}
+                                history={history}
                                 label={label}
+                                initialRender={initialRender}
                             />
                         )
                     }}
-                />
-            </div>
+                /> */}
+            </React.Fragment>
         )
     }
 }

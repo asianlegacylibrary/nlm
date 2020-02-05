@@ -9,7 +9,7 @@ const NavItem = ({ active, children, onClick }) => (
         key={children}
         onClick={active ? null : onClick}
         className={active ? 'nav-active' : 'nav'}
-        style={active ? { color: 'red' } : { color: 'black' }}
+        //style={active ? { color: 'red' } : { color: 'black' }}
     >
         <button
             key={children}

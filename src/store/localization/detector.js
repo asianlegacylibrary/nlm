@@ -4,8 +4,8 @@ export const detectorOptions = {
     order: ['path', 'localStorage'],
     lookupFromPathIndex: 0, //1st element on path
     lookupLocalStorage: 'i18nextLng', // caching to localStorage
-    
+
     // cache user language on
     caches: ['localStorage'],
-    excludeCacheFor: false
+    excludeCacheFor: false,
 }

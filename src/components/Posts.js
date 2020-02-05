@@ -1,7 +1,9 @@
 import '../assets/sass/nlm/posts.scss'
+import logo from '../assets/images/logo_all.png'
+import nlm_logo from '../assets/images/nlm_logo_transparent.png'
 import React from 'react'
 import { connect } from 'react-redux'
-import { sortNested } from '../store/actions'
+import { sortNested } from '../tools/utilities'
 
 const Posts = ({ posts }) => {
     if (!posts) {
@@ -21,45 +23,53 @@ const Posts = ({ posts }) => {
 
         if (parseInt(post.acf.columns) === 2) {
             return (
-                <section key={i} id={i} className={`wrapper special style${j}`}>
-                    <div className="inner">
-                        <section className="spotlights">
-                            <section>
-                                <h2>{post.acf.title}</h2>
-                                <span className="image">
+                <div key={i} className="row">
+                    <div className="col s12 posts-col">
+                        <h2>{post.acf.title}</h2>
+
+                        <div className="row flex">
+                            <div className="col s12 m6">
+                                <span className="image left">
                                     <img src={mediaURL} alt="" />
                                 </span>
-                            </section>
-                            <section>
+                            </div>
+                            <div className="col s12 m6">
                                 <p
+                                    className="down-push"
                                     dangerouslySetInnerHTML={{
                                         __html: post.content.rendered,
                                     }}
                                 />
-                            </section>
-                        </section>
+                            </div>
+                        </div>
+                        <div className="divider-with-logo">
+                            <div className="hr-line-left"></div>
+                            <img src={nlm_logo} width="24px" alt="logo" />
+                            <div className="hr-line-right"></div>
+                        </div>
                     </div>
-                </section>
+                </div>
             )
         } else {
             return (
-                <section key={i} id={i} className={`wrapper special style${j}`}>
-                    <div className="inner">
-                        <section className="spotlights col1">
-                            <section>
-                                <h2>{post.acf.title}</h2>
-                                <span className="image">
-                                    <img src={mediaURL} alt="" />
-                                </span>
-                                <p
-                                    dangerouslySetInnerHTML={{
-                                        __html: post.content.rendered,
-                                    }}
-                                />
-                            </section>
-                        </section>
+                <div key={i} className="row">
+                    <div className="col s12 posts-col">
+                        <h2>{post.acf.title}</h2>
+                        <span className="image">
+                            <img src={mediaURL} alt="" />
+                        </span>
+                        <p
+                            dangerouslySetInnerHTML={{
+                                __html: post.content.rendered,
+                            }}
+                        />
+                        <div className="divider-with-logo">
+                            <div className="hr-line-left"></div>
+                            <img src={nlm_logo} width="24px" alt="logo" />
+                            <div className="hr-line-right"></div>
+                        </div>
                     </div>
-                </section>
+                </div>
             )
         }
     })

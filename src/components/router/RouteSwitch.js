@@ -86,7 +86,6 @@ class RouteSwitch extends Component {
                         render={({ history, match }) => (
                             <React.Fragment>
                                 <Page history={history} />
-
                                 <Stats match={match} />
                                 <div className="container">
                                     <Posts />
@@ -95,8 +94,6 @@ class RouteSwitch extends Component {
                         )}
                     />
 
-                    {/* if we add other pages, would be something like this...
-                    <Route path={`/:lng(${this.l})/:page`} component={Page} /> */}
                     <Route
                         path={`/:lng(${this.l})/archives/doc/:id`}
                         render={({ match, history }) => {
@@ -146,6 +143,9 @@ class RouteSwitch extends Component {
                             </React.Fragment>
                         )}
                     />
+
+                    {/* if we add other pages, would be something like this... */}
+                    <Route path={`/:lng(${this.l})/:page`} component={Page} />
 
                     <Route
                         render={() => <Redirect selectedPage="home" to="/en" />}

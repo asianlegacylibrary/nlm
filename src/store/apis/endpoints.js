@@ -2,7 +2,8 @@ import axios from 'axios'
 
 // EXPRESS
 const expressOptions = {
-    baseUrl: '/api',
+    //baseUrl: '/api',
+    baseUrl: 'http://api.asianclassics.org',
     devUrl: 'http://localhost:5000',
 }
 

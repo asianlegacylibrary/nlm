@@ -5,8 +5,11 @@ export default ({ pages }) => {
     let dropdownOptions = {
         alignment: 'right',
         closeOnClick: true,
+        constrainWidth: false,
+        hover: false,
         inDuration: 250,
     }
+
     useEffect(() => {
         const dropdownElem = document.querySelectorAll('.dropdown-trigger')
         M.Dropdown.init(dropdownElem, dropdownOptions)

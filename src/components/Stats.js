@@ -11,8 +11,11 @@ class Stats extends Component {
     }
     render() {
         let statList
-        const { stats, t, match } = this.props
+        const { stats, t, match, selectedPage } = this.props
         let lang = match.params.lng
+        if (selectedPage !== 'home') {
+            return null
+        }
         if (
             Object.entries(stats).length === 0 &&
             stats.constructor === Object
@@ -82,6 +85,7 @@ class Stats extends Component {
 
 const mapStateToProps = state => ({
     stats: state.GS.isFetching ? {} : state.GS.items,
+    selectedPage: state.selectedPage,
 })
 
 const withN = new withNamespaces()(Stats)

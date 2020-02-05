@@ -174,13 +174,15 @@ function getStatus(state) {
 }
 
 function getTotal(type, state) {
-    return state.ES[type].items.hits.total
+    return state.ES[type].isFetching ? 0 : state.ES[type].items.hits.total
 }
 
 const mapStateToProps = state => ({
     offsets: state.offsets,
     menu: state.selectedMenu,
-    total: getTotal(state.selectedMenu, state),
+    total: state.ES[state.selectedMenu].isFetching
+        ? 0
+        : state.ES[state.selectedMenu].items.hits.total, //getTotal(state.selectedMenu, state),
     currentlyFetchingResults: getStatus(state),
     filterArray: state.filterArray,
     currentSearchTerm: state.currentSearchTerm,

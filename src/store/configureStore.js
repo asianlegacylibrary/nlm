@@ -11,11 +11,13 @@ export default function configureStore(preloadedState) {
 
     const middlewares = [thunkMiddleware]
 
-    if (process.env.NODE_ENV === 'development') {
-        log('In Dev, will add logger middleware...')
-        const loggerMiddleware = createLogger()
-        middlewares.push(loggerMiddleware)
-    }
+    // if (process.env.NODE_ENV === 'development') {
+    //     log('In Dev, will add logger middleware...')
+    //     const loggerMiddleware = createLogger()
+    //     middlewares.push(loggerMiddleware)
+    // }
+    const loggerMiddleware = createLogger()
+    middlewares.push(loggerMiddleware)
 
     const middlewareEnhancer = applyMiddleware(...middlewares)
 

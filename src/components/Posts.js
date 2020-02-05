@@ -5,8 +5,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { sortNested } from '../tools/utilities'
 
-const Posts = ({ posts }) => {
-    if (!posts) {
+const Posts = ({ posts, selectedPage }) => {
+    if (!posts || selectedPage !== 'home') {
         return null
     }
 
@@ -78,6 +78,7 @@ const Posts = ({ posts }) => {
 const mapStateToProps = state => ({
     fetchingPosts: state.WP.posts.isFetching,
     selectedLanguage: state.selectedLanguage,
+    selectedPage: state.selectedPage,
     posts: state.WP.posts.isFetching
         ? []
         : sortNested(

@@ -14,13 +14,16 @@ const Nav = ({ navigation, match, t }) => {
         return null
     }
 
+    console.log(navigation)
+
     // THIS NAV BAR GETS RENDERED TOO MUCH, NEED TO REFACTOR, MEMOIZE!
     const slugs = navigation.map(nav => {
         const p = nav.match === 'home' ? '' : `/${nav.match}`
         return (
             <Link key={nav.slug} to={`/${match.params.lng}${p}`}>
                 <NavItem key={nav.slug} selectedPage={nav.match}>
-                    {t('pages')[nav.match]}
+                    {/* {t('pages')[nav.match]} */}
+                    {nav.nav_label}
                 </NavItem>
             </Link>
         )
@@ -36,10 +39,10 @@ const Nav = ({ navigation, match, t }) => {
 const createNavigation = pages => {
     return pages.map(c => {
         return {
-            match: c.slug.split('-')[0],
+            match: c.slug.includes('-') ? c.slug.split('-')[0] : c.slug,
             slug: c.slug,
-            //title: c.slug.substring(0,4) ==='home' ? 'Home' : c.title.rendered,
-            //order: c.menu_order
+            nav_label: c.acf.nav_label.length > 0 ? c.acf.nav_label : c.slug,
+            order: c.acf.order,
         }
     })
 }

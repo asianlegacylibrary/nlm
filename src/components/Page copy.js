@@ -24,57 +24,26 @@ class Page extends Component {
     }
 
     renderContent = page => {
-        if (parseInt(page.acf.columns) === 2) {
-            return (
-                <div key={page.slug} className="row">
-                    <div className="col s12 posts-col">
-                        <h2>{page.acf.title}</h2>
-
-                        <div className="row flex">
-                            <div className="col s12 m6">
-                                {/* <span className="image left">
-                                    <img src={mediaURL} alt="" />
-                                </span> */}
-                            </div>
-                            <div className="col s12 m6">
-                                <p
-                                    className="down-push"
-                                    dangerouslySetInnerHTML={{
-                                        __html: page.content.rendered,
-                                    }}
-                                />
-                            </div>
-                        </div>
-                        <div className="divider-with-logo">
-                            <div className="hr-line-left"></div>
-                            <img src={nlm_logo} width="24px" alt="logo" />
-                            <div className="hr-line-right"></div>
-                        </div>
+        return (
+            <div key={page.slug} className="row">
+                <div className="col s12 posts-col">
+                    {/* <h2>{page.acf.title}</h2> */}
+                    {/* <span className="image">
+                        <img src={mediaURL} alt="" />
+                    </span> */}
+                    <p
+                        dangerouslySetInnerHTML={{
+                            __html: page.content.rendered,
+                        }}
+                    />
+                    <div className="divider-with-logo">
+                        <div className="hr-line-left"></div>
+                        <img src={nlm_logo} width="24px" alt="logo" />
+                        <div className="hr-line-right"></div>
                     </div>
                 </div>
-            )
-        } else {
-            return (
-                <div key={page.slug} className="row">
-                    <div className="col s12 posts-col">
-                        <h2>{page.acf.title}</h2>
-                        {/* <span className="image">
-                            <img src={mediaURL} alt="" />
-                        </span> */}
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: page.content.rendered,
-                            }}
-                        />
-                        <div className="divider-with-logo">
-                            <div className="hr-line-left"></div>
-                            <img src={nlm_logo} width="24px" alt="logo" />
-                            <div className="hr-line-right"></div>
-                        </div>
-                    </div>
-                </div>
-            )
-        }
+            </div>
+        )
     }
 
     resetPage = () => {
@@ -92,25 +61,33 @@ class Page extends Component {
         return pages
             .filter(page => page.slug.split('-')[0] === selectedPage)
             .map((page, i) => {
-                let mediaURL = null
-                if (page._embedded['wp:featuredmedia']) {
-                    mediaURL = page._embedded['wp:featuredmedia'][0].source_url
-                }
+                // let mediaURL = null
+                // if (page._embedded['wp:featuredmedia']) {
+                //     mediaURL = page._embedded['wp:featuredmedia'][0].source_url
+                // }
 
                 return (
                     <React.Fragment>
                         <section
                             id="banner"
                             key={page.id}
-                            style={{
-                                backgroundImage: `linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgba(117, 19, 93, 0.73)), url(${mediaURL})`,
-                                backgroundSize: 'cover',
-                            }}
+                            // style={{
+                            //     backgroundImage: `url(${mediaURL})`,
+                            // }}
                         >
                             <header className="major">
                                 <h1>{page.acf.title}</h1>
                                 <div className="divider" />
                                 <h3>{page.acf.subtitle}</h3>
+                                {/* <div className="inner-page">
+                                    <section className="spotlights-page">
+                                        <p
+                                            dangerouslySetInnerHTML={{
+                                                __html: page.content.rendered,
+                                            }}
+                                        />
+                                    </section>
+                                </div> */}
                             </header>
                         </section>
                         {selectedPage !== 'home'

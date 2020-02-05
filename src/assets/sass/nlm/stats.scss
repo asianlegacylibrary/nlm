@@ -11,19 +11,21 @@
     li {
         p {
             padding: 8px 0 4px 8px;
-            color: $c-dark;
+            //color: $c-dark;
             margin: 0 0 1.2em 0;
             em {
                 font-weight: normal;
                 font-style: normal;
                 font-family: 'Merriweather';
-                color: $c-dark;
+                //color: $c-dark;
             }
         }
     }
 }
 .stats-row {
-    background-color: rgba($color: $c-purple-light, $alpha: 0.3);
+    background-color: rgba($color: $c-dark, $alpha: 1);
+    color: rgba($color: $c-light, $alpha: 0.8);
+    border-top: 0.3em solid rgba($color: $c-light, $alpha: 0.8);
 }
 
 @media #{$medium-and-down} {

@@ -45,7 +45,21 @@ input[type='password'],
 input[type='email'],
 select,
 textarea {
-    background: rgba(255, 255, 255, 0.9);
+    background: transparent;
+}
+
+@keyframes autofill {
+    0%,
+    100% {
+        color: $c-light;
+        background: transparent;
+    }
+}
+
+input:-webkit-autofill {
+    animation-delay: 1s; /* Safari support - any positive time runs instantly */
+    animation-name: autofill;
+    animation-fill-mode: both;
 }
 
 input[type='text']:not(.browser-default):focus:not([readonly]) {

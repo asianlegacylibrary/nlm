@@ -1,6 +1,7 @@
 import {
     fetchGSAction,
     fetchWorksAction,
+    fetchAllAction,
     fetchWPPostsAction,
     fetchWPPagesAction,
 } from './actions'
@@ -14,5 +15,6 @@ export default function initialize(store) {
     store.dispatch(fetchGSAction())
 
     // ES data
-    store.dispatch(fetchWorksAction({ offset: 0 }))
+    //store.dispatch(fetchWorksAction({ offset: 0 }))
+    store.dispatch(fetchAllAction())
 }

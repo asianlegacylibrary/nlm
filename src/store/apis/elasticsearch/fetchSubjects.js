@@ -3,7 +3,7 @@ import { elastic, expressURL } from '../endpoints'
 export default async args => {
     let offset = args.offset ? args.offset : 0
     try {
-        const data = await expressURL.get(elastic.fetchWorks, {
+        const data = await expressURL.get(elastic.fetchSubjects, {
             params: { offset },
         })
 

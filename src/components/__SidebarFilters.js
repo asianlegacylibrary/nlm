@@ -5,11 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { withNamespaces } from 'react-i18next'
 import M from 'materialize-css'
 
-import {
-    fetchResultsAction,
-    setCurrentFilterTerm,
-    clearFilterTerm,
-} from '../store/actions'
+import { fetchResultsAction, clearFilterTerm } from '../store/actions'
 
 const FilterItem = ({ listItem, type, filterTerm }) => {
     //console.log(active, listItem, filterTerm)
@@ -35,7 +31,7 @@ const FilterItem = ({ listItem, type, filterTerm }) => {
                               filterType: type,
                               filterTerm: listItem.key,
                           })
-                      ) && dispatch(setCurrentFilterTerm(listItem.key))
+                      ) //&& dispatch(setCurrentFilterTerm(listItem.key))
                 setActive(active => !active)
             }}
         >

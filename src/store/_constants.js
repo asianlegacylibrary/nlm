@@ -8,6 +8,9 @@ const IIIFImageAPI = {
 export const constants = {
     fetchTypes: {
         WORKS: 'WORKS',
+        ALL: 'ALL',
+        AUTHORS: 'AUTHORS',
+        SUBJECTS: 'SUBJECTS',
         RESULTS: 'RESULTS',
         ID: 'ID',
         PAGES: 'PAGES',
@@ -26,6 +29,7 @@ export const constants = {
         SET_LANG: 'SET_LANG',
         SET_PAGE: 'SET_PAGE',
         SET_COLLAPSE: 'SET_COLLAPSE',
+        SET_MENU: 'SET_MENU',
         SET_BROWSE: 'SET_BROWSE',
         SET_COLLECTION: 'SET_COLLECTION',
         SET_OFFSETS: 'SET_OFFSETS',
@@ -43,6 +47,12 @@ export const constants = {
         RECEIVE_GS: 'RECEIVE_GS',
         REQUEST_WORKS: 'REQUEST_WORKS',
         RECEIVE_WORKS: 'RECEIVE_WORKS',
+        REQUEST_ALL: 'REQUEST_ALL',
+        RECEIVE_ALL: 'RECEIVE_ALL',
+        REQUEST_AUTHORS: 'REQUEST_AUTHORS',
+        RECEIVE_AUTHORS: 'RECEIVE_AUTHORS',
+        REQUEST_SUBJECTS: 'REQUEST_SUBJECTS',
+        RECEIVE_SUBJECTS: 'RECEIVE_SUBJECTS',
         REQUEST_ID: 'REQUEST_ID',
         RECEIVE_ID: 'RECEIVE_ID',
         REQUEST_RESULTS: 'REQUEST_RESULTS',
@@ -66,9 +76,15 @@ export const constants = {
     pages: ['home', 'archives'],
     browseOptions: ['Title', 'Author', 'Subject'],
     menuItems: [
-        { key: 'works', label: 'Browse by works' },
-        { key: 'results', label: 'Search results' },
+        { key: 'browse', label: 'Browse' },
+        { key: 'search', label: 'Search results' },
     ],
+    browseItems: [
+        { key: 'works', label: 'Works' },
+        { key: 'authors', label: 'Authors' },
+        { key: 'subjects', label: 'Subjects' },
+    ],
+    browseTypes: ['works', 'authors', 'subjects'],
     searchTypeOptions: [
         { key: 'work', color: 'col-green' },
         { key: 'topic', color: 'col-blue' },

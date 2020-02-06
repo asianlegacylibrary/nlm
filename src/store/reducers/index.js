@@ -8,15 +8,14 @@ import detailsItem from './detailsItem'
 import selectLanguage from './selectLanguage'
 import selectPage from './selectPage'
 import setCollapse from './setCollapse'
-import setBrowse from './setBrowse'
+import setMenu from './setMenu'
 import setCollection from './setCollection'
 import setCurrentSearchTerm from './setCurrentSearchTerm'
-import setCurrentFilterTerm from './setCurrentFilterTerm'
 import setOffsets from './setOffsets'
 import setModal from './setModal'
 import addTermToHistory from './addTermToHistory'
 import addTermToFilter from './addTermToFilter'
-import setFilterArray from './setFilterArray'
+import setBrowse from './setBrowse'
 
 export default history =>
     combineReducers({
@@ -25,13 +24,13 @@ export default history =>
         filterArray: addTermToFilter,
         selectedLanguage: selectLanguage,
         selectedPage: selectPage,
-        selectedMenu: setBrowse,
+        selectedMenu: setMenu,
+        selectedBrowse: setBrowse,
         setCollapse,
         setCollection,
         setModal,
         offsets: setOffsets,
         currentSearchTerm: setCurrentSearchTerm,
-        currentFilterTerm: setCurrentFilterTerm,
         WP: fetchWordpress,
         GS: fetchGoogleSheets,
         ES: fetchElasticsearch,

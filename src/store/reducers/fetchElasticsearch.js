@@ -7,8 +7,8 @@ export default (state = initialState.ES, action) => {
         case actions.REQUEST_RESULTS:
             return {
                 ...state,
-                results: {
-                    ...state.results,
+                search: {
+                    ...state.search,
                     isFetching: true,
                     currentSearch: false,
                 },
@@ -21,12 +21,28 @@ export default (state = initialState.ES, action) => {
                     isFetching: true,
                 },
             }
+        case actions.REQUEST_ALL:
+            return {
+                ...state,
+                works: {
+                    ...state.works,
+                    isFetching: true,
+                },
+                authors: {
+                    ...state.authors,
+                    isFetching: true,
+                },
+                subjects: {
+                    ...state.subjects,
+                    isFetching: true,
+                },
+            }
 
         case actions.RECEIVE_RESULTS:
             return {
                 ...state,
-                results: {
-                    ...state.results,
+                search: {
+                    ...state.search,
                     isFetching: false,
                     currentSearch: true,
                     error: false,
@@ -38,6 +54,29 @@ export default (state = initialState.ES, action) => {
                             (r, k) => ((r[k] = action.secondaryPayload[k]), r),
                             {}
                         ),
+                    lastUpdated: Date.now(),
+                },
+            }
+        case actions.RECEIVE_ALL:
+            //console.log(action.payload)
+            return {
+                ...state,
+                works: {
+                    ...state.works,
+                    isFetching: false,
+                    items: action.payload.WORKS,
+                    lastUpdated: Date.now(),
+                },
+                authors: {
+                    ...state.authors,
+                    isFetching: false,
+                    items: action.payload.AUTHORS,
+                    lastUpdated: Date.now(),
+                },
+                subjects: {
+                    ...state.subjects,
+                    isFetching: false,
+                    items: action.payload.SUBJECTS,
                     lastUpdated: Date.now(),
                 },
             }

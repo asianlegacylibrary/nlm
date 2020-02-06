@@ -19,7 +19,7 @@ export default ({ pages }) => {
         <React.Fragment>
             <a
                 className="dropdown-trigger btn dropdown-btn right"
-                href="#"
+                href="#!"
                 data-target="dropdown-nav"
             >
                 <i className="fal fa-bars" />

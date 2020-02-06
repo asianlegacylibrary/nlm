@@ -107,10 +107,19 @@
     }
 
     label {
+        transition: all 300ms;
         display: inline-block;
         text-align: right;
         margin-bottom: 0;
         padding: 0;
+        color: $c-gold;
+        font-size: 1.2em;
+        line-height: 2em;
+
+        &.active {
+            color: $c-light;
+            transform: scale(0.7);
+        }
     }
 }
 

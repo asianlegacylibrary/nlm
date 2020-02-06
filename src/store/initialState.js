@@ -10,7 +10,27 @@ export const initialState = {
             },
             lastUpdated: null,
         },
-        results: {
+        authors: {
+            isFetching: false,
+            items: {
+                hits: {
+                    total: 0,
+                    hits: [],
+                },
+            },
+            lastUpdated: null,
+        },
+        subjects: {
+            isFetching: false,
+            items: {
+                hits: {
+                    total: 0,
+                    hits: [],
+                },
+            },
+            lastUpdated: null,
+        },
+        search: {
             isFetching: false,
             currentSearch: false,
             items: {
@@ -33,10 +53,13 @@ export const initialState = {
         },
         lastUpdated: null,
     },
-    menu: 'works',
+    menu: 'browse',
+    browse: 'works',
     offsets: {
         works: 0,
-        results: 0,
+        authors: 0,
+        subjects: 0,
+        search: 0,
     },
-    filterTerm: '',
+    filterArray: [],
 }

@@ -44,9 +44,9 @@ export const setCollection = collection => ({
     collection,
 })
 
-export const setBrowse = browse => ({
-    type: actions.SET_BROWSE,
-    browse,
+export const setMenu = menu => ({
+    type: actions.SET_MENU,
+    menu,
 })
 
 export const resetOffsets = () => {
@@ -61,11 +61,6 @@ export const clearResults = () => {
     }
 }
 
-export const clearFilterTerm = () => {
-    return {
-        type: actions.CLEAR_FILTER_TERM,
-    }
-}
 export const clearFilterArray = () => {
     return {
         type: actions.CLEAR_FILTER_ARRAY,
@@ -82,10 +77,7 @@ export const setCurrentSearchTerm = term => {
         payload: term,
     }
 }
-export const setCurrentFilterTerm = term => ({
-    type: actions.SET_CURRENT_FILTER_TERM,
-    payload: term,
-})
+
 export const setFilterArray = filters => ({
     type: actions.SET_FILTER_ARRAY,
     payload: filters,

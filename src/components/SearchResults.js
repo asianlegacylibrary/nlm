@@ -5,12 +5,16 @@ import { useSelector, useDispatch } from 'react-redux'
 import { withNamespaces } from 'react-i18next'
 import { fetchIDAction } from '../store/actions'
 import { constants } from '../store/_constants'
+import setBrowse from '../store/reducers/setBrowse'
 
 let { menuItems } = constants
 
-function useData(type) {
+function useData(browse, menu) {
     return useSelector(state => {
-        return state.ES[type]
+        if (menu === 'search') {
+            return state.ES.search
+        }
+        return state.ES[browse]
     })
 }
 
@@ -21,10 +25,13 @@ const SearchResults = ({ match, t }) => {
         dispatch(fetchIDAction(doc_id))
     }
 
-    const browse = useSelector(state => state.selectedMenu)
-    let currentESdata = menuItems.find(x => x.key === browse)
+    const selectedMenu = useSelector(state => state.selectedMenu)
+    let selectedBrowse = useSelector(state => state.selectedBrowse)
+    let data = useData(selectedBrowse, selectedMenu)
 
-    let data = useData(currentESdata.key)
+    //let currentESdata = menuItems.find(x => x.key === selectedMenu)
+
+    //let data = useData(currentESdata.key)
     let d = data.items.hits.hits
 
     if (d.length === 0) {
@@ -34,7 +41,7 @@ const SearchResults = ({ match, t }) => {
                     <div className="card-content blue-grey-text darken-4">
                         <div className="blinky">
                             {t('technical.loading-simple')}{' '}
-                            {t(`browse.${currentESdata.key}-plural`)}
+                            {t(`browse.${selectedMenu}-plural`)}
                         </div>
                     </div>
                 </div>

@@ -3,20 +3,20 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withNamespaces } from 'react-i18next'
 import { constants } from '../store/_constants'
-import { getRandomInt } from '../tools/utilities'
+//import { getRandomInt } from '../tools/utilities'
 import {
     resetOffsets,
-    clearFilterTerm,
     clearFilterArray,
     addTermToHistory,
     setCurrentSearchTerm,
     fetchResultsAction,
     fetchWorksAction,
-    setBrowse,
+    setMenu,
     setOffsets,
 } from '../store/actions'
+import { getTotal } from '../store/selectors'
 
-let { searchOptions, searchTerms } = constants
+let { searchOptions } = constants
 
 class SearchBar extends Component {
     state = {
@@ -34,8 +34,7 @@ class SearchBar extends Component {
 
         if (total > offset + searchOptions.resultSetSize) {
             offset = offset + searchOptions.resultSetSize
-            console.log(offset)
-            if (this.props.menu === 'results') {
+            if (this.props.menu === 'search') {
                 action = this.props.fetchResultsAction
                 args = { term: this.state.term, offset: offset }
             } else {
@@ -55,7 +54,7 @@ class SearchBar extends Component {
 
         if (offset - searchOptions.resultSetSize >= 0) {
             offset = offset - searchOptions.resultSetSize
-            if (this.props.menu === 'results') {
+            if (this.props.menu === 'search') {
                 action = this.props.fetchResultsAction
                 args = { term: this.state.term, offset: offset }
             } else {
@@ -79,16 +78,14 @@ class SearchBar extends Component {
         //this.updateSearchDefinitionAndFetch()
         const {
             resetOffsets,
-            clearFilterTerm,
             clearFilterArray,
             addTermToHistory,
             setCurrentSearchTerm,
-            setBrowse,
+            setMenu,
         } = this.props
-        setBrowse('results')
+        setMenu('search')
         resetOffsets()
         //clearResults()
-        clearFilterTerm()
         clearFilterArray()
         setCurrentSearchTerm(this.state.term)
         addTermToHistory(this.state.term)
@@ -126,8 +123,9 @@ class SearchBar extends Component {
         return (
             <div className="search-form col">
                 <div className="search-ctl">
-                    <label>Search</label>
+                    <label htmlFor="search-input">Search</label>
                     <input
+                        id="search-input"
                         className="search-input"
                         autoFocus
                         type="text"
@@ -166,24 +164,25 @@ class SearchBar extends Component {
     }
 }
 
-function getStatus(state) {
-    if (state.ES.works.isFetching || state.ES.results.isFetching) {
+function getStatus(browse, state) {
+    if (state.ES[browse].isFetching || state.ES.search.isFetching) {
         return true
     }
     return false
 }
 
-function getTotal(type, state) {
-    return state.ES[type].isFetching ? 0 : state.ES[type].items.hits.total
+function getMenu(menu, browse) {
+    if (menu === 'search') {
+        return 'search'
+    }
+    return browse
 }
 
 const mapStateToProps = state => ({
     offsets: state.offsets,
-    menu: state.selectedMenu,
-    total: state.ES[state.selectedMenu].isFetching
-        ? 0
-        : state.ES[state.selectedMenu].items.hits.total, //getTotal(state.selectedMenu, state),
-    currentlyFetchingResults: getStatus(state),
+    menu: getMenu(state.selectedMenu, state.selectedBrowse),
+    total: getTotal(state.selectedBrowse, state.selectedMenu, state),
+    currentlyFetchingResults: getStatus(state.selectedBrowse, state),
     filterArray: state.filterArray,
     currentSearchTerm: state.currentSearchTerm,
 })
@@ -193,10 +192,9 @@ export default connect(mapStateToProps, {
     resetOffsets,
     addTermToHistory,
     setCurrentSearchTerm,
-    clearFilterTerm,
     clearFilterArray,
     fetchResultsAction,
     fetchWorksAction,
-    setBrowse,
+    setMenu,
     setOffsets,
 })(withN)

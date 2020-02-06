@@ -1,6 +1,7 @@
 import getAsyncAction from './asyncActionUtils'
 import { constants } from '../_constants'
 import fetchWorks from '../apis/elasticsearch/fetchWorks'
+import fetchAll from '../apis/elasticsearch/fetchAll'
 import fetchID from '../apis/elasticsearch/fetchIDs'
 import fetchResults from '../apis/elasticsearch/fetchResults'
 import fetchWPType from '../apis/wordpress/fetchWPType'
@@ -8,6 +9,10 @@ import fetchGS from '../apis/googleSheets/fetchGS'
 
 let { fetchTypes } = constants
 // ELASTICSEARCH
+export const fetchAllAction = getAsyncAction({
+    actionType: fetchTypes.ALL,
+    asyncFunc: fetchAll,
+})
 export const fetchWorksAction = getAsyncAction({
     actionType: fetchTypes.WORKS,
     asyncFunc: fetchWorks,

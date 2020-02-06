@@ -17,15 +17,15 @@
                 font-weight: normal;
                 font-style: normal;
                 font-family: 'Merriweather';
-                //color: $c-dark;
+                color: $c-dark;
             }
         }
     }
 }
 .stats-row {
-    background-color: rgba($color: $c-dark, $alpha: 1);
-    color: rgba($color: $c-light, $alpha: 0.8);
-    border-top: 0.3em solid rgba($color: $c-light, $alpha: 0.8);
+    background-color: rgba($color: $c-light-alt, $alpha: 1);
+    color: rgba($color: $c-dark, $alpha: 0.8);
+    border-top: 0.3em solid rgba($color: $c-purple, $alpha: 0.8);
 }
 
 @media #{$medium-and-down} {

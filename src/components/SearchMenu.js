@@ -2,7 +2,8 @@ import '../assets/sass/nlm/search.scss'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withNamespaces } from 'react-i18next'
-import { setBrowse } from '../store/actions'
+import { setMenu } from '../store/actions'
+import { getTotal } from '../store/selectors'
 import { constants } from '../store/_constants'
 import M from 'materialize-css'
 import MenuOption from './MenuOption'
@@ -16,7 +17,7 @@ class SearchMenu extends Component {
     }
 
     handleClick = menuItem => {
-        this.props.setBrowse(menuItem.key)
+        this.props.setMenu(menuItem.key)
     }
 
     render() {
@@ -33,7 +34,7 @@ class SearchMenu extends Component {
                             key={m.key}
                             option={m}
                             handleClick={this.handleClick}
-                            current={this.props.browse}
+                            current={this.props.menu}
                         />
                     )
                 })}
@@ -42,15 +43,11 @@ class SearchMenu extends Component {
     }
 }
 
-function getTotal(type, state) {
-    return state.ES[type].items.hits.total
-}
-
 const mapStateToProps = state => ({
-    total: getTotal(state.selectedMenu, state),
-    browse: state.selectedMenu,
-    currentSearch: state.ES.results.currentSearch,
+    total: getTotal(state.selectedBrowse, state.selectedMenu, state),
+    menu: state.selectedMenu,
+    currentSearch: state.ES.search.currentSearch,
 })
 
 const withN = new withNamespaces()(SearchMenu)
-export default connect(mapStateToProps, { setBrowse })(withN)
+export default connect(mapStateToProps, { setMenu })(withN)

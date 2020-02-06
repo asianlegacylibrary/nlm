@@ -1,3 +1,5 @@
+@import '~materialize-css/sass/components/color-variables';
+@import '~materialize-css/sass/components/variables';
 @import './vars';
 
 .language-list {
@@ -27,7 +29,7 @@
     padding: 0 1.4em;
     button {
         font-weight: bold;
-        border-bottom: 2px solid $c-purple-light;
+        //border-bottom: 2px solid $c-purple-light;
     }
 }
 .btn-nav,
@@ -45,7 +47,7 @@
 .btn-nav a,
 .btn-lang a {
     text-decoration: none;
-    color: #222;
+    color: $c-purple-light;
     outline: none;
 }
 button:disabled,
@@ -65,7 +67,7 @@ button:disabled,
 .lang-active.btn-nav a {
     background-color: transparent;
     outline: none;
-    color: $c-purple-light;
+    color: $c-dark;
 }
 
 /* ADDING AN ICON TO THE LANGUAGE MENU, it needs something, not sure what */
@@ -116,4 +118,10 @@ button:disabled,
 .search-form-icon {
     font-size: 4em;
     color: $c-light;
+}
+
+@media #{$medium-and-down} {
+    .search-form-icon {
+        font-size: 2.2em;
+    }
 }

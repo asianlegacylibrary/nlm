@@ -8,10 +8,11 @@ import M from 'materialize-css'
 import SidebarFilterItem from './SidebarFilterItem'
 
 import { fetchResultsAction, actionWrapper } from '../store/actions'
+import { getTotal } from '../store/selectors'
 import { constants } from '../store/_constants'
-let { actions, smallScreenWidth } = constants
+let { actions } = constants
 
-class SidebarFiltersClass extends Component {
+class SidebarFilters extends Component {
     state = {
         sidenavOptions: {
             edge: 'left',
@@ -28,22 +29,11 @@ class SidebarFiltersClass extends Component {
         const collapsibleElems = document.querySelectorAll('.collapsible')
         M.Sidenav.init(sidenavElems, this.state.sidenavOptions)
         M.Collapsible.init(collapsibleElems, this.state.collapsibleOptions)
-
-        this.setState({ screenWidth: window.innerWidth })
-        window.addEventListener('resize', this.updateWindowDimensions)
     }
 
     componentDidUpdate = () => {
         const sidenavElems = document.querySelectorAll('.sidenav')
         M.Sidenav.init(sidenavElems, this.state.sidenavOptions)
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.updateWindowDimensions)
-    }
-
-    updateWindowDimensions = () => {
-        this.setState({ screenWidth: window.innerWidth })
     }
 
     handleFilters = (filter, isActive) => {
@@ -70,9 +60,9 @@ class SidebarFiltersClass extends Component {
             })
     }
 
-    handleClick = () => {
-        this.filterItem.current.setActive()
-    }
+    // handleClick = () => {
+    //     this.filterItem.current.setActive()
+    // }
 
     // onClick need to also make item not active in listing
     buildFilterList = () => {
@@ -124,97 +114,38 @@ class SidebarFiltersClass extends Component {
             return null
         }
 
-        let filterText
         let currentFilters = null
-        let showResultTotal = false
-        let activeSidenav = ''
-        let sidenavLink = null
-        let sidenavClose = null
-        let filterBtn = ''
 
-        if (filterArray.length > -0 || results.length > 0) {
+        if (filterArray.length > 0 || results.length > 0) {
             currentFilters = (
                 <div className="current-filters">{this.buildFilterList()}</div>
             )
-            filterText = (
-                <p className="sidebar-filter-text">
-                    {`${t('sidebar.results-filter')} `}
-                    <i className="fal fa-filter" />
-                </p>
-            )
-        } else {
-            filterText = (
-                <React.Fragment>
-                    <p className="sidebar-text">
-                        <i className="fad fa-book-open fa-2x" />
-                        To begin, use the search bar above or browse our
-                        listings
-                    </p>
-                </React.Fragment>
-            )
-            filterBtn = 'disabled'
-        }
-
-        if (this.state.screenWidth < smallScreenWidth) {
-            activeSidenav = 'sidenav'
-            sidenavLink = (
-                <a
-                    className={`${filterBtn} btn dropdown-btn left sidenav-trigger show-on-large valign-wrapper`}
-                    data-target="filter-slide-out"
-                    href="#!"
-                >
-                    <i className="fal fa-arrow-right" /> Filter Results
-                </a>
-            )
-            sidenavClose = (
-                <li>
-                    <a className="sidenav-close" href="#!">
-                        <i className="fal fa-times" />
-                    </a>
-                </li>
-            )
-            showResultTotal = true
         }
 
         return (
             <React.Fragment>
-                {sidenavLink}
-                <ul
-                    id="filter-slide-out"
-                    className={`${activeSidenav} collapsible`}
-                >
-                    {sidenavClose}
+                {currentFilters ? (
                     <li>
-                        <div className="user-view">
-                            <div className="sidenav-title">{filterText}</div>
-                            {showResultTotal ? (
-                                <div>{`Currently showing ${this.props.total} results`}</div>
-                            ) : null}
-                            {currentFilters}
-                        </div>
+                        <div className="user-view">{currentFilters}</div>
                     </li>
+                ) : null}
 
-                    {Object.entries(filters).map(([title, filter]) => {
-                        return this.buildFilters(title, filter)
-                    })}
-                </ul>
+                {Object.entries(filters).map(([title, filter]) => {
+                    return this.buildFilters(title, filter)
+                })}
             </React.Fragment>
         )
     }
 }
 
-function getTotal(type, state) {
-    return state.ES[type].items.hits.total
-}
-
 const mapStateToProps = state => ({
-    filters: state.ES.results.aggregations,
-    results: state.ES.results.items.hits.hits,
+    filters: state.ES.search.aggregations,
+    results: state.ES.search.items.hits.hits,
     currentSearchTerm: state.currentSearchTerm,
     filterArray: state.filterArray,
-    total: getTotal(state.selectedMenu, state),
+    total: getTotal(state.selectedBrowse, state.selectedMenu, state),
 })
 
 //{ fetchResultsAction, addTermToFilter, preFetch,}
-const withN = new withNamespaces()(SidebarFiltersClass)
+const withN = new withNamespaces()(SidebarFilters)
 export default connect(mapStateToProps)(withN)

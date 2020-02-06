@@ -14,8 +14,6 @@ const Nav = ({ navigation, match, t }) => {
         return null
     }
 
-    console.log(navigation)
-
     // THIS NAV BAR GETS RENDERED TOO MUCH, NEED TO REFACTOR, MEMOIZE!
     const slugs = navigation.map(nav => {
         const p = nav.match === 'home' ? '' : `/${nav.match}`

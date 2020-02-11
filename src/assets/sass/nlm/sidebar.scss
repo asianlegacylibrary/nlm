@@ -142,10 +142,14 @@
         background-color: $c-white;
         padding: 0.4em;
         display: flex;
+        margin: 0 0 0.4em;
         i {
             margin-left: auto;
             order: 2;
             vertical-align: middle;
+        }
+        &:last-child {
+            margin: 0 0 1em;
         }
     }
 }

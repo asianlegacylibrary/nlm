@@ -1,6 +1,9 @@
 import getAsyncAction from './asyncActionUtils'
 import { constants } from '../_constants'
 import fetchWorks from '../apis/elasticsearch/fetchWorks'
+import fetchAuthors from '../apis/elasticsearch/fetchAuthors'
+import fetchSubjects from '../apis/elasticsearch/fetchSubjects'
+import fetchPlaces from '../apis/elasticsearch/fetchPlaces'
 import fetchAll from '../apis/elasticsearch/fetchAll'
 import fetchID from '../apis/elasticsearch/fetchIDs'
 import fetchResults from '../apis/elasticsearch/fetchResults'
@@ -17,7 +20,18 @@ export const fetchWorksAction = getAsyncAction({
     actionType: fetchTypes.WORKS,
     asyncFunc: fetchWorks,
 })
-
+export const fetchAuthorsAction = getAsyncAction({
+    actionType: fetchTypes.AUTHORS,
+    asyncFunc: fetchAuthors,
+})
+export const fetchSubjectsAction = getAsyncAction({
+    actionType: fetchTypes.SUBJECTS,
+    asyncFunc: fetchSubjects,
+})
+export const fetchPlacesAction = getAsyncAction({
+    actionType: fetchTypes.PLACES,
+    asyncFunc: fetchPlaces,
+})
 export const fetchIDAction = getAsyncAction({
     actionType: fetchTypes.ID,
     asyncFunc: fetchID,

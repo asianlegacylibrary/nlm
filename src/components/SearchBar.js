@@ -11,6 +11,9 @@ import {
     setCurrentSearchTerm,
     fetchResultsAction,
     fetchWorksAction,
+    fetchAuthorsAction,
+    fetchSubjectsAction,
+    fetchPlacesAction,
     setMenu,
     setOffsets,
 } from '../store/actions'
@@ -37,8 +40,17 @@ class SearchBar extends Component {
             if (this.props.menu === 'search') {
                 action = this.props.fetchResultsAction
                 args = { term: this.state.term, offset: offset }
-            } else {
+            } else if (this.props.menu === 'works') {
                 action = this.props.fetchWorksAction
+                args = { offset: offset }
+            } else if (this.props.menu === 'authors') {
+                action = this.props.fetchAuthorsAction
+                args = { offset: offset }
+            } else if (this.props.menu === 'subjects') {
+                action = this.props.fetchSubjectsAction
+                args = { offset: offset }
+            } else if (this.props.menu === 'places') {
+                action = this.props.fetchPlacesAction
                 args = { offset: offset }
             }
             action(args)
@@ -57,8 +69,17 @@ class SearchBar extends Component {
             if (this.props.menu === 'search') {
                 action = this.props.fetchResultsAction
                 args = { term: this.state.term, offset: offset }
-            } else {
+            } else if (this.props.menu === 'works') {
                 action = this.props.fetchWorksAction
+                args = { offset: offset }
+            } else if (this.props.menu === 'authors') {
+                action = this.props.fetchAuthorsAction
+                args = { offset: offset }
+            } else if (this.props.menu === 'subjects') {
+                action = this.props.fetchSubjectsAction
+                args = { offset: offset }
+            } else if (this.props.menu === 'places') {
+                action = this.props.fetchPlacesAction
                 args = { offset: offset }
             }
             action(args)
@@ -195,6 +216,9 @@ export default connect(mapStateToProps, {
     clearFilterArray,
     fetchResultsAction,
     fetchWorksAction,
+    fetchAuthorsAction,
+    fetchSubjectsAction,
+    fetchPlacesAction,
     setMenu,
     setOffsets,
 })(withN)

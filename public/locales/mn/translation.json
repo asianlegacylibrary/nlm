@@ -1,16 +1,16 @@
 {
     "title": "Монгол Улсын Үндэсний Номын Сан",
     "sub-title": "Дэд гарчиг",
-    "pages": {
-        "home": "Нүүр",
-        "archives": "Архив"
-    },
     "technical": {
         "loading": "Татаж авах...",
         "loading-simple": "Татаж авах",
         "loading-image": "Зураг татах...",
         "btn-close": "Хаах",
-        "btn-view": "Архив харах"
+        "btn-view": "Архив харах",
+        "btn-search": "Search the archives",
+        "btn-next": "Next",
+        "btn-previous": "Previous",
+        "showing": "Showing {min-number} to {max-number} of {total-number}"
     },
     "languageCodeLookup": {
         "English": "en",
@@ -28,27 +28,35 @@
         "VolumesCataloged": "Каталогжуулсан боть",
         "TitlesCataloged": "Каталогжуулсан гарчиг"
     },
-    "archives": {
+    "sidebar": {
+        "browse-by": "Browse by",
+        "browse": "Хандах",
+        "search-results": "Search Results",
+        "filter": "Хязгаартай хайлт",
+        "results-filter": "Filter results",
+        "no-results": "No results",
+        "to-begin": "To begin, use the search bar above or browse our listings below"
+    },
+    "details": {
+        "detail": "Нарийвчлан үзэх",
+        "nlm-id": "NLM ID",
+        "names": "Name(s)",
         "author": "Зохиогч",
         "genre": "Төрөл зүйл",
         "topic": "Сэдэв",
+        "subject": "Subject",
         "more": "Дэлгэрэнгүй үзэх...",
-        "attribution": "Монгол Улсын Үндэсний Номын Санд ACIP-ийн тусламжаар сканнердсан"
-    },
-    "sidebar": {
-        "browse": "Хандах",
-        "filter": "Хязгаартай хайлт",
-        "results-filter": "Filter results"
-    },
-    "modal": {
-        "detail": "Нарийвчлан үзэх",
-        "nlm-id": "NLM ID",
+        "explore-further": "Explore further",
+        "attribution": "Монгол Улсын Үндэсний Номын Санд ACIP-ийн тусламжаар сканнердсан",
+        "note": "Note",
+        "note-plural": "Notes",
         "scans": "Цахимаар үзэх",
         "scans-restricted": "Цахим хувилбар хязгаарлагдсан",
         "image-restricted": "Зураг хязгаарлагдсан",
         "image-not-found": "Одоохондоо үзэх боломжгүй",
         "meta-print-type": "Хэвлэлийн төрөл",
         "meta-published-by": "Хэвлэсэн субьект",
+        "meta-number-volumes": "Number of volumes",
         "meta-work-extent": "Төлөв",
         "meta-language": "Хэл",
         "author-birth-year": "Төрсөн",
@@ -64,15 +72,31 @@
         "Title-plural": "Гарчиг",
         "Author-plural": "Зохиогчид",
         "Subject-plural": "Субьектууд",
-        "Search": "Хайлт хийх",
-        "Search-plural": "Хайлт хийх"
+        "search": "Хайлт хийх",
+        "search-plural": "Хайлт хийх",
+        "Place": "Place",
+        "Place-plural": "Places",
+        "results": "Results",
+        "results-plural": "Results",
+        "browse": "Хандах",
+        "browse-plural": "Хандах",
+        "work": "Work",
+        "work-plural": "Works"
     },
     "bdrc-ontology": {
         "work": "Aжил",
         "person": "Бие хүн",
         "topic": "Сэдэв",
+        "subject": "Subject",
         "geography": "Газар орон",
         "item": "Нэгж"
+    },
+    "bdrc-ontology-code": {
+        "W": "Aжил",
+        "P": "Бие хүн",
+        "T": "Сэдэв",
+        "G": "Газар орон",
+        "I": "Нэгж"
     },
     "gender": {
         "gender": "Хүйс",
@@ -80,6 +104,7 @@
         "gender-Female": "Эмэгтэй"
     },
     "footer": {
+        "links": "Links",
         "terms": "Ашиглах нөхцөл",
         "privacy": "Нууцлал",
         "contact": "Холбоо барих",

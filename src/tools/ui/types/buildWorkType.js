@@ -101,7 +101,7 @@ function buildImg(t, _img, _manifestURL) {
 }
 
 // use 't' variable to translate the labels (Author, etc)
-export function buildWorkType(itemDetail, t, notes) {
+export function buildWorkType(itemDetail, itemRelated, t, notes) {
     let {
         workIsAbout,
         workGenre,
@@ -129,7 +129,7 @@ export function buildWorkType(itemDetail, t, notes) {
     ) : null
 
     return (
-        <div>
+        <React.Fragment>
             {!attribution ? null : (
                 <div className="meta-detail attribution">
                     <div className="meta-item">
@@ -148,13 +148,13 @@ export function buildWorkType(itemDetail, t, notes) {
                         )}
                         {!pubName ? null : (
                             <li className="meta-item all-caps">
-                                {t('modal.meta-published-by')}:{' '}
+                                {t('details.meta-published-by')}:{' '}
                                 <span className="no-trans">{pubName}</span>
                             </li>
                         )}
                         {!workExtentStatement ? null : (
                             <li className="meta-item all-caps">
-                                {t('modal.meta-work-extent')}:{' '}
+                                {t('details.meta-work-extent')}:{' '}
                                 <span className="no-trans">
                                     {workExtentStatement}, in{' '}
                                     {workNumberOfVolumes} volume(s)
@@ -163,7 +163,7 @@ export function buildWorkType(itemDetail, t, notes) {
                         )}
                         {!workLangScript ? null : (
                             <li className="meta-item all-caps">
-                                {t('modal.meta-language')}:{' '}
+                                {t('details.meta-language')}:{' '}
                                 <span className="no-trans">
                                     {workLangScript}
                                 </span>
@@ -202,6 +202,6 @@ export function buildWorkType(itemDetail, t, notes) {
                     </div>
                 )}
             </div>
-        </div>
+        </React.Fragment>
     )
 }

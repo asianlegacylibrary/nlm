@@ -91,7 +91,7 @@ class Sidebar extends Component {
     }
 
     render() {
-        let { filters, filterArray, results } = this.props
+        let { filters, filterArray, results, menu } = this.props
         if (Object.entries(filters) === 0) {
             return null
         }
@@ -99,11 +99,15 @@ class Sidebar extends Component {
         let showResultTotal
         let activeSidenav = ''
         let sidenavLink = null
+        let sidenavLinkText = 'Choose Browse'
         let sidenavClose = null
         let filterBtn = ''
 
-        if (filterArray.length === 0 || results.length === 0) {
-            filterBtn = 'disabled'
+        if (menu === 'search') {
+            sidenavLinkText = 'Filter Results'
+            if (results.length === 0) {
+                filterBtn = 'disabled'
+            }
         }
 
         if (this.state.screenWidth < smallScreenWidth) {
@@ -114,7 +118,7 @@ class Sidebar extends Component {
                     data-target="filter-slide-out"
                     href="#!"
                 >
-                    <i className="fal fa-arrow-right" /> Filter Results
+                    <i className="fal fa-arrow-right" /> {sidenavLinkText}
                 </a>
             )
             sidenavClose = (

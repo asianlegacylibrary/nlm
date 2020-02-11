@@ -10,7 +10,7 @@ export default async args => {
         const data = await expressURL.get(elastic.searchAll, {
             params: { term, offset, filterArray }, //params: { term, offset },
         })
-        return { data: data.data, secondaryData: data.data.aggregations }
+        return { data: data.data }
     } catch (error) {
         console.error('there been fetchResults error ', error)
         return error

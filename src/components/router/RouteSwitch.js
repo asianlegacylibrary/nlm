@@ -38,14 +38,14 @@ class RouteSwitch extends Component {
         const { history, dispatch, t } = this.props
         const url = history.location.pathname
 
-        if (url.split('/')[2] !== undefined) {
-            if (Object.keys(t('pages')).includes(url.split('/')[2])) {
-                dispatch(setPage('archives'))
-            } else {
-                dispatch(setPage('home'))
-                history.push(`/${url.split('/')[1]}`)
-            }
-        }
+        // if (url.split('/')[2] !== undefined) {
+        //     if (Object.keys(t('pages')).includes(url.split('/')[2])) {
+        //         dispatch(setPage('archives'))
+        //     } else {
+        //         dispatch(setPage('home'))
+        //         history.push(`/${url.split('/')[1]}`)
+        //     }
+        // }
 
         if (url.split('/')[1] in languages) {
             this.setLang(url.split('/')[1])
@@ -82,19 +82,6 @@ class RouteSwitch extends Component {
                 <Switch>
                     <Route
                         exact
-                        path={`/:lng(${this.l})`}
-                        render={({ history, match }) => (
-                            <React.Fragment>
-                                <Page history={history} />
-                                <Stats match={match} />
-                                <div className="container">
-                                    <Posts />
-                                </div>
-                            </React.Fragment>
-                        )}
-                    />
-
-                    <Route
                         path={`/:lng(${this.l})/archives/doc/:id`}
                         render={({ match, history }) => {
                             let label = this.props.location.state
@@ -114,9 +101,6 @@ class RouteSwitch extends Component {
 
                             return (
                                 <React.Fragment>
-                                    {/* <NavSub /> */}
-                                    {/* <div className="container archives"> */}
-                                    {/* <Sidebar /> */}
                                     <Modal
                                         show={true}
                                         match={match}
@@ -124,12 +108,12 @@ class RouteSwitch extends Component {
                                         label={label}
                                         initialRender={initialRender}
                                     />
-                                    {/* </div> */}
                                 </React.Fragment>
                             )
                         }}
                     />
                     <Route
+                        exact
                         path={`/:lng(${this.l})/archives`}
                         render={({ match, history }) => (
                             <React.Fragment>
@@ -146,6 +130,20 @@ class RouteSwitch extends Component {
 
                     {/* if we add other pages, would be something like this... */}
                     <Route path={`/:lng(${this.l})/:page`} component={Page} />
+
+                    <Route
+                        exact
+                        path={`/:lng(${this.l})`}
+                        render={({ history, match }) => (
+                            <React.Fragment>
+                                <Page history={history} />
+                                <Stats match={match} />
+                                <div className="container">
+                                    <Posts />
+                                </div>
+                            </React.Fragment>
+                        )}
+                    />
 
                     <Route
                         render={() => <Redirect selectedPage="home" to="/en" />}

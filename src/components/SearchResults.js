@@ -4,10 +4,6 @@ import SearchCard from './SearchCard'
 import { useSelector, useDispatch } from 'react-redux'
 import { withNamespaces } from 'react-i18next'
 import { fetchIDAction } from '../store/actions'
-import { constants } from '../store/_constants'
-import setBrowse from '../store/reducers/setBrowse'
-
-let { menuItems } = constants
 
 function useData(browse, menu) {
     return useSelector(state => {
@@ -28,10 +24,6 @@ const SearchResults = ({ match, t }) => {
     const selectedMenu = useSelector(state => state.selectedMenu)
     let selectedBrowse = useSelector(state => state.selectedBrowse)
     let data = useData(selectedBrowse, selectedMenu)
-
-    //let currentESdata = menuItems.find(x => x.key === selectedMenu)
-
-    //let data = useData(currentESdata.key)
     let d = data.items.hits.hits
 
     if (d.length === 0) {

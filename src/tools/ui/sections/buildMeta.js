@@ -4,9 +4,9 @@ export function buildMeta(t, id, nlmIDs) {
         <div className="meta-detail">
             <p className="meta-item">
                 <span>
-                    {t('modal.detail')} {id},{' '}
+                    {t('details.detail')} {id},{' '}
                 </span>
-                <span> {t(`bdrc-ontology2.${id[4]}`)}</span>
+                <span> {t(`bdrc-ontology-code.${id[4]}`)}</span>
             </p>
             {nlmIDs == null ? null : (
                 <p className="meta-item">

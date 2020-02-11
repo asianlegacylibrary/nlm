@@ -6,6 +6,13 @@ import { fetchIDAction } from '../store/actions'
 export const SectionLink = ({ section, label }) => {
     const dispatch = useDispatch()
     // check for array, if not return null
+    if (
+        typeof section === 'object' &&
+        section !== null &&
+        !Array.isArray(section)
+    ) {
+        section = [section]
+    }
     if (Array.isArray(section)) {
         return section.map(t => {
             // straight from BDRC, @language / @value

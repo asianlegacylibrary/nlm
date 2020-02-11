@@ -7,7 +7,8 @@ const expressOptions = {
     devUrl: 'http://localhost:5000',
 }
 
-// check dev environment, we're proxying through NGINX on 8081 port (/api endpoint)
+// here we use the public api endpoint, which at some point we should close
+// and do something like ACE, proxying through NGINX on 8081 port (/api endpoint)
 const express =
     window.location.port === '3000'
         ? expressOptions.devUrl
@@ -26,6 +27,7 @@ export const elastic = {
     fetchWorks: '/nlm/_works',
     fetchAuthors: '/nlm/_authors',
     fetchSubjects: '/nlm/_subjects',
+    fetchPlaces: '/nlm/_places',
     fetchID: '/nlm/_ids',
 }
 

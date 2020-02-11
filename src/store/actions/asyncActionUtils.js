@@ -12,14 +12,7 @@ const getAsyncAction = ({ actionType, asyncFunc }) => {
         }
     }
 
-    const successAction = (payload, secondaryPayload) => {
-        if (secondaryPayload) {
-            return {
-                type: actionTypeReceive,
-                payload: payload,
-                secondaryPayload: secondaryPayload,
-            }
-        }
+    const successAction = payload => {
         return {
             type: actionTypeReceive,
             payload: payload,
@@ -37,12 +30,7 @@ const getAsyncAction = ({ actionType, asyncFunc }) => {
         return async dispatch => {
             dispatch(startAction())
             try {
-                const { data, secondaryData } = await asyncFunc(args)
-
-                if (secondaryData) {
-                    //console.log(aggregations)
-                    return dispatch(successAction(data, secondaryData))
-                }
+                const { data } = await asyncFunc(args)
                 dispatch(successAction(data))
             } catch (error) {
                 dispatch(failureAction(error))

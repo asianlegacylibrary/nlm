@@ -5,14 +5,15 @@ import { constants } from '../store/_constants'
 let { searchTypeOptions, defaultColor } = constants
 
 function getType(type) {
-    if (Array.isArray(type)) {
-        if (type.includes('Work')) {
+    let t = type === 'Topic' ? 'Subject' : type
+    if (Array.isArray(t)) {
+        if (t.includes('Work')) {
             return 'Work'
         } else {
             return 'Unknown'
         }
     }
-    return type
+    return t
 }
 
 function getColor(type) {

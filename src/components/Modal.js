@@ -8,7 +8,7 @@ import {
     buildPlaceType,
     buildMeta,
     buildNotes,
-    parseSection,
+    buildPersonalDetails,
 } from '../tools/ui'
 import { selectorDetailsItem } from '../store/selectors'
 import { SectionLink } from './SectionLink'
@@ -35,7 +35,7 @@ class Modal extends Component {
             ? 'modal display-block'
             : 'modal display-none'
 
-        const { itemDetail, t, match, label } = this.props
+        const { itemDetail, itemRelated, t, match, label } = this.props
         if (!itemDetail) {
             return null
         }
@@ -43,6 +43,7 @@ class Modal extends Component {
         const id = match.params.id
         let buildType
         let topSection, catalog
+        let personal = null
 
         if (id[4] === 'W') {
             buildType = buildWorkType
@@ -62,6 +63,7 @@ class Modal extends Component {
             topSection = <React.Fragment>{catalog}</React.Fragment>
         } else if (id[4] === 'P') {
             buildType = buildPersonType
+            personal = buildPersonalDetails(itemDetail, t)
         } else if (id[4] === 'T') {
             buildType = buildSubjectType
         } else if (id[4] === 'G') {
@@ -110,11 +112,12 @@ class Modal extends Component {
                             <div className="detail-top-section with-border">
                                 {topSection}
                                 {meta}
+                                {personal}
                             </div>
 
                             <div className="modal-title">{label}</div>
 
-                            {buildType(itemDetail, t, notes)}
+                            {buildType(itemDetail, itemRelated, t, notes)}
 
                             {/* {notes} */}
                             {closeBtn}
@@ -129,9 +132,10 @@ class Modal extends Component {
 const mapStateToProps = state => ({
     show: state.setModal,
     itemDetail:
-        state.detailsItem.item.hits.hits.length === 0
-            ? {}
-            : selectorDetailsItem(state.detailsItem.item.hits.hits[0]),
+        state.ES.id.items.hits.hits.length === 0
+            ? []
+            : selectorDetailsItem(state.ES.id.items.hits.hits[0]),
+    itemRelated: state.ES.id.related,
 })
 
 const withN = withNamespaces()(Modal)

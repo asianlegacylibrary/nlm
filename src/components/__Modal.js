@@ -17,6 +17,15 @@ import {
 //import injectSinglePrefLabel from '../tools/parsing/injectSinglePrefLabel'
 import { bdrcResources } from '../tools/ontology/bdrcResources'
 
+// "pages": {
+//     "home": "Нүүр",
+//     "archives": "Архив"
+// },
+// "pages": {
+//     "home": "Нүүр",
+//     "archives": "Архив"
+// },
+
 class Modal extends Component {
     handleHideModal = (initialRender, e) => {
         this.props.dispatch({ type: 'SET_MODAL', show: false })
@@ -62,7 +71,7 @@ class Modal extends Component {
             <ul className="meta-detail-list">
                 {!objectType ? null : (
                     <li className="meta-item all-caps">
-                        {t('modal.meta-print-type')}:{' '}
+                        {t('details.meta-print-type')}:{' '}
                         <span className="no-trans">
                             {bdrObjectType[objectType]}
                         </span>
@@ -71,13 +80,13 @@ class Modal extends Component {
 
                 {!pubName ? null : (
                     <li className="meta-item all-caps">
-                        {t('modal.meta-published-by')}:{' '}
+                        {t('details.meta-published-by')}:{' '}
                         <span className="no-trans">{pubName}</span>
                     </li>
                 )}
                 {!workExtentStatement ? null : (
                     <li className="meta-item all-caps">
-                        {t('modal.meta-work-extent')}:{' '}
+                        {t('details.meta-work-extent')}:{' '}
                         <span className="no-trans">
                             {workExtentStatement}, in {workNumberOfVolumes}{' '}
                             volume(s)
@@ -86,7 +95,7 @@ class Modal extends Component {
                 )}
                 {!workLangScript ? null : (
                     <li className="meta-item all-caps">
-                        {t('modal.meta-language')}:{' '}
+                        {t('details.meta-language')}:{' '}
                         <span className="no-trans">{workLangScript}</span>
                     </li>
                 )}

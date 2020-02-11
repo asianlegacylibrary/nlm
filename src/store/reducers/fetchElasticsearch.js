@@ -13,11 +13,43 @@ export default (state = initialState.ES, action) => {
                     currentSearch: false,
                 },
             }
+        case actions.REQUEST_ID:
+            return {
+                ...state,
+                id: {
+                    ...state.id,
+                    isFetching: true,
+                },
+            }
         case actions.REQUEST_WORKS:
             return {
                 ...state,
                 works: {
                     ...state.works,
+                    isFetching: true,
+                },
+            }
+        case actions.REQUEST_AUTHORS:
+            return {
+                ...state,
+                authors: {
+                    ...state.authors,
+                    isFetching: true,
+                },
+            }
+        case actions.REQUEST_SUBJECTS:
+            return {
+                ...state,
+                subjects: {
+                    ...state.subjects,
+                    isFetching: true,
+                },
+            }
+        case actions.REQUEST_PLACES:
+            return {
+                ...state,
+                places: {
+                    ...state.places,
                     isFetching: true,
                 },
             }
@@ -36,6 +68,10 @@ export default (state = initialState.ES, action) => {
                     ...state.subjects,
                     isFetching: true,
                 },
+                places: {
+                    ...state.places,
+                    isFetching: true,
+                },
             }
 
         case actions.RECEIVE_RESULTS:
@@ -47,11 +83,13 @@ export default (state = initialState.ES, action) => {
                     currentSearch: true,
                     error: false,
                     errorStatus: null,
-                    items: action.payload,
-                    aggregations: Object.keys(action.secondaryPayload)
+                    items: {
+                        hits: action.payload.RESULTS,
+                    },
+                    aggregations: Object.keys(action.payload.AGGS)
                         .sort()
                         .reduce(
-                            (r, k) => ((r[k] = action.secondaryPayload[k]), r),
+                            (r, k) => ((r[k] = action.payload.AGGS[k]), r),
                             {}
                         ),
                     lastUpdated: Date.now(),
@@ -79,6 +117,23 @@ export default (state = initialState.ES, action) => {
                     items: action.payload.SUBJECTS,
                     lastUpdated: Date.now(),
                 },
+                places: {
+                    ...state.places,
+                    isFetching: false,
+                    items: action.payload.PLACES,
+                    lastUpdated: Date.now(),
+                },
+            }
+        case actions.RECEIVE_ID:
+            return {
+                ...state,
+                id: {
+                    ...state.id,
+                    isFetching: false,
+                    items: action.payload.ID,
+                    lastUpdated: Date.now(),
+                    related: action.payload.RELATED,
+                },
             }
         case actions.RECEIVE_WORKS:
             return {
@@ -90,7 +145,36 @@ export default (state = initialState.ES, action) => {
                     lastUpdated: Date.now(),
                 },
             }
-
+        case actions.RECEIVE_AUTHORS:
+            return {
+                ...state,
+                authors: {
+                    ...state.authors,
+                    isFetching: false,
+                    items: action.payload,
+                    lastUpdated: Date.now(),
+                },
+            }
+        case actions.RECEIVE_SUBJECTS:
+            return {
+                ...state,
+                subjects: {
+                    ...state.subjects,
+                    isFetching: false,
+                    items: action.payload,
+                    lastUpdated: Date.now(),
+                },
+            }
+        case actions.RECEIVE_PLACES:
+            return {
+                ...state,
+                places: {
+                    ...state.places,
+                    isFetching: false,
+                    items: action.payload,
+                    lastUpdated: Date.now(),
+                },
+            }
         default:
             return state
     }

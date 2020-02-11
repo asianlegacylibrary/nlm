@@ -24,7 +24,7 @@
 .card-type {
     padding: 0.4em;
     text-transform: uppercase;
-    color: $c-purple;
+    color: $c-light;
     font-weight: bold;
     margin: 1em 1em 1em 0;
 }
@@ -51,8 +51,11 @@
 .col-blue {
     background-color: rgba($color: $c-blue, $alpha: 0.8);
 }
-.col-green {
-    background-color: rgba($color: $c-red, $alpha: 0.5);
+.col-red {
+    background-color: rgba($color: $c-red, $alpha: 0.9);
+}
+.col-dark {
+    background-color: rgba($color: $c-dark, $alpha: 1);
 }
 .favorites-active,
 .text-active {

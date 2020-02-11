@@ -4,7 +4,7 @@ import { connectRouter } from 'connected-react-router'
 import fetchWordpress from './fetchWordpress'
 import fetchGoogleSheets from './fetchGoogleSheets'
 import fetchElasticsearch from './fetchElasticsearch'
-import detailsItem from './detailsItem'
+//import detailsItem from './detailsItem'
 import selectLanguage from './selectLanguage'
 import selectPage from './selectPage'
 import setCollapse from './setCollapse'
@@ -34,5 +34,5 @@ export default history =>
         WP: fetchWordpress,
         GS: fetchGoogleSheets,
         ES: fetchElasticsearch,
-        detailsItem,
+        //detailsItem,
     })

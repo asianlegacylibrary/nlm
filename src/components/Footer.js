@@ -12,7 +12,7 @@ const Footer = ({ t }) => {
         <footer className="page-footer">
             <div className="container">
                 <div className="row">
-                    <div className="col l6 s12">
+                    <div className="col m6 s12">
                         <div className="icon">
                             <img
                                 src={nlm_full}
@@ -21,7 +21,7 @@ const Footer = ({ t }) => {
                             />
                         </div>
                     </div>
-                    <div className="col l4 offset-l2 s12">
+                    <div className="col m4 offset-l2 s12">
                         <h5 className="white-text">Links</h5>
                         <ul>
                             <li>

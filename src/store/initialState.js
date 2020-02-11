@@ -30,6 +30,16 @@ export const initialState = {
             },
             lastUpdated: null,
         },
+        places: {
+            isFetching: false,
+            items: {
+                hits: {
+                    total: 0,
+                    hits: [],
+                },
+            },
+            lastUpdated: null,
+        },
         search: {
             isFetching: false,
             currentSearch: false,
@@ -42,17 +52,32 @@ export const initialState = {
             aggregations: {},
             lastUpdated: null,
         },
-    },
-    detailsItem: {
-        isFetching: false,
-        item: {
-            hits: {
-                total: 0,
-                hits: [],
+        id: {
+            isFetching: false,
+            items: {
+                hits: {
+                    total: 0,
+                    hits: [],
+                },
+            },
+            related: {
+                hits: {
+                    total: 0,
+                    hits: [],
+                },
             },
         },
-        lastUpdated: null,
     },
+    // detailsItem: {
+    //     isFetching: false,
+    //     item: {
+    //         hits: {
+    //             total: 0,
+    //             hits: [],
+    //         },
+    //     },
+    //     lastUpdated: null,
+    // },
     menu: 'browse',
     browse: 'works',
     offsets: {
@@ -60,6 +85,7 @@ export const initialState = {
         authors: 0,
         subjects: 0,
         search: 0,
+        places: 0,
     },
     filterArray: [],
 }

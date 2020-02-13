@@ -1,8 +1,8 @@
 //import { UniqueLabelSet } from '../../tools/utilities'
 import { uniqueFilters } from '../../tools/utilities'
 
-import { constants } from '../_constants'
-let { actions } = constants
+import { actions } from '../types'
+
 // SEARCH RESULTS
 export default (state = [], action) => {
     switch (action.type) {

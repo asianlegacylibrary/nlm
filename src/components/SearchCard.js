@@ -34,7 +34,7 @@ const SearchCard = ({ data, idx, match, handleShowDetails }) => {
             to={{
                 pathname: `/${lang}/archives/doc/${data._id}`,
                 // this is the trick! check out RouteSwitch
-                state: { label: data._source._label },
+                state: { label: data._source._label, modalID: data._id },
             }}
             className="item-title card-item-link"
             onClick={() => handleShowDetails(data._id)}

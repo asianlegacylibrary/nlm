@@ -1,6 +1,4 @@
-import { constants } from '../_constants'
-let { actions } = constants
-
+import { actions } from '../types'
 export default (state = false, action) => {
     switch (action.type) {
         case actions.SET_COLLECTION:

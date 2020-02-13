@@ -1,5 +1,4 @@
-import { constants } from '../_constants'
-let { actions } = constants
+import { actions } from '../types'
 
 export default (state = true, action) => {
     switch (action.type) {

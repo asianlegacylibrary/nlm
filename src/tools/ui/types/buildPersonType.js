@@ -1,6 +1,6 @@
 import React from 'react'
-import { SectionLink } from '../../../components/SectionLink'
-
+import { SectionLinks } from '../../../components/SectionLinks'
+import buildExplore from '../sections/buildExplore'
 /*
 BDRC, Person type
 
@@ -29,89 +29,34 @@ NOT USED
 
 // use 't' variable to translate the labels (Author, etc)
 export function buildPersonType(itemDetail, itemRelated, t, notes) {
-    let { personTeacherOf, personStudentOf } = itemDetail
-
-    const buildRelations = relation => {
-        if (relation === 'teachers') {
-            return personStudentOf.map((t, i) => {
-                return (
-                    <SectionLink
-                        key={`teacher_${i}`}
-                        label="Teacher"
-                        section={t}
-                    />
-                )
-            })
-        } else if (relation === 'students') {
-            return personTeacherOf.map((t, i) => {
-                return (
-                    <SectionLink
-                        key={`student_${i}`}
-                        label="Student"
-                        section={t}
-                    />
-                )
-            })
-        }
+    const buildRelatedItems = () => {
+        return (
+            <SectionLinks
+                label={'work'}
+                section={itemRelated.hits.hits}
+                convert={true}
+            />
+        )
     }
 
-    const buildExplore = () => {
-        if (itemRelated.hits.total > 0) {
-            return itemRelated.hits.hits.map(r => {
-                let u =
-                    r._id.substring(0, 3) === 'bdr' ? r._id.substring(4) : r._id
-                return (
-                    <SectionLink
-                        key={r._id}
-                        label={u}
-                        section={[{ _id: u, _value: r._source._label }]}
-                    />
-                )
-            })
-        }
-    }
-
-    let students = personTeacherOf ? buildRelations('students') : null
-    let teachers = personStudentOf ? buildRelations('teachers') : null
+    let works = itemRelated.hits.total > 0 ? buildRelatedItems() : null
+    let explore = buildExplore(itemDetail, 'teacher', 'student')
 
     return (
+        // main section for person: works and notes
         <div className="row flex no-margin">
             <div className="col s12 m8 bottom-items">
-                {personTeacherOf ? (
-                    <div className="meta-detail students">{students}</div>
-                ) : null}
-                {personStudentOf ? (
-                    <div className="meta-detail teachers">{teachers}</div>
-                ) : null}
+                {works}
                 {notes}
             </div>
 
-            <div className="col s12 m4 explore-items with-border">
-                <p className="title">Explore further</p>
-                {buildExplore()}
-            </div>
-            {/* {!_creator && !workIsAbout && !workGenre ? null : (
+            {/* explore section for person: teachers and students */}
+            {explore ? (
                 <div className="col s12 m4 explore-items with-border">
                     <p className="title">Explore further</p>
-                    {!_creator ? null : (
-                        <React.Fragment>
-                            <SectionLink label="Author" section={_creator} />
-                            <div className="divider down-push" />
-                        </React.Fragment>
-                    )}
-
-                    {!workIsAbout ? null : (
-                        <React.Fragment>
-                            <SectionLink label="Topic" section={workIsAbout} />
-                            <div className="divider down-push" />
-                        </React.Fragment>
-                    )}
-
-                    {!workGenre ? null : (
-                        <SectionLink label="Genre" section={workGenre} />
-                    )}
+                    {explore}
                 </div>
-            )} */}
+            ) : null}
         </div>
     )
 }

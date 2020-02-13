@@ -88,11 +88,13 @@ class RouteSwitch extends Component {
                                 ? this.props.location.state.label
                                 : null
 
-                            if (initialRender) {
-                                this.props.dispatch(
-                                    fetchIDAction(match.params.id)
-                                )
-                            }
+                            // if (initialRender) {
+                            //     this.props.dispatch(
+                            //         fetchIDAction(match.params.id)
+                            //     )
+                            // }
+
+                            this.props.dispatch(fetchIDAction(match.params.id))
 
                             this.props.dispatch({
                                 type: 'SET_MODAL',
@@ -106,6 +108,8 @@ class RouteSwitch extends Component {
                                         match={match}
                                         history={history}
                                         label={label}
+                                        modalID={match.params.id}
+                                        previousLocation={this.previousLocation}
                                         initialRender={initialRender}
                                     />
                                 </React.Fragment>
@@ -185,6 +189,12 @@ class RouteSwitch extends Component {
         )
     }
 }
+
+// const mapStateToProps = state => ({
+//     _id: state.ES.id.items.hits.hits[0]
+//         ? state.ES.id.items.hits.hits[0]._id
+//         : null,
+// })
 
 const withN = new withNamespaces()(RouteSwitch)
 export default connect()(withN)

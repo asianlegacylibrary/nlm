@@ -1,7 +1,5 @@
-import { constants } from '../_constants'
+import { actions } from '../types'
 import { initialState } from '../initialState'
-
-let { actions } = constants
 
 export default (state = initialState.menu, action) => {
     switch (action.type) {

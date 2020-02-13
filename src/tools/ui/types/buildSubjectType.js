@@ -1,5 +1,6 @@
 import React from 'react'
-import { ParseSection } from '../parseSection'
+import { SectionLinks } from '../../../components/SectionLinks'
+import buildExplore from '../sections/buildExplore'
 /*
 BDRC, Person type
 
@@ -27,41 +28,30 @@ NOT USED
 */
 
 // use 't' variable to translate the labels (Author, etc)
-export function buildSubjectType(itemDetail, t) {
-    let { personGender, personTeacherOf, personStudentOf } = itemDetail
+export function buildSubjectType(itemDetail, itemRelated, t, notes) {
+    const buildRelatedItems = () => {
+        return (
+            <SectionLinks
+                label={'work'}
+                section={itemRelated.hits.hits}
+                convert={true}
+            />
+        )
+    }
 
-    // let topics = workIsAbout ? ParseSection(workIsAbout) : null
-    // let genre = workGenre ? ParseSection(workGenre) : null
-    // let volumes = workNumberOfVolumes ? workNumberOfVolumes : null
-    // let attribution = workBiblioNote ? ParseSection(workBiblioNote) : null
-    // let manifest = _manifestURL ? _manifestURL : null
+    let works = itemRelated.hits.total > 0 ? buildRelatedItems() : null
 
     return (
-        <div>
-            {/* {attribution ? (
-                <div className="meta-detail">
-                    <p className="meta-item">
-                        <span>{attribution}</span>
-                    </p>
+        // main section for person: works and notes
+        <div className="row flex no-margin">
+            <div className="col s12 m7 bottom-items">{notes}</div>
+            {/* explore section for person: teachers and students */}
+            {works ? (
+                <div className="col s12 m5 explore-items with-border">
+                    <p className="title">Explore further</p>
+                    {works}
                 </div>
             ) : null}
-            {topics ? (
-                <div className="related-items">Topics: {topics}</div>
-            ) : null}
-            {genre ? <div className="related-items">Genre: {genre}</div> : null}
-            {volumes ? (
-                <div className="related-items">
-                    Number of Volumes: {volumes}
-                </div>
-            ) : null}
-
-            {manifest ? (
-                <div className="related-items">
-                    <a target="_blank" href={manifest}>
-                        {manifest}
-                    </a>
-                </div>
-            ) : null} */}
         </div>
     )
 }

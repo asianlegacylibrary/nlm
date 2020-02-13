@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { fetchIDAction } from '../store/actions'
+//import { useDispatch } from 'react-redux'
+//import { fetchIDAction } from '../store/actions'
 
 export const SectionLink = ({ section, label }) => {
-    const dispatch = useDispatch()
+    //const dispatch = useDispatch()
     // check for array, if not return null
     if (
         typeof section === 'object' &&
@@ -32,12 +32,12 @@ export const SectionLink = ({ section, label }) => {
                                 to={{
                                     pathname: `/en/archives/doc/bdr:${t._id}`, //${lang}
                                     // this is the trick!
-                                    state: { label: t._value },
+                                    state: { label: t._value, modalID: t._id },
                                 }}
                                 className="span-title card-item-link"
-                                onClick={() =>
-                                    dispatch(fetchIDAction(`bdr:${t._id}`))
-                                }
+                                // onClick={() =>
+                                //     dispatch(fetchIDAction(`bdr:${t._id}`))
+                                // }
                             >
                                 {t._value}
                             </Link>

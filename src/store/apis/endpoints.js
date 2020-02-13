@@ -27,7 +27,7 @@ export const elastic = {
     fetchWorks: '/nlm/_works',
     fetchAuthors: '/nlm/_authors',
     fetchSubjects: '/nlm/_subjects',
-    fetchPlaces: '/nlm/_places',
+    //fetchPlaces: '/nlm/_places',
     fetchID: '/nlm/_ids',
 }
 

@@ -91,9 +91,7 @@ export const addTermToHistory = term => {
     }
     //}
 }
-export const hi = () => {
-    console.log('hi')
-}
+
 //export const someThenableThunk = (filter, isActive) => (dispatch, getState) =>
 export const handleFilters = (filter, isActive) => (dispatch, getState) => {
     return dispatch(
@@ -117,7 +115,7 @@ export const handleFilters = (filter, isActive) => (dispatch, getState) => {
 }
 
 export function actionWrapper(type, payload) {
-    return (dispatch, getState) =>
+    return dispatch =>
         new Promise((resolve, reject) => {
             dispatch({ type: type, payload: payload })
             resolve()

@@ -1,5 +1,6 @@
 import { constants } from '../_constants'
-let { defaultLanguage, routerActions, actions } = constants
+import { actions } from '../types'
+let { defaultLanguage, routerActions } = constants
 
 // should use defaultLanguage code here
 export default (state = defaultLanguage, action) => {

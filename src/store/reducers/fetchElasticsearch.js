@@ -1,9 +1,9 @@
-import { constants } from '../_constants'
+import { actions } from '../types'
 import { initialState } from '../initialState'
-let { actions } = constants
 
 export default (state = initialState.ES, action) => {
     switch (action.type) {
+        /* REQUESTS */
         case actions.REQUEST_RESULTS:
             return {
                 ...state,
@@ -45,14 +45,14 @@ export default (state = initialState.ES, action) => {
                     isFetching: true,
                 },
             }
-        case actions.REQUEST_PLACES:
-            return {
-                ...state,
-                places: {
-                    ...state.places,
-                    isFetching: true,
-                },
-            }
+        // case actions.REQUEST_PLACES:
+        //     return {
+        //         ...state,
+        //         places: {
+        //             ...state.places,
+        //             isFetching: true,
+        //         },
+        //     }
         case actions.REQUEST_ALL:
             return {
                 ...state,
@@ -68,12 +68,12 @@ export default (state = initialState.ES, action) => {
                     ...state.subjects,
                     isFetching: true,
                 },
-                places: {
-                    ...state.places,
-                    isFetching: true,
-                },
+                // places: {
+                //     ...state.places,
+                //     isFetching: true,
+                // },
             }
-
+        /* RECEIVES */
         case actions.RECEIVE_RESULTS:
             return {
                 ...state,
@@ -117,12 +117,12 @@ export default (state = initialState.ES, action) => {
                     items: action.payload.SUBJECTS,
                     lastUpdated: Date.now(),
                 },
-                places: {
-                    ...state.places,
-                    isFetching: false,
-                    items: action.payload.PLACES,
-                    lastUpdated: Date.now(),
-                },
+                // places: {
+                //     ...state.places,
+                //     isFetching: false,
+                //     items: action.payload.PLACES,
+                //     lastUpdated: Date.now(),
+                // },
             }
         case actions.RECEIVE_ID:
             return {
@@ -165,15 +165,21 @@ export default (state = initialState.ES, action) => {
                     lastUpdated: Date.now(),
                 },
             }
-        case actions.RECEIVE_PLACES:
+        // case actions.RECEIVE_PLACES:
+        //     return {
+        //         ...state,
+        //         places: {
+        //             ...state.places,
+        //             isFetching: false,
+        //             items: action.payload,
+        //             lastUpdated: Date.now(),
+        //         },
+        //     }
+        case actions.CLEAR_ID:
+            console.log('this is clear id')
             return {
                 ...state,
-                places: {
-                    ...state.places,
-                    isFetching: false,
-                    items: action.payload,
-                    lastUpdated: Date.now(),
-                },
+                id: initialState.ES.id,
             }
         default:
             return state

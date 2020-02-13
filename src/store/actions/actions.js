@@ -1,6 +1,5 @@
-import { constants } from '../_constants'
-let { actions } = constants
-
+import { actions } from '../types'
+import { fetchResultsAction } from '../actions'
 // do the resolve reject within here? vs above...
 export const someThenableThunk = (filter, isActive) => (dispatch, getState) =>
     Promise.resolve()
@@ -91,6 +90,30 @@ export const addTermToHistory = term => {
         term,
     }
     //}
+}
+export const hi = () => {
+    console.log('hi')
+}
+//export const someThenableThunk = (filter, isActive) => (dispatch, getState) =>
+export const handleFilters = (filter, isActive) => (dispatch, getState) => {
+    return dispatch(
+        actionWrapper(actions.ADD_TERM_TO_FILTER, {
+            filter: filter,
+            isActive: isActive,
+        })
+    )
+        .then(() => {
+            const { currentSearchTerm, filterArray } = getState()
+            dispatch(
+                fetchResultsAction({
+                    term: currentSearchTerm,
+                    filterArray: filterArray,
+                })
+            )
+        })
+        .catch(error => {
+            console.log('fetch error in filter component', error)
+        })
 }
 
 export function actionWrapper(type, payload) {

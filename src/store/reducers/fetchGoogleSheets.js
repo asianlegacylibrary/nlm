@@ -1,6 +1,4 @@
-import { constants } from '../_constants'
-let { actions } = constants
-
+import { actions } from '../types'
 export default (state = { items: {} }, action) => {
     switch (action.type) {
         case actions.REQUEST_GS:

@@ -6,22 +6,23 @@ import { withNamespaces } from 'react-i18next'
 import M from 'materialize-css'
 
 import SidebarFilterItem from './SidebarFilterItem'
+import SidebarFilterList from './SidebarFilterList'
 
-import { fetchResultsAction, actionWrapper } from '../store/actions'
 import { getTotal } from '../store/selectors'
-import { constants } from '../store/_constants'
-let { actions } = constants
 
 class SidebarFilters extends Component {
-    state = {
-        sidenavOptions: {
-            edge: 'left',
-            inDuration: 250,
-        },
-        collapsibleOptions: {
-            accordion: false,
-        },
-        screenWidth: 0,
+    constructor(props) {
+        super(props)
+        this.state = {
+            sidenavOptions: {
+                edge: 'left',
+                inDuration: 250,
+            },
+            collapsibleOptions: {
+                accordion: false,
+            },
+            screenWidth: 0,
+        }
     }
 
     componentDidMount = () => {
@@ -36,51 +37,6 @@ class SidebarFilters extends Component {
         M.Sidenav.init(sidenavElems, this.state.sidenavOptions)
     }
 
-    handleFilters = (filter, isActive) => {
-        let { currentSearchTerm } = this.props
-
-        this.props
-            .dispatch(
-                actionWrapper(actions.ADD_TERM_TO_FILTER, {
-                    filter: filter,
-                    isActive: isActive,
-                })
-            )
-            .then(() => {
-                this.props.dispatch(
-                    fetchResultsAction({
-                        term: currentSearchTerm,
-                        filterArray: this.props.filterArray,
-                    })
-                )
-                this.setState({ currentFilterArray: this.props.filterArray })
-            })
-            .catch(error => {
-                console.log('fetch error in filter component', error)
-            })
-    }
-
-    // handleClick = () => {
-    //     this.filterItem.current.setActive()
-    // }
-
-    // onClick need to also make item not active in listing
-    buildFilterList = () => {
-        let { filterArray } = this.props
-        return filterArray.map(f => {
-            return (
-                <p
-                    key={`list-${f.label}`}
-                    className={`filter-${f.type} with-border`}
-                    //onClick={this.handleClick} //this.handleFilter(f, false)
-                >
-                    {f.label}
-                    <i className="fal fa-times-circle valign-wrapper" />
-                </p>
-            )
-        })
-    }
-
     buildFilters = (title, filter) => {
         if (filter.buckets.length === 0) {
             return null
@@ -93,13 +49,12 @@ class SidebarFilters extends Component {
                     <i className="fal fa-chevron-double-down right fade-up" />
                 </div>
                 <div className="collapsible-body">
-                    {filter.buckets.map(b => {
+                    {filter.buckets.map((b, i) => {
                         return (
                             <SidebarFilterItem
                                 key={b.key}
                                 listItem={b}
                                 type={title}
-                                handleFilters={this.handleFilters}
                             />
                         )
                     })}
@@ -109,27 +64,13 @@ class SidebarFilters extends Component {
     }
 
     render() {
-        let { t, filters, filterArray, results } = this.props
+        let { t, filters } = this.props
         if (Object.entries(filters) === 0) {
             return null
         }
 
-        let currentFilters = null
-
-        if (filterArray.length > 0 || results.length > 0) {
-            currentFilters = (
-                <div className="current-filters">{this.buildFilterList()}</div>
-            )
-        }
-
         return (
             <React.Fragment>
-                {currentFilters ? (
-                    <li>
-                        <div className="user-view">{currentFilters}</div>
-                    </li>
-                ) : null}
-
                 {Object.entries(filters).map(([title, filter]) => {
                     return this.buildFilters(title, filter)
                 })}

@@ -1,10 +1,8 @@
 import React from 'react'
 import { SectionLink } from '../../../components/SectionLink'
-//import { parseSection } from '../parseSection'
-//import parseAgain from '../parseAgain'
-//import { unpackOntology } from '../../ontology'
-import { constants } from '../../../store/_constants'
-let { IIIFsuffix } = constants
+import buildExplore from '../sections/buildExplore'
+import Img from '../sections/buildImg'
+
 /*
 BDRC, Work type
 
@@ -41,70 +39,11 @@ NOT USED
 
 */
 
-function buildScansBtn(t, manifestURL) {
-    let btn = null
-    if (manifestURL == null) {
-        return null
-    }
-    if (manifestURL !== undefined) {
-        //window.localStorage.setItem("manifestURL", this.props.manifestURL)
-        if (manifestURL.length === 0) {
-            //window.localStorage.setItem("manifestURL", "")
-            btn = null
-        } else {
-            btn = (
-                <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={
-                        process.env.PUBLIC_URL +
-                        '/uv.html?manifest=' +
-                        manifestURL
-                    }
-                >
-                    <button>
-                        <i className="fa fa-2x fa-eye"></i> {t('modal.scans')}
-                    </button>
-                </a>
-            )
-        }
-    }
-    return btn
-}
-
-//SCANS button on the img itself
-function buildImg(t, _img, _manifestURL) {
-    let img = null
-    let manifest = _manifestURL
-        ? process.env.PUBLIC_URL + '/uv.html?manifest=' + _manifestURL
-        : null
-    if (_img === 'Not Found') {
-        img = <div>{t('modal.image-not-found')}</div>
-    } else if (_img == null) {
-        img = <div className="blinky">{t('technical.loading-image')}</div>
-    } else {
-        if (manifest) {
-            img = (
-                <a href={manifest} target="_blank" rel="noopener noreferrer">
-                    <img
-                        src={`${_img}/${IIIFsuffix}`}
-                        width="100%"
-                        alt="scan"
-                    />
-                </a>
-            )
-        } else {
-            img = <img src={`${_img}/${IIIFsuffix}`} width="100%" alt="scan" />
-        }
-    }
-    return img
-}
-
 // use 't' variable to translate the labels (Author, etc)
 export function buildWorkType(itemDetail, itemRelated, t, notes) {
     let {
-        workIsAbout,
-        workGenre,
+        //workIsAbout,
+        //workGenre,
         workNumberOfVolumes,
         workBiblioNote,
         //workCatalogInfo,
@@ -114,7 +53,7 @@ export function buildWorkType(itemDetail, itemRelated, t, notes) {
         //workPublisherLocation,
         _manifestURL,
         _firstImageURL,
-        _creator,
+        //_creator,
     } = itemDetail
 
     let volumes = workNumberOfVolumes ? workNumberOfVolumes : null
@@ -122,11 +61,13 @@ export function buildWorkType(itemDetail, itemRelated, t, notes) {
         <SectionLink label="biblio" section={workBiblioNote} />
     ) : null
 
-    let img = _firstImageURL ? buildImg(t, _firstImageURL, _manifestURL) : null
+    //let img = buildImg(t, _firstImageURL, _manifestURL) // _firstImageURL ? buildImg(t, _firstImageURL, _manifestURL) : null
 
     let pubName = workPublisherName ? (
         <SectionLink label="publisher" section={workPublisherName} />
     ) : null
+
+    let explore = buildExplore(itemDetail, 'author', 'subject', 'genre')
 
     return (
         <React.Fragment>
@@ -137,7 +78,7 @@ export function buildWorkType(itemDetail, itemRelated, t, notes) {
                     </div>
                 </div>
             )}
-            {img}
+            <Img t={t} _img={_firstImageURL} _manifestURL={_manifestURL} />
             <div className="row flex no-margin">
                 <div className="col s12 m8 bottom-items">
                     <ul className="meta-detail-list">
@@ -173,34 +114,12 @@ export function buildWorkType(itemDetail, itemRelated, t, notes) {
 
                     {notes}
                 </div>
-                {!_creator && !workIsAbout && !workGenre ? null : (
+                {explore ? (
                     <div className="col s12 m4 explore-items with-border">
                         <p className="title">Explore further</p>
-                        {!_creator ? null : (
-                            <React.Fragment>
-                                <SectionLink
-                                    label="Author"
-                                    section={_creator}
-                                />
-                                <div className="divider down-push" />
-                            </React.Fragment>
-                        )}
-
-                        {!workIsAbout ? null : (
-                            <React.Fragment>
-                                <SectionLink
-                                    label="Topic"
-                                    section={workIsAbout}
-                                />
-                                <div className="divider down-push" />
-                            </React.Fragment>
-                        )}
-
-                        {!workGenre ? null : (
-                            <SectionLink label="Genre" section={workGenre} />
-                        )}
+                        {explore}
                     </div>
-                )}
+                ) : null}
             </div>
         </React.Fragment>
     )

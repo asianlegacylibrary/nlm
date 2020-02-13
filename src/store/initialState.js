@@ -30,16 +30,16 @@ export const initialState = {
             },
             lastUpdated: null,
         },
-        places: {
-            isFetching: false,
-            items: {
-                hits: {
-                    total: 0,
-                    hits: [],
-                },
-            },
-            lastUpdated: null,
-        },
+        // places: {
+        //     isFetching: false,
+        //     items: {
+        //         hits: {
+        //             total: 0,
+        //             hits: [],
+        //         },
+        //     },
+        //     lastUpdated: null,
+        // },
         search: {
             isFetching: false,
             currentSearch: false,

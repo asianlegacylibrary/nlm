@@ -1,6 +1,7 @@
 import '../assets/sass/nlm/search.scss'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import SidebarFilterList from './SidebarFilterList'
 import { withNamespaces } from 'react-i18next'
 import { constants } from '../store/_constants'
 //import { getRandomInt } from '../tools/utilities'
@@ -13,7 +14,6 @@ import {
     fetchWorksAction,
     fetchAuthorsAction,
     fetchSubjectsAction,
-    fetchPlacesAction,
     setMenu,
     setOffsets,
 } from '../store/actions'
@@ -49,9 +49,6 @@ class SearchBar extends Component {
             } else if (this.props.menu === 'subjects') {
                 action = this.props.fetchSubjectsAction
                 args = { offset: offset }
-            } else if (this.props.menu === 'places') {
-                action = this.props.fetchPlacesAction
-                args = { offset: offset }
             }
             action(args)
             this.props.setOffsets(this.props.menu, offset)
@@ -77,9 +74,6 @@ class SearchBar extends Component {
                 args = { offset: offset }
             } else if (this.props.menu === 'subjects') {
                 action = this.props.fetchSubjectsAction
-                args = { offset: offset }
-            } else if (this.props.menu === 'places') {
-                action = this.props.fetchPlacesAction
                 args = { offset: offset }
             }
             action(args)
@@ -157,6 +151,7 @@ class SearchBar extends Component {
                         }
                     />
                 </div>
+                <SidebarFilterList />
                 <div className="result-pagination">
                     <button
                         className="waves-effect waves-light btn"
@@ -218,7 +213,6 @@ export default connect(mapStateToProps, {
     fetchWorksAction,
     fetchAuthorsAction,
     fetchSubjectsAction,
-    fetchPlacesAction,
     setMenu,
     setOffsets,
 })(withN)

@@ -1,6 +1,7 @@
 import '../assets/sass/nlm/modal.scss'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { fetchIDAction } from '../store/actions'
 import {
     buildWorkType,
     buildPersonType,
@@ -18,12 +19,33 @@ class Modal extends Component {
     state = {}
 
     handleBackButton = (initialRender, e) => {
-        let lang = this.props.match.params.lng
         e.preventDefault()
-        this.props.dispatch({ type: 'SET_MODAL', payload: false })
+        console.log(this.props)
+        let { lang, id } = this.props.match.params
+        // let previousModalID = null
+
+        // if (this.props.previousLocation.state) {
+        //     previousModalID = this.props.previousLocation.state.modalID
+        // }
+
+        if (!this.props.previousLocation.state) {
+            this.props.dispatch({ type: 'SET_MODAL', payload: false })
+        }
+
         if (initialRender) {
             this.props.history.push(`/${lang}/archives`)
         } else {
+            //console.log(previousModalID)
+            // if (previousModalID) {
+            //     if (previousModalID !== id) {
+            //         previousModalID =
+            //             previousModalID.substring(0, 3) === 'bdr'
+            //                 ? previousModalID
+            //                 : `bdr:${previousModalID}`
+            //         this.props.dispatch(fetchIDAction(previousModalID))
+            //     }
+            // }
+
             this.props.history.goBack()
         }
 
@@ -35,11 +57,11 @@ class Modal extends Component {
             ? 'modal display-block'
             : 'modal display-none'
 
-        const { itemDetail, itemRelated, t, match, label } = this.props
+        const { itemDetail, itemRelated, t, match } = this.props
         if (!itemDetail) {
             return null
         }
-        const { _notes, workCatalogInfo } = itemDetail
+        const { _notes, workCatalogInfo, _label } = itemDetail
         const id = match.params.id
         let buildType
         let topSection, catalog
@@ -115,7 +137,7 @@ class Modal extends Component {
                                 {personal}
                             </div>
 
-                            <div className="modal-title">{label}</div>
+                            <div className="modal-title">{_label}</div>
 
                             {buildType(itemDetail, itemRelated, t, notes)}
 

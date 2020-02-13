@@ -18,7 +18,7 @@ const SearchResults = ({ match, t }) => {
     const dispatch = useDispatch()
 
     const handleShowDetails = doc_id => {
-        dispatch(fetchIDAction(doc_id))
+        //dispatch(fetchIDAction(doc_id))
     }
 
     const selectedMenu = useSelector(state => state.selectedMenu)

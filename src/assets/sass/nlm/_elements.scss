@@ -101,8 +101,11 @@ input[type='text']:not(.browser-default) {
 }
 
 .fade-up {
-    opacity: 0.1;
+    opacity: 0.4;
     transition: opacity 300ms;
+    &:hover {
+        opacity: 1;
+    }
 }
 .hover-little {
     &:hover {
@@ -141,10 +144,9 @@ input[type='text']:not(.browser-default) {
 
 .img-link {
     opacity: 1;
-    transition: opacity 300ms;
-
+    transition: all 700ms ease-out;
     &:hover {
-        opacity: 0.4;
+        opacity: 0.3;
     }
 }
 
@@ -162,21 +164,31 @@ input[type='text']:not(.browser-default) {
         .content {
             opacity: 1;
         }
+        .reverse-content {
+            opacity: 0;
+        }
+    }
+    .reverse-content,
+    .content {
+        position: absolute;
+        transition: all 400ms ease-out;
+        user-select: none;
+    }
+    .reverse-content {
+        opacity: 1;
+        font-size: 2em;
+        bottom: 6%;
+        left: 4%;
+        color: $c-light;
     }
     .content {
         opacity: 0;
-        color: $c-light;
-        font-size: 2em;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        position: absolute;
+        font-size: 1.4em;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        transition: all 400ms ease-out;
         text-align: center;
-        user-select: none;
-        cursor: pointer;
+        color: $c-dark;
     }
 }
 
@@ -223,3 +235,16 @@ input[type='text']:not(.browser-default) {
         font-size: 1.4em;
     }
 }
+
+// color: $c-light;
+// font-size: 2em;
+// text-transform: uppercase;
+// letter-spacing: 0.1em;
+// position: absolute;
+// bottom: 0%;
+// right: 0%;
+// transform: translate(-50%, -50%);
+// transition: all 400ms ease-out;
+// //text-align: center;
+// user-select: none;
+// cursor: pointer;

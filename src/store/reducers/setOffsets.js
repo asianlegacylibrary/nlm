@@ -1,7 +1,5 @@
-import { constants } from '../_constants'
+import { actions } from '../types'
 import { initialState } from '../initialState'
-
-let { actions } = constants
 
 // SEARCH RESULTS
 export default (state = initialState.offsets, action) => {

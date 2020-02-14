@@ -13,7 +13,7 @@ import {
     buildPlaceType,
     buildMeta,
     buildNotes,
-    parseSection,
+    //parseSection,
 } from '../tools/ui'
 import { SectionLink } from './SectionLink'
 
@@ -60,7 +60,7 @@ class Details extends React.Component {
 
         if (id[4] === 'W') {
             buildType = buildWorkType
-            catalog = workCatalogInfo ? parseSection(workCatalogInfo) : null
+            catalog = workCatalogInfo //? parseSection(workCatalogInfo) : null
             author = _creator ? (
                 <SectionLink label="Author" section={_creator} />
             ) : null

@@ -45,7 +45,8 @@ export const wpURL = axios.create({
 // GOOGLE SHEETS
 export const gs = {
     d: `https://docs.google.com/spreadsheets/d/`,
-    gsKey: `1hPqe-Y2TWwMTAxIEXYvc8du_GMFUJQNPvZbJou7veAY`,
+    gsKey_original: `1hPqe-Y2TWwMTAxIEXYvc8du_GMFUJQNPvZbJou7veAY`,
+    gsKey: `1PPvGoikEC37L-dtigW9FEk9-IZRoalmS28HkRfaIVT4`,
     testKey: `1P6Dk9SN0af7GDitw7-tRXGc5N22AEXoaOpDIKzVdlK0`,
     editParam: `/edit?usp=sharing`,
 }

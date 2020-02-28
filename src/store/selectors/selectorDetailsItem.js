@@ -14,6 +14,6 @@ export function selectorDetailsItem(itemDetails) {
             newObj[k] = v
         }
     })
-    console.log(newObj)
+
     return newObj
 }

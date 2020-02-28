@@ -32,7 +32,7 @@ def get_xml(config):
     e = ssh_config.lookup(config['host'])
     ssh.connect(e['hostname'], username=e['user'])
 
-    # SCPClient takes a paramiko transport as an argument
+    # SCPClient takes a Paramiko transport as an argument
     scp = SCPClient(ssh.get_transport())
     scp.get(remote_path=config['remote_path'], local_path=local_path)
     scp.close()

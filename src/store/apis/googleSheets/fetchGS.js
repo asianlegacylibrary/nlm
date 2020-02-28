@@ -19,6 +19,7 @@ const tableTopInit = async () => {
 export default async () => {
     try {
         const data = await tableTopInit()
+
         // add some data processing
         let gsData = {}
         data.forEach(d => {

@@ -42,7 +42,7 @@
 }
 
 .span-title {
-    text-transform: uppercase;
+    //text-transform: uppercase;
     padding: 0 1em 0 0;
     font-weight: bold;
 }
@@ -104,6 +104,7 @@
     input {
         color: $c-light;
         font-size: 1.6em;
+        text-transform: none !important;
     }
 
     label {

@@ -23,7 +23,7 @@
 }
 .card-type {
     padding: 0.4em;
-    text-transform: uppercase;
+    //text-transform: uppercase;
     color: $c-light;
     font-weight: bold;
     margin: 1em 1em 1em 0;
@@ -66,7 +66,7 @@
 .full-text-selection {
     color: $c-gold-dark;
     cursor: pointer;
-    text-transform: uppercase;
+    //text-transform: uppercase;
     letter-spacing: 0.1em;
     &:hover {
         color: $c-blue-darker;
@@ -75,7 +75,7 @@
 
 .result-label {
     font-size: 1.4em;
-    text-transform: uppercase;
+    //text-transform: uppercase;
     padding: 0.4em 0;
 }
 .result-id {

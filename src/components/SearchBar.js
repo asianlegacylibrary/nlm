@@ -85,7 +85,7 @@ class SearchBar extends Component {
 
     handleChange = e => {
         e.preventDefault()
-        this.setState({ term: e.target.value.toUpperCase() })
+        this.setState({ term: e.target.value })
     }
 
     handleSearch = e => {
@@ -152,6 +152,15 @@ class SearchBar extends Component {
                     />
                 </div>
                 <SidebarFilterList />
+                <button
+                    className="waves-effect waves-light btn"
+                    disabled={this.props.currentlyFetchingResults}
+                    onClick={e => this.handleSearch(e)}
+                >
+                    {this.props.currentlyFetchingResults
+                        ? 'Searching'
+                        : `Search`}
+                </button>
                 <div className="result-pagination">
                     <button
                         className="waves-effect waves-light btn"

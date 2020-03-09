@@ -23,7 +23,7 @@ class RouteSwitch extends Component {
         .join('|')
 
     componentDidMount() {
-        this.languageCheckAndUpdate()
+        this.generalCheckAndUpdate()
     }
 
     componentDidUpdate(prevProps) {
@@ -34,18 +34,12 @@ class RouteSwitch extends Component {
         }
     }
 
-    languageCheckAndUpdate() {
+    generalCheckAndUpdate() {
         const { history, dispatch, t } = this.props
         const url = history.location.pathname
 
-        // if (url.split('/')[2] !== undefined) {
-        //     if (Object.keys(t('pages')).includes(url.split('/')[2])) {
-        //         dispatch(setPage('archives'))
-        //     } else {
-        //         dispatch(setPage('home'))
-        //         history.push(`/${url.split('/')[1]}`)
-        //     }
-        // }
+        // when component mounts, match params empty, so must call this from routes
+        //dispatch(setPage(match.params.page))
 
         if (url.split('/')[1] in languages) {
             this.setLang(url.split('/')[1])
@@ -88,12 +82,6 @@ class RouteSwitch extends Component {
                                 ? this.props.location.state.label
                                 : null
 
-                            // if (initialRender) {
-                            //     this.props.dispatch(
-                            //         fetchIDAction(match.params.id)
-                            //     )
-                            // }
-
                             this.props.dispatch(fetchIDAction(match.params.id))
 
                             this.props.dispatch({
@@ -116,6 +104,7 @@ class RouteSwitch extends Component {
                             )
                         }}
                     />
+
                     <Route
                         exact
                         path={`/:lng(${this.l})/archives`}
@@ -133,7 +122,16 @@ class RouteSwitch extends Component {
                     />
 
                     {/* if we add other pages, would be something like this... */}
-                    <Route path={`/:lng(${this.l})/:page`} component={Page} />
+                    <Route
+                        path={`/:lng(${this.l})/:page`}
+                        render={({ match }) => {
+                            if (match.params.page) {
+                                this.props.dispatch(setPage(match.params.page))
+                            }
+
+                            return <Page />
+                        }}
+                    />
 
                     <Route
                         exact

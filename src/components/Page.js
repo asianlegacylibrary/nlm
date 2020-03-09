@@ -24,6 +24,7 @@ class Page extends Component {
     }
 
     renderContent = page => {
+        console.log('render content of page', page)
         if (parseInt(page.acf.columns) === 2) {
             return (
                 <div key={page.slug} className="row">

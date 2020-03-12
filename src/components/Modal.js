@@ -20,7 +20,6 @@ class Modal extends Component {
 
     handleBackButton = (initialRender, e) => {
         e.preventDefault()
-        console.log(this.props)
         let { lang, id } = this.props.match.params
         // let previousModalID = null
 
@@ -28,26 +27,15 @@ class Modal extends Component {
         //     previousModalID = this.props.previousLocation.state.modalID
         // }
 
-        if (!this.props.previousLocation.state) {
-            this.props.dispatch({ type: 'SET_MODAL', payload: false })
-        }
+        // if (!this.props.previousLocation.state) {
+        //     this.props.dispatch({ type: 'SET_MODAL', payload: false })
+        // }
 
-        if (initialRender) {
-            this.props.history.push(`/${lang}/archives`)
-        } else {
-            //console.log(previousModalID)
-            // if (previousModalID) {
-            //     if (previousModalID !== id) {
-            //         previousModalID =
-            //             previousModalID.substring(0, 3) === 'bdr'
-            //                 ? previousModalID
-            //                 : `bdr:${previousModalID}`
-            //         this.props.dispatch(fetchIDAction(previousModalID))
-            //     }
-            // }
+        // if (initialRender) {
+        //     this.props.history.push(`/${lang}/archives`)
+        // }
 
-            this.props.history.goBack()
-        }
+        this.props.history.goBack()
 
         e.stopPropagation()
     }

@@ -24,7 +24,7 @@ class Page extends Component {
     }
 
     renderContent = page => {
-        console.log('render content of page', page)
+        //console.log('render content of page', page)
         if (parseInt(page.acf.columns) === 2) {
             return (
                 <div key={page.slug} className="row">
@@ -56,21 +56,20 @@ class Page extends Component {
             )
         } else {
             return (
-                <div key={page.slug} className="row">
-                    <div className="col s12 posts-col">
-                        <h2>{page.acf.title}</h2>
-                        {/* <span className="image">
-                            <img src={mediaURL} alt="" />
-                        </span> */}
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: page.content.rendered,
-                            }}
-                        />
-                        <div className="divider-with-logo">
-                            <div className="hr-line-left"></div>
-                            <img src={nlm_logo} width="24px" alt="logo" />
-                            <div className="hr-line-right"></div>
+                <div className="container">
+                    <div key={page.slug} className="row">
+                        <div className="col s12 posts-col">
+                            <h2>{page.title.rendered}</h2>
+                            <p
+                                dangerouslySetInnerHTML={{
+                                    __html: page.content.rendered,
+                                }}
+                            />
+                            <div className="divider-with-logo">
+                                <div className="hr-line-left"></div>
+                                <img src={nlm_logo} width="24px" alt="logo" />
+                                <div className="hr-line-right"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

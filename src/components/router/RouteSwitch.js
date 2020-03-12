@@ -32,6 +32,8 @@ class RouteSwitch extends Component {
         if (prevProps.history.action !== 'POP') {
             this.previousLocation = location
         }
+
+        this.generalCheckAndUpdate()
     }
 
     generalCheckAndUpdate() {
@@ -41,20 +43,29 @@ class RouteSwitch extends Component {
         // when component mounts, match params empty, so must call this from routes
         //dispatch(setPage(match.params.page))
 
-        if (url.split('/')[1] in languages) {
-            this.setLang(url.split('/')[1])
+        if (url.split('/')[2]) {
+            //console.log('there is a page!', url.split('/')[2])
+            dispatch(setPage(url.split('/')[2]))
         } else {
-            this.setLang(defaultLanguage)
+            dispatch(setPage('home'))
+        }
+
+        if (url.split('/')[1] in languages) {
+            //this.setLang(url.split('/')[1])
+            dispatch(setLanguage(url.split('/')[1]))
+        } else {
+            //this.setLang(defaultLanguage)
+            dispatch(setLanguage(defaultLanguage))
             dispatch(setPage('home'))
             history.push(defaultLanguage)
         }
     }
 
-    setLang = lng => {
-        const { i18n, dispatch } = this.props
-        i18n.changeLanguage(lng) // change locale
-        dispatch(setLanguage(lng)) // set redux language
-    }
+    // setLang = lng => {
+    //     const { i18n, dispatch } = this.props
+    //     //i18n.changeLanguage(lng) // change locale !!! this leads to infinite loop
+    //     dispatch(setLanguage(lng)) // set redux language
+    // }
 
     render() {
         let initialRender = this.props.location === this.previousLocation
@@ -124,27 +135,23 @@ class RouteSwitch extends Component {
                     {/* if we add other pages, would be something like this... */}
                     <Route
                         path={`/:lng(${this.l})/:page`}
-                        render={({ match }) => {
-                            if (match.params.page) {
-                                this.props.dispatch(setPage(match.params.page))
-                            }
-
-                            return <Page />
-                        }}
+                        render={({ history }) => <Page history={history} />}
                     />
 
                     <Route
                         exact
                         path={`/:lng(${this.l})`}
-                        render={({ history, match }) => (
-                            <React.Fragment>
-                                <Page history={history} />
-                                <Stats match={match} />
-                                <div className="container">
-                                    <Posts />
-                                </div>
-                            </React.Fragment>
-                        )}
+                        render={({ history, match }) => {
+                            return (
+                                <React.Fragment>
+                                    <Page history={history} />
+                                    <Stats match={match} />
+                                    <div className="container">
+                                        <Posts />
+                                    </div>
+                                </React.Fragment>
+                            )
+                        }}
                     />
 
                     <Route

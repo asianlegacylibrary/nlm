@@ -2,6 +2,13 @@
 @import '~materialize-css/sass/components/variables';
 @import './vars';
 
+#dropdown-nav.dropdown-content {
+    height: auto !important;
+    li {
+        padding: 1em;
+    }
+}
+
 .language-list {
     list-style: none;
     margin-right: auto;
@@ -115,6 +122,7 @@ button:disabled,
         }
     }
 }
+
 .search-form-icon {
     font-size: 4em;
     color: $c-light;

@@ -4,7 +4,9 @@ export const initialState = {
             isFetching: false,
             items: {
                 hits: {
-                    total: 0,
+                    total: {
+                        value: 0,
+                    },
                     hits: [],
                 },
             },
@@ -14,7 +16,9 @@ export const initialState = {
             isFetching: false,
             items: {
                 hits: {
-                    total: 0,
+                    total: {
+                        value: 0,
+                    },
                     hits: [],
                 },
             },
@@ -24,7 +28,9 @@ export const initialState = {
             isFetching: false,
             items: {
                 hits: {
-                    total: 0,
+                    total: {
+                        value: 0,
+                    },
                     hits: [],
                 },
             },
@@ -45,7 +51,9 @@ export const initialState = {
             currentSearch: false,
             items: {
                 hits: {
-                    total: 0,
+                    total: {
+                        value: 0,
+                    },
                     hits: [],
                 },
             },
@@ -56,13 +64,17 @@ export const initialState = {
             isFetching: false,
             items: {
                 hits: {
-                    total: 0,
+                    total: {
+                        value: 0,
+                    },
                     hits: [],
                 },
             },
             related: {
                 hits: {
-                    total: 0,
+                    total: {
+                        value: 0,
+                    },
                     hits: [],
                 },
             },

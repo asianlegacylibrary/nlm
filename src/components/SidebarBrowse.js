@@ -8,6 +8,7 @@ const BrowseItem = ({ item }) => {
     let dispatch = useDispatch()
     const currentBrowse = useSelector(state => state.selectedBrowse)
     const total = useSelector(state => getTotal(item, 'browse', state))
+    console.log('total from selector', total)
     let active = !!(currentBrowse === item)
     return (
         <div

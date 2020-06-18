@@ -1,0 +1,115 @@
+{
+    "title": "National Library of Mongolia",
+    "sub-title": "Digital Archives",
+    "technical": {
+        "loading": "Loading...",
+        "loading-simple": "Loading",
+        "loading-image": "Loading image...",
+        "btn-close": "Close",
+        "btn-view": "View Archives",
+        "btn-search": "Search the archives",
+        "btn-next": "Next",
+        "btn-previous": "Previous",
+        "showing": "Showing {min-number} to {max-number} of {total-number}"
+    },
+    "languageCodeLookup": {
+        "English": "en",
+        "Mongolian": "mn"
+    },
+    "languages": {
+        "en": "English",
+        "mn": "Монгол хэл"
+    },
+    "stats": {
+        "Title": "Archive Statistics",
+        "LastUpdate": "Last Update",
+        "PagesDigitized": "Pages Digitized",
+        "VolumesDigitized": "Volumes Digitized",
+        "VolumesCataloged": "Volumes Cataloged",
+        "TitlesCataloged": "Titles Cataloged"
+    },
+    "sidebar": {
+        "browse-by": "Browse by",
+        "browse": "Browse",
+        "search-results": "Search Results",
+        "filter": "Limit results to current collection",
+        "results-filter": "Filter results",
+        "no-results": "No results",
+        "to-begin": "To begin, use the search bar above or browse our listings below"
+    },
+    "details": {
+        "detail": "Detail for record",
+        "nlm-id": "NLM ID",
+        "names": "Name(s)",
+        "author": "Author",
+        "genre": "Genre",
+        "topic": "Topic",
+        "subject": "Subject",
+        "more": "More details...",
+        "explore-further": "Explore further",
+        "attribution": "Scanned at the National Library of Mongolia by Asian Classics Input Project.",
+        "note": "Note",
+        "note-plural": "Notes",
+        "scans": "Scans",
+        "scans-restricted": "Scans Restricted",
+        "image-restricted": "RESTRICTED ACCESS TO IMAGE FILE",
+        "image-not-found": "PREVIEW IMAGE NOT CURRENTLY AVAILABLE.",
+        "meta-print-type": "Print type",
+        "meta-published-by": "Published by",
+        "meta-number-volumes": "Number of volumes",
+        "meta-work-extent": "Work extent",
+        "meta-language": "Language",
+        "author-birth-year": "Born in",
+        "author-birth-between": "Born between",
+        "author-death-year": "Died in",
+        "author-death-between": "Died between",
+        "geography-associated-places": "Associated place(s)"
+    },
+    "browse": {
+        "Title": "Title",
+        "Author": "Author",
+        "Subject": "Subject",
+        "Title-plural": "Titles",
+        "Author-plural": "Authors",
+        "Subject-plural": "Subjects",
+        "search": "Search",
+        "search-plural": "Search",
+        "Place": "Place",
+        "Place-plural": "Places",
+        "results": "Results",
+        "results-plural": "Results",
+        "browse": "Browse",
+        "browse-plural": "Browse",
+        "work": "Work",
+        "work-plural": "Works"
+    },
+    "bdrc-ontology": {
+        "work": "Work",
+        "person": "Person",
+        "topic": "Topic",
+        "subject": "Subject",
+        "geography": "Geography",
+        "item": "Item"
+    },
+    "bdrc-ontology-code": {
+        "W": "Work",
+        "P": "Person",
+        "T": "Topic",
+        "G": "Geography",
+        "I": "Item"
+    },
+    "gender": {
+        "gender": "Gender",
+        "gender-Male": "Male",
+        "gender-Female": "Female"
+    },
+    "footer": {
+        "links": "Links",
+        "terms": "Terms of use",
+        "privacy": "Privacy policy",
+        "contact": "Contact us",
+        "rights": "All rights reserved",
+        "login": "Admin Login",
+        "library-site": "National Library Website"
+    }
+}

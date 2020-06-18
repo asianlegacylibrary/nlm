@@ -21,7 +21,7 @@ python/log.txt
 python/__pycache__
 
 # production, keeping build in repo for webhook to DO
-/build
+# /build
 
 # misc
 .DS_Store

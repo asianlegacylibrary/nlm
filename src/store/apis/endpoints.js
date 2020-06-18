@@ -1,21 +1,23 @@
 import axios from 'axios'
 
-// EXPRESS
-const expressOptions = {
-    //baseUrl: '/api',
-    baseUrl: 'http://api.asianclassics.org',
-    devUrl: 'http://localhost:5000',
-}
+// EXPRESS, can change between local and remote API
+// const expressOptions = {
+//     //baseUrl: '/api',
+//     baseUrl: 'http://api.asianclassics.org',
+//     //baseUrl: 'http://localhost:5000',
+//     devUrl: 'http://localhost:5000',
+// }
 
 // here we use the public api endpoint, which at some point we should close
 // and do something like ACE, proxying through NGINX on 8081 port (/api endpoint)
-const express =
-    window.location.port === '3000'
-        ? expressOptions.devUrl
-        : expressOptions.baseUrl
+// const express =
+//     window.location.port === '3000'
+//         ? expressOptions.devUrl
+//         : expressOptions.baseUrl
 
 export const expressURL = axios.create({
-    baseURL: express,
+    //baseURL: express,
+    baseURL: 'http://api.asianclassics.org',
 })
 
 // Express Routes for NLM

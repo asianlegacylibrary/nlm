@@ -9,6 +9,9 @@
 # within src, there's an archive of old code
 /src/archive
 
+# contains 
+/es
+
 # PYTHON
 # python interpreter files
 python/venv

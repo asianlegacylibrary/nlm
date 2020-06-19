@@ -1,0 +1,15 @@
+[[redirects]]
+from = "/*"
+to = "http://178.128.7.239/wp-json/wp/v2/pages?_embed="
+status = 200
+force = false
+[[redirects]]
+from = "/*"
+to = "http://178.128.7.239/wp-json/wp/v2/posts?_embed="
+status = 200
+force = false
+[[redirects]]
+from = "/*"
+to = "http://api.asianclassics.org/nlm/_all"
+status = 200
+force = false

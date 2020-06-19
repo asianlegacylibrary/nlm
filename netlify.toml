@@ -6,12 +6,12 @@ force = true
 
 [[redirects]]
 from = "/*"
-to = "http://206.189.71.52/wp-json/wp/v2/pages?_embed:splat"
+to = "http://178.128.7.239/wp-json/wp/v2/pages?_embed:splat"
 status = 200
 force = true
 
 [[redirects]]
 from = "/*"
-to = "http://206.189.71.52/wp-json/wp/v2/posts?_embed:splat"
+to = "http://178.128.7.239/wp-json/wp/v2/posts?_embed:splat"
 status = 200
 force = true

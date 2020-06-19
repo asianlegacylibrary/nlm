@@ -1,5 +1,4 @@
 import '../assets/sass/nlm/posts.scss'
-import logo from '../assets/images/logo_all.png'
 import nlm_logo from '../assets/images/nlm_logo_transparent.png'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -14,7 +13,7 @@ const Posts = ({ posts, selectedPage }) => {
 
     return posts.map((post, i) => {
         //strange method to make alternating styles
-        let j = i % 2 === 0 ? 1 : 3
+        //let j = i % 2 === 0 ? 1 : 3
 
         let mediaURL = ''
         if (post._embedded['wp:featuredmedia']) {

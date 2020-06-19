@@ -2,7 +2,6 @@ import '../assets/sass/nlm/footer.scss'
 import React from 'react'
 import { withNamespaces } from 'react-i18next'
 import { constants } from '../store/_constants'
-import logo from '../assets/images/logo_all.png'
 import nlm_full from '../assets/images/nlm_logo_full_transparent.png'
 
 let { buildYear, links } = constants

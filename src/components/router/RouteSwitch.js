@@ -37,7 +37,7 @@ class RouteSwitch extends Component {
     }
 
     generalCheckAndUpdate() {
-        const { history, dispatch, t } = this.props
+        const { history, dispatch } = this.props
         const url = history.location.pathname
 
         // when component mounts, match params empty, so must call this from routes

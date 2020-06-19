@@ -89,6 +89,7 @@ export default (state = initialState.ES, action) => {
                     aggregations: Object.keys(action.payload.AGGS)
                         .sort()
                         .reduce(
+                            // eslint-disable-next-line
                             (r, k) => ((r[k] = action.payload.AGGS[k]), r),
                             {}
                         ),

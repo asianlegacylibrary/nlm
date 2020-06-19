@@ -91,7 +91,7 @@ class Sidebar extends Component {
     }
 
     render() {
-        let { filters, filterArray, results, menu } = this.props
+        let { filters, results, menu } = this.props
         if (Object.entries(filters) === 0) {
             return null
         }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { SectionLinks } from '../../../components/SectionLinks'
-import buildExplore from '../sections/buildExplore'
+//import buildExplore from '../sections/buildExplore'
 /*
 BDRC, Person type
 

@@ -6,7 +6,6 @@ import { withNamespaces } from 'react-i18next'
 import M from 'materialize-css'
 
 import SidebarFilterItem from './SidebarFilterItem'
-import SidebarFilterList from './SidebarFilterList'
 
 import { getTotal } from '../store/selectors'
 
@@ -64,7 +63,7 @@ class SidebarFilters extends Component {
     }
 
     render() {
-        let { t, filters } = this.props
+        let { filters } = this.props
         if (Object.entries(filters) === 0) {
             return null
         }

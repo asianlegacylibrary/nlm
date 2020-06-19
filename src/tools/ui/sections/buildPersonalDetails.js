@@ -38,7 +38,7 @@ const buildParents = (father, mother, parent) => {
     }
     if (!mother && !father && parent) {
         parents.push(<div>Parents</div>)
-        parent.map((p, i) => {
+        parent.forEach((p, i) => {
             parents.push(
                 <SectionLink key={`parent_${i}`} label="Parent" section={p} />
             )

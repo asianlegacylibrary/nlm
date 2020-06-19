@@ -1,9 +1,8 @@
 import '../assets/sass/nlm/card.scss'
 import React from 'react'
 import SearchCard from './SearchCard'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { withNamespaces } from 'react-i18next'
-import { fetchIDAction } from '../store/actions'
 
 function useData(browse, menu) {
     return useSelector(state => {
@@ -15,7 +14,7 @@ function useData(browse, menu) {
 }
 
 const SearchResults = ({ match, t }) => {
-    const dispatch = useDispatch()
+    //const dispatch = useDispatch()
 
     const handleShowDetails = doc_id => {
         //dispatch(fetchIDAction(doc_id))

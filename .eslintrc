@@ -3,6 +3,8 @@
     "plugins": ["prettier"],
     "parser": "babel-eslint",
     "rules": {
-        "prettier/prettier": "error"
+        "prettier/prettier": "error",
+        "no-restricted-syntax": ["error", "SequenceExpression"],
+        "react-hooks/exhaustive-deps": "warn"
     }
 }

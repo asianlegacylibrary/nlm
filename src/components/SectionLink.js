@@ -45,6 +45,7 @@ export const SectionLink = ({ section, label }) => {
                     </div>
                 )
             }
+            return null
         })
     }
     return null

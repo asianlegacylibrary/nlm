@@ -1,6 +1,5 @@
 import {
     fetchGSAction,
-    fetchWorksAction,
     fetchAllAction,
     fetchWPPostsAction,
     fetchWPPagesAction,

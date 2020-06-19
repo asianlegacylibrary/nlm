@@ -49,6 +49,7 @@ export const SectionLinks = ({ section, label, convert }) => {
                     </Link>
                 )
             }
+            return null
         })
         let l = items.length > 1 ? `${label}s` : label
         return (

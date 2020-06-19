@@ -17,7 +17,7 @@ class SidebarFilterItem extends Component {
     }
 
     render() {
-        let { listItem, type, filterArray, id } = this.props
+        let { listItem, type, filterArray } = this.props
         let activated = !!filterArray.some(f => f.label === listItem.key)
         return (
             <div

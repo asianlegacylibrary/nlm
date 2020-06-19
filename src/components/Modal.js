@@ -1,7 +1,6 @@
 import '../assets/sass/nlm/modal.scss'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchIDAction } from '../store/actions'
 import {
     buildWorkType,
     buildPersonType,
@@ -20,7 +19,7 @@ class Modal extends Component {
 
     handleBackButton = (initialRender, e) => {
         e.preventDefault()
-        let { lang, id } = this.props.match.params
+        // let { lang, id } = this.props.match.params
         // let previousModalID = null
 
         // if (this.props.previousLocation.state) {

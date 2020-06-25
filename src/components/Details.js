@@ -25,6 +25,7 @@ class Details extends React.Component {
         }
     }
 
+    
     // handleHideModal = (initialRender, e) => {
     //     //this.props.dispatch({ type: 'SET_MODAL', show: false })
 

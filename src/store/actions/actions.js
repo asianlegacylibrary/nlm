@@ -139,3 +139,10 @@ export const setOffsets = (offsetType, offset) => {
         offset,
     }
 }
+
+export const setModal = (isSet) => {
+    return {
+        type: actions.SET_MODAL,
+        isSet
+    }
+}

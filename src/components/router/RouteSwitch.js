@@ -11,7 +11,7 @@ import Posts from '../Posts'
 import Page from '../Page'
 import Modal from '../Modal'
 
-import { setPage, setLanguage, fetchIDAction } from '../../store/actions'
+import { setPage, setLanguage, fetchIDAction, setModal } from '../../store/actions'
 import { constants } from '../../store/_constants'
 import SearchForm from '../SearchForm'
 let { languages, defaultLanguage } = constants

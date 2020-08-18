@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,8 +10,9 @@
     <script src="uv/helpers.js"></script>
     <title>NLM IIIF Viewer</title>
 </head>
+
 <body>
-    
+
     <div id="uv" class="uv"></div>
 
     <script>
@@ -20,18 +22,25 @@
         window.addEventListener('uvLoaded', function (e) {
             //const manifest = localStorage.getItem("manifestURL")
             const urlParams = new URLSearchParams(window.location.search)
-            const manifest = urlParams.get('manifest')
-            
-            console.log("event on window, uvLoaded")
-            console.log("window.UV", window.UV)
-            myUV = createUV('#uv', {
-                iiifResourceUri: manifest, //localStorage.getItem("manifestURL"),
-                configUri: 'uv.json'
-            }, new UV.URLDataProvider());
+            var urlDataProvider = new UV.URLDataProvider(true)
+
+            // console.log('window.UV', window.UV)
+            myUV = createUV(
+                '#uv',
+                {
+                    iiifResourceUri: urlParams.get('manifest'), //localStorage.getItem("manifestURL"),
+                    collectionIndex: Number(urlDataProvider.get('c', 0)),
+                    manifestIndex: Number(urlDataProvider.get('m', 0)),
+                    sequenceIndex: Number(urlDataProvider.get('s', 0)),
+                    canvasIndex: Number(urlDataProvider.get('cv', 0)),
+                    configUri: 'uv.json',
+                },
+                new UV.URLDataProvider()
+            )
 
             console.log("new UV created", myUV)
 
-            myUV.on("created", function(obj) {
+            myUV.on("created", function (obj) {
                 //window.Utils.Urls.setHashParameter('manifest', localStorage.getItem("manifestURL"))
                 console.log('parsed metadata', myUV.extension.helper.manifest.getMetadata());
                 console.log('raw jsonld', myUV.extension.helper.manifest.__jsonld);
@@ -43,4 +52,5 @@
 
     <script defer src="uv/uv.js"></script>
 </body>
+
 </html>

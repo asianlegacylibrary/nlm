@@ -25,7 +25,6 @@ class Details extends React.Component {
         }
     }
 
-    
     // handleHideModal = (initialRender, e) => {
     //     //this.props.dispatch({ type: 'SET_MODAL', show: false })
 
@@ -108,7 +107,7 @@ class Details extends React.Component {
                             this.handleBackButton(this.props.initialRender, e)
                         }
                     >
-                        <i className="icon fal fa-long-arrow-left fa-2x" />
+                        <i className="icon fa fa-long-arrow-left fa-2x" />
                     </div>
                 </div>
                 <div className="detail-data">

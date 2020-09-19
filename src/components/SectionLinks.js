@@ -58,7 +58,7 @@ export const SectionLinks = ({ section, label, convert }) => {
                     <li className={`active ${label}`}>
                         <div className="collapsible-header">
                             {l}
-                            <i className="fal fa-chevron-double-down right fade-up" />
+                            <i className="fa fa-chevron-double-down right fade-up" />
                         </div>
                         <div className="collapsible-body">{items}</div>
                     </li>

@@ -9,7 +9,7 @@ const NavSub = () => {
         <React.Fragment>
             <div className="row no-margin valign-wrapper nav-sub">
                 <div className="col s2 m3 center-align">
-                    <i className="fad fa-search search-form-icon" />
+                    <i className="fa fa-search search-form-icon" />
                 </div>
                 <div className="col s10 m9">
                     <SearchBar />

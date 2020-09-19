@@ -22,7 +22,7 @@ export default ({ pages }) => {
                 href="#!"
                 data-target="dropdown-nav"
             >
-                <i className="fal fa-bars" />
+                <i className="fa fa-bars" />
             </a>
             <ul id="dropdown-nav" className="dropdown-content">
                 {pages}

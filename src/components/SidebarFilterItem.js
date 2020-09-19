@@ -34,7 +34,7 @@ class SidebarFilterItem extends Component {
                     <span> ({listItem.doc_count})</span>
                 </div>
                 {activated ? (
-                    <i className="fal fa-times-circle fade-up" />
+                    <i className="fa fa-times-circle fade-up" />
                 ) : null}
             </div>
         )

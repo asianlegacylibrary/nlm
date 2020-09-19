@@ -17,7 +17,7 @@ class SidebarFilterList extends Component {
                     onClick={() => this.props.dispatch(handleFilters(f, false))}
                 >
                     {f.label}
-                    <i className="fal fa-times-circle valign-wrapper" />
+                    <i className="fa fa-times-circle valign-wrapper" />
                 </p>
             )
         })

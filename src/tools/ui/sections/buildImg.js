@@ -39,7 +39,7 @@ export default ({ t, _img, _manifestURL }) => {
                         alt="scan"
                     />
                     <div className="content">View Scans</div>
-                    <i className="reverse-content fal fa-eye" />
+                    <i className="reverse-content fa fa-eye" />
                 </a>
             )
         } else {

@@ -31,7 +31,7 @@ export default () => {
         <li className="active">
             <div className="collapsible-header">
                 Browse By
-                <i className="fal fa-chevron-double-down right fade-up" />
+                <i className="fa fa-chevron-double-down right fade-up" />
             </div>
             <div className="collapsible-body">{types}</div>
         </li>

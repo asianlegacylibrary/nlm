@@ -114,7 +114,7 @@ class Modal extends Component {
                                     )
                                 }
                             >
-                                <i className="icon fal fa-long-arrow-left fa-2x" />
+                                <i className="icon fa fa-long-arrow-left fa-2x" />
                             </div>
                         </div>
                         <div className="detail-data">

@@ -22,12 +22,12 @@ export const constants = {
         { key: 'search', label: 'Search results' },
     ],
     sectionLinks: [
-        { key: 'student', node: 'personTeacherOf', icon: 'fal fa-user' },
-        { key: 'teacher', node: 'personStudentOf', icon: 'fal fa-user-crown' },
-        { key: 'work', node: '', icon: 'fal fa-book-spells' },
-        { key: 'author', node: '_creator', icon: 'fal fa-user-edit' },
-        { key: 'genre', node: 'workGenre', icon: 'fal fa-layer-group' },
-        { key: 'subject', node: 'workIsAbout', icon: 'fal fa-list' },
+        { key: 'student', node: 'personTeacherOf', icon: 'fa fa-user' },
+        { key: 'teacher', node: 'personStudentOf', icon: 'fa fa-user-crown' },
+        { key: 'work', node: '', icon: 'fa fa-book-spells' },
+        { key: 'author', node: '_creator', icon: 'fa fa-user-edit' },
+        { key: 'genre', node: 'workGenre', icon: 'fa fa-layer-group' },
+        { key: 'subject', node: 'workIsAbout', icon: 'fa fa-list' },
     ],
     browseItems: [
         { key: 'works', label: 'Works' },

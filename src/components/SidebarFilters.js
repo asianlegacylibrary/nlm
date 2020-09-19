@@ -45,7 +45,7 @@ class SidebarFilters extends Component {
             <li key={title} className={title}>
                 <div className="collapsible-header">
                     {title}
-                    <i className="fal fa-chevron-double-down right fade-up" />
+                    <i className="fa fa-chevron-double-down right fade-up" />
                 </div>
                 <div className="collapsible-body">
                     {filter.buckets.map((b, i) => {

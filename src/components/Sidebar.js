@@ -57,7 +57,7 @@ class Sidebar extends Component {
                             <div className="sidenav-title">
                                 <p className="sidebar-filter-text">
                                     {`${t('sidebar.results-filter')} `}
-                                    <i className="fal fa-filter" />
+                                    <i className="fa fa-filter" />
                                 </p>
                             </div>
                             {showResultTotal ? (
@@ -75,7 +75,7 @@ class Sidebar extends Component {
                     <div className="user-view">
                         <div className="sidenav-title">
                             <p className="sidebar-text">
-                                <i className="fad fa-book-open fa-2x" />
+                                <i className="fa fa-book-open fa-2x" />
                                 To begin, use the search bar above or browse our
                                 listings
                             </p>
@@ -118,13 +118,13 @@ class Sidebar extends Component {
                     data-target="filter-slide-out"
                     href="#!"
                 >
-                    <i className="fal fa-arrow-right" /> {sidenavLinkText}
+                    <i className="fa fa-arrow-right" /> {sidenavLinkText}
                 </a>
             )
             sidenavClose = (
                 <li>
                     <a className="sidenav-close" href="#!">
-                        <i className="fal fa-times" />
+                        <i className="fa fa-times" />
                     </a>
                 </li>
             )

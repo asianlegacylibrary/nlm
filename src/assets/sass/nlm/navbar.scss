@@ -80,7 +80,7 @@ button:disabled,
 /* ADDING AN ICON TO THE LANGUAGE MENU, it needs something, not sure what */
 .lang-active::before,
 .lang::before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Pro";
     content: '\f1ab';
     color: $c-purple-light;
 }

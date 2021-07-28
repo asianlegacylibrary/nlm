@@ -17,7 +17,7 @@ import axios from 'axios'
 
 export const expressURL = axios.create({
     //baseURL: express,
-    baseURL: 'http://api.asianclassics.org',
+    baseURL: 'https://api.asianclassics.org',
 })
 
 // Express Routes for NLM

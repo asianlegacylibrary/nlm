@@ -59,7 +59,8 @@ export const constants = {
         `BLO BZANG GRAGS PA`,
     ],
     links: {
-        wpAdmin: 'http://178.128.7.239/wp-login.php',
+        wpAdmin_IP: 'http://178.128.7.239/wp-login.php',
+        wpAdmin: 'https://nlm-cms.asianlegacylibrary.org/wp-login.php',
         acipEmail: 'mailto:info@asianclassics.org',
         nlmSite: 'http://nationallibrary.mn/mn/',
     },

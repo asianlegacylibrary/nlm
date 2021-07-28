@@ -34,9 +34,15 @@ export const elastic = {
 }
 
 // WORDPRESS
+// export const wordpress = {
+//     node: 'http://178.128.7.239/',
+//     onlyIP: '178.128.7.239',
+//     rest: 'wp-json/wp/v2/',
+// }
+
 export const wordpress = {
-    node: 'http://178.128.7.239/',
-    onlyIP: '178.128.7.239',
+    node: 'https://nlm-cms.asianlegacylibrary.org/',
+    onlyIP: 'nlm-cms.asianlegacylibrary.org',
     rest: 'wp-json/wp/v2/',
 }
 

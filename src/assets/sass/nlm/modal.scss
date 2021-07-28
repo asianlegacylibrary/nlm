@@ -1,5 +1,5 @@
 @import './vars';
-@import '../fontawesome.min.css';
+//@import '../fontawesome.min.css';
 
 .row .col {
     + .explore-items {
@@ -109,7 +109,7 @@
 }
 .with-fa::before,
 .with-fa-note::before {
-    font-family: FontAwesome;
+    font-family: 'Font Awesome 5 Pro';
     display: inline-block;
     width: 1.3em; /* same as padding-left set on li */
 }

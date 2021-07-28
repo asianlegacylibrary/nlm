@@ -1,8 +1,8 @@
 # National Library of Mongolia Digital Archive Website
 
-[http://nlm.asianclassics.org/](http://nlm.asianclassics.org/)
+[http://nlm.asianlegacylibrary.org/](http://nlm.asianlegacylibrary.org/)
 
-The Digital Archives for the [National Library of Mongolia](http://nationallibrary.mn/en/) created as part of the Preservation initiative currently underway. The National Library of Mongolia (NLM) is partnering with two US organizations to scan and catalog its large collection of Tibetan Buddhist texts. The [Asian Classics Input Project](https://asianclassics.org) and the [Buddhist Digital Resource Center](https://www.tbrc.org/#!footer/about/preservation) are providing funds and working with the Director of the National Library of Mongolia, Ichinkhorloo Bayarkhuu, and her staff to do this work.
+The Digital Archives for the [National Library of Mongolia](http://nationallibrary.mn/en/) created as part of the Preservation initiative currently underway. The National Library of Mongolia (NLM) is partnering with two US organizations to scan and catalog its large collection of Tibetan Buddhist texts. The [Asian Legacy Library](https://asianlegacylibrary.org) and the [Buddhist Digital Resource Center](https://www.tbrc.org/#!footer/about/preservation) are providing funds and working with the Director of the National Library of Mongolia, Ichinkhorloo Bayarkhuu, and her staff to do this work.
 
 Scans and catalog information will be made available online on the websites of the National Library of Mongolia, ACIP and BDRC on an ongoing basis as work proceeds on the project.
 

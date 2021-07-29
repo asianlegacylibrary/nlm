@@ -102,7 +102,8 @@ class Page extends Component {
                         <section
                             id="banner"
                             style={{
-                                backgroundImage: `linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgba(117, 19, 93, 0.73)), url(${mediaURL})`,
+                                //backgroundImage: `linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgba(117, 19, 93, 0.73)), url(${mediaURL})`,
+                                backgroundImage: `linear-gradient(to bottom, rgba(48, 48, 48, 0.32), rgba(48, 48, 48, 0.73)), url(${mediaURL})`,
                                 backgroundSize: 'cover',
                             }}
                         >

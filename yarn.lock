@@ -4730,8 +4730,9 @@ exit@^0.1.2:
   resolved "https://registry.yarnpkg.com/exit/-/exit-0.1.2.tgz#0632638f8d877cc82107d30a0fff1a17cba1cd0c"
   integrity sha1-BjJjj42HfMghB9MKD/8aF8uhzQw=
 
-"exjs@github:BSick7/exjs#0.5.1":
+exjs@BSick7/exjs#0.5.1:
   version "0.5.1"
+  uid "87f638b98635fe8ddee36ce964e64bcce6e2bb6d"
   resolved "https://codeload.github.com/BSick7/exjs/tar.gz/87f638b98635fe8ddee36ce964e64bcce6e2bb6d"
 
 expand-brackets@^2.1.4:
@@ -5739,8 +5740,9 @@ http-signature@~1.2.0:
     jsprim "^1.2.2"
     sshpk "^1.7.0"
 
-"http-status-codes@github:edsilv/http-status-codes#v0.0.7":
+http-status-codes@edsilv/http-status-codes#v0.0.7:
   version "0.0.7"
+  uid af3a8ab9970b1f291a79b03c7382dc16aebee749
   resolved "https://codeload.github.com/edsilv/http-status-codes/tar.gz/af3a8ab9970b1f291a79b03c7382dc16aebee749"
 
 https-browserify@^1.0.0:
@@ -6983,9 +6985,9 @@ json3@^3.3.2:
   integrity sha512-c7/8mbUsKigAbLkD5B010BK4D9LZm7A1pNItkEwiUZRpIN66exu/e7YQWysGun+TRKaJp8MhemM+VkfWv42aCA==
 
 json5@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/json5/-/json5-1.0.1.tgz#779fb0018604fa854eacbf6252180d83543e3dbe"
-  integrity sha512-aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/json5/-/json5-1.0.2.tgz#63d98d60f21b313b77c4d6da18bfa69d80e1d593"
+  integrity sha512-g1MWMLBiz8FKi1e4w0UyVL3w+iJceWAFBAaBnnGKOpNa5f8TLktkbre1+s6oICydWAm+HRUGTmI+//xv2hvXYA==
   dependencies:
     minimist "^1.2.0"
 
@@ -7581,9 +7583,9 @@ minimist@1.2.0:
   integrity sha1-o1AIsg9BOD7sH7kU9M1d95omQoQ=
 
 minimist@^1.1.1, minimist@^1.2.0, minimist@^1.2.5:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
-  integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.7.tgz#daa1c4d91f507390437c6a8bc01078e7000c4d18"
+  integrity sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g==
 
 minipass-collect@^1.0.2:
   version "1.0.2"
